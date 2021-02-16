@@ -1,18 +1,18 @@
 """
-File name :
-Author    : 
+File name : Sizing landing gear
+Author    : Alejandro Rios
 Email     : aarc.88@gmail.com
-Date      : 
-Last edit :
+Date      : January 2021
+Last edit : February 2021
 Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This module performs the landing gear sizing.
 Inputs:
-    -
+    - Vehicle dictionary
 Outputs:
-    -
+    - Vehicle dictionary with landing gear information updated
 TODO's:
     -
 

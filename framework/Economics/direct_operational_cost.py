@@ -7,23 +7,25 @@ Last edit : September/2020
 Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
-Description:
+Description: 
+    - This module calculates the direct operational cost using the
+    Roskam formulation
 
 Inputs:
     -Time block
     -Cons_block
     -weitght_empty_kg
-    -Rangenm
-    -T0
-    -NEng
+    -total_mission_distance
+    -max_engine_thrust
+    -engines_number
     -weitght_engine_kg
-    -MTOW
+    -max_takeoff_mass
 
 Outputs:
-    -DOC
+    - DOC [USD]
 
 TODO's:
-    -
+    - Rename variables
 
 """
 # =============================================================================
@@ -54,28 +56,28 @@ var = structtype()
 
 
 def direct_operational_cost(
-    TBO,
-    Time_Block,
-    Cons_Block,
-    weight_empty_kg,
-    Rangenm,
-    T0,
-    NEng,
-    weight_engine_kg,
-    MTOW
+    time_between_overhaul,
+    total_mission_flight_time,
+    fuel_mass,
+    operational_empty_weight,
+    total_mission_distance,
+    max_engine_thrust,
+    engines_number,
+    engines_weight,
+    max_takeoff_mass
 ):
 
     # Constants
     kg2lb = 2.20462262
-    var.Range = Rangenm
-    salary.Captain, salary.FO, _ = crew_salary(MTOW)
-    Fuel_price = 2.387
+    var.Range = total_mission_distance
+    salary.Captain, salary.FO, _ = crew_salary(max_takeoff_mass)
+    Fuel_price = 2.8039
 
     # =============================================================================
     # Mision data
     # =============================================================================
 
-    tbl = Time_Block/60  # [HRS] BLOCK TIME EQ 5.6
+    tbl = total_mission_flight_time/60  # [HRS] BLOCK TIME EQ 5.6
     Block_Range = var.Range  # [NM] BLOCK RANGE
     vbl = Block_Range / tbl  # [KTS]BLOCK SPEED EQ 5.5
     Uannbl = 1e3 * (3.4546 * tbl + 2.994 - (12.289 * (tbl**2) -
@@ -106,7 +108,7 @@ def direct_operational_cost(
     # 2) FUEL AND OIL COST -> Cpol (PAG 148)
     pfuel = Fuel_price  # PRICE [USD/GALLON]
     dfuel = 6.74  # DENSITY [LBS/GALLON]
-    Wfbl = Cons_Block*kg2lb  # [LBS] OPERATIONAL MISSION FUEL
+    Wfbl = fuel_mass*kg2lb  # [LBS] OPERATIONAL MISSION FUEL
     Cpol = 1.05*(Wfbl/Block_Range)*(pfuel/dfuel)  # EQ 5.30 PAG 116 5# DO DOC
 
     # 3) INSURANCE COST -> Cins (PAG 148)
@@ -122,22 +124,23 @@ def direct_operational_cost(
     fnrev = 1.03  # NON-REVENUE FACTOR. IT ACCOUNTS FOR EXTRA MAINTENANCE COSTS INCURRED DUE FLIGHT DELAYS
 
     # 1) MAINTENANCE LABOR COST FOR AIRFRAME AND SYSTEMS -> Clab_ap (PAG 148)
-    weight_empty_lb = weight_empty_kg*kg2lb
-    weight_engine_lb = weight_engine_kg*kg2lb
-    Wa = weight_empty_lb - NEng*weight_engine_lb  # [LBS] AIRFRAME WEIGHT
+    weight_empty_lb = operational_empty_weight*kg2lb
+    weight_engine_lb = engines_weight*kg2lb
+    Wa = weight_empty_lb - engines_number * \
+        weight_engine_lb  # [LBS] AIRFRAME WEIGHT
     MHRmap_bl = 3*0.067*(Wa/1000)  # [mhrs/blhr] FIGURE 5.5 PAG 122
     Rlap = 15.5  # [USD/mhr] RATE PER MANHOUR
     Clab_ap = fnrev * MHRmap_bl * Rlap / vbl  # [USD/NM] EQ 5.34 PAG 119
 
     # 2) MAINTENANCE LABOR COST FOR ENGINES -> Clab_eng  (PAG 149)
     # BPR = razao de passagem
-    Tto = NEng*T0  # lbf
-    Tto_Ne = Tto / NEng  # [LBS] TAKE-OFF THRUST PER ENGINE
-    Hem = TBO  # [HRS] OVERHAUL PERIOD
+    Tto = engines_number*max_engine_thrust  # lbf
+    Tto_Ne = Tto / engines_number  # [LBS] TAKE-OFF THRUST PER ENGINE
+    Hem = time_between_overhaul  # [HRS] OVERHAUL PERIOD
     Rleng = Rlap
     MHRmeng_bl = ((0.718 + 0.0317*(Tto_Ne/1000))*(1100/Hem) +
                   0.1)  # [mhrs/blhr] FIGURE 5.6 PAG 123
-    Clab_eng = fnrev*1.3*NEng*MHRmeng_bl * \
+    Clab_eng = fnrev*1.3*engines_number*MHRmeng_bl * \
         (Rleng/vbl)  # [USD/NM] EQ 5.36 PAG 120
 
     # 3) MAINTANENCE MATERIALS COST FOR AIRPLANE -> Cmat_ap (PAG 150)
@@ -148,14 +151,14 @@ def direct_operational_cost(
     EP = CEF*EP1989  # [1992]
     # AIRPLANE PRICE
     # [USD] PAG 89 APPENDIX A9 EQ A12 PAG 331
-    AEP1989 = (10**(3.3191 + 0.8043 * (np.log10(MTOW * kg2lb))))
+    AEP1989 = (10**(3.3191 + 0.8043 * (np.log10(max_takeoff_mass * kg2lb))))
     AEP = CEF*AEP1989  # [1992]
     # AIRFRAME PRICE
-    AFP = AEP - NEng*EP  # [USD]
+    AFP = AEP - engines_number*EP  # [USD]
 
-    if MTOW * kg2lb >= 10000:  # FIGURE 5.8 PAG 126
+    if max_takeoff_mass * kg2lb >= 10000:  # FIGURE 5.8 PAG 126
         ATF = 1.0
-    elif MTOW * kg2lb < 10000 and MTOW * kg2lb < 5000:
+    elif max_takeoff_mass * kg2lb < 10000 and max_takeoff_mass * kg2lb < 5000:
         ATF = 0.5
     else:
         ATF = 0.25
@@ -168,14 +171,14 @@ def direct_operational_cost(
     KHem = 0.021 * (Hem/100) + 0.769  # FIGURE 5.11 PAG 129
     ESPPF = 1.5  # ENGINE SPARE PARTS PRICE PAG 133
     Cmat_engblhr = (5.43*1e-5 * EP * ESPPF - 0.47)/KHem  # FIGURE 5.9 PAG 127
-    Cmat_eng = fnrev * 1.3 * NEng * \
+    Cmat_eng = fnrev * 1.3 * engines_number * \
         (Cmat_engblhr/vbl)  # [USD/NM] EQ 5.38 PAG 125
 
     # 5) APPLIED MAINTENANCE BURDEN COST -> Camb (PAG 151)
     famb_lab = 1.2  # OVERHEAD DISTRIBUTION FACTOR LABOUR COST PAG 129 -> MIDDLE VALUE
     famb_mat = 0.55  # OVERHEAD DISTRIBUTION FACTOR MATERIAL COST PAG 129 -> MIDDLE VALUE
-    Camb = fnrev * (famb_lab * (MHRmap_bl * Rlap + NEng * MHRmeng_bl * Rleng) +
-                    famb_mat * (Cmat_apbhr + NEng * Cmat_engblhr))/vbl  # [USD/NM] EQ 5.39 PAG 125
+    Camb = fnrev * (famb_lab * (MHRmap_bl * Rlap + engines_number * MHRmeng_bl * Rleng) +
+                    famb_mat * (Cmat_apbhr + engines_number * Cmat_engblhr))/vbl  # [USD/NM] EQ 5.39 PAG 125
 
     # TOTAL MAINTENANCE COST
     DOCmaint = Clab_ap + Clab_eng + Cmat_ap + \
@@ -190,14 +193,14 @@ def direct_operational_cost(
     DPap = 10  # AIRPLANE DEPRECIATION PERIOD TABELA 5.7 PAG 134
     # [USD] PAG 151 AVIONICS SYSTEM PRICE APPENDIX C THE SAME VALUE WHICH WAS USED IN THE EXAMPLE
     ASP = 2670000
-    Cdap = fdap * (AEP - NEng * EP - ASP) / \
+    Cdap = fdap * (AEP - engines_number * EP - ASP) / \
         (DPap * Uannbl * vbl)  # [USD/NM] EQ 5.41 PAG 130
 
     # 2) ENGINE DEPRECIATION FACTOR -> Cdeng (PAG 152)
     fdeng = 0.85  # ENGINE DEPRECIATION FACTOR TABELA 5.7 PAG 134
     DPeng = 7  # ENGINE DEPRECIATION PERIOD TABELA 5.7 PAG 134
     # [USD/NM] EQ 5.42 PAG 131
-    Cdeng = fdeng * NEng * EP / (DPeng * Uannbl * vbl)
+    Cdeng = fdeng * engines_number * EP / (DPeng * Uannbl * vbl)
 
     # 3) AVIONICS DEPRECIATION FACTOR -> Cdav (PAG 152)
     fdav = 1.0  # AVIONICS DEPRECIATION FACTOR TABELA 5.7 PAG 134
@@ -209,14 +212,15 @@ def direct_operational_cost(
     fapsp = 0.1  # AIRPLANE SPARE PARTS FACTOR PAG 132
     DPapsp = 10  # AIRPLANE SPARE PARTS DEPRECIATION PERIOD TABELA 5.7 PAG 134
     # [USD/NM] EQ 5.45 PAG 132
-    Cdapsp = fdapsp * fapsp * (AEP - NEng * EP) / (DPapsp * Uannbl * vbl)
+    Cdapsp = fdapsp * fapsp * \
+        (AEP - engines_number * EP) / (DPapsp * Uannbl * vbl)
 
     # 5) ENGINE SPARE PARTS DEPRECIATION FACTOR -> Cdengsp (PAG 153)
     fdengsp = 0.85  # ENGINE SPARE PARTS DEPRECIATION FACTOR TABELA 5.7 PAG 134
     fengsp = 0.5  # ENGINE SPARE PARTS FACTOR PAG 133
     ESPDF = 1.5  # ENGINE SPARE PARTS PRICE FACTOR PAG 133
     DPengsp = 7.0  # ENGINE SPARE PARTS DEPRECIATION PERIOD TABELA 5.7 PAG 134
-    Cdengsp = fdengsp * fengsp * NEng * EP * ESPDF / \
+    Cdengsp = fdengsp * fengsp * engines_number * EP * ESPDF / \
         (DPengsp * Uannbl * vbl)  # [USD/NM] EQ 5.46 PAG 133
 
     # TOTAL DEPRECIATION COST
@@ -227,7 +231,8 @@ def direct_operational_cost(
     # ==============================#
     # (PAG 130)
     # 1) COST OF LANDING FEES -> Clf (PAG 154)
-    Caplf = 0.002 * MTOW * kg2lb  # EQ 5.49 PAG 135 AIRPLANE LANDING FEE PER LANDING
+    # EQ 5.49 PAG 135 AIRPLANE LANDING FEE PER LANDING
+    Caplf = 0.002 * max_takeoff_mass * kg2lb
     Clf = Caplf/(vbl*tbl)  # [USD/NM] EQ 5.48 PAG 135 LANDING FEE
 
     # 2) COST OF NAVIGATION FEES -> Cnf (PAG 154)
@@ -235,7 +240,7 @@ def direct_operational_cost(
     Cnf = Capnf/(vbl*tbl)  # [USD/NM] EQ 5.52 PAG 135
 
     # 3) COST OF REGISTRY FEES -> Crf (PAG 154)
-    frt = 0.001 + 1e-8 * MTOW * kg2lb
+    frt = 0.001 + 1e-8 * max_takeoff_mass * kg2lb
     # Crt        = frt * DOC # EQ 5.53 PAG 136
     # DOClnr    = Clf + Cnf + Crt
     # ==============================#

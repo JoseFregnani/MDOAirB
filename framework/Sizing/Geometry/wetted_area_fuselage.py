@@ -38,7 +38,7 @@ def wetted_area_forward_fuselage(vehicle):
 
     fuselage = vehicle['fuselage']
 
-    mesh = mesh.Mesh.from_file('Sizing/Geometry/forwardfus_short.stl')
+    mesh = mesh.Mesh.from_file('Database/Fuselage/forwardfus_short.stl')
     # mesh = meshio.read('forwardfus_short.stl')('forwardfus_short.stl')
 
     xmin = mesh.min_[0]

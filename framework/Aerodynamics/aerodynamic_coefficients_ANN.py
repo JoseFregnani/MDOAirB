@@ -8,13 +8,20 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This module computes the wing aerodynamic coefficients using a neural network.
+
 Inputs:
-    -
+    - Vehicle dictionary
+    - Altitude [ft]
+    - Mach number
+    - CL or alpha_deg
+    - switch_neural_network - 0 for CL | 1 for alpha input
 Outputs:
-    -
+    - CD - Drag coefficient
+    - CL - Lift coefficient
 TODO's:
-    -
+    - Rename variables
+    - Check issue with dtype object
 """
 # =============================================================================
 # IMPORTS
@@ -23,8 +30,6 @@ import numpy as np
 import array
 import scipy.io as spio
 from sklearn.preprocessing import normalize
-
-from framework.baseline_aircraft import *
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -136,11 +141,11 @@ def aerodynamic_coefficients_ANN(vehicle, altitude, mach, CL, alpha_deg,switch_n
     # NN_CL = loadmat('Aerodynamics/NN_CL.mat')
     # np.save('NN_CL.npy', NN_CL)
 
-    NN_induced = np.load('Aerodynamics/NN_induced.npy',
+    NN_induced = np.load('Database/Neural_Network/NN_induced.npy',
                          allow_pickle=True).item()
-    NN_wave = np.load('Aerodynamics/NN_wave.npy', allow_pickle=True).item()
-    NN_cd0 = np.load('Aerodynamics/NN_cd0.npy', allow_pickle=True).item()
-    NN_CL = np.load('Aerodynamics/NN_CL.npy', allow_pickle=True).item()
+    NN_wave = np.load('Database/Neural_Network/NN_wave.npy', allow_pickle=True).item()
+    NN_cd0 = np.load('Database/Neural_Network/NN_cd0.npy', allow_pickle=True).item()
+    NN_CL = np.load('Database/Neural_Network/NN_CL.npy', allow_pickle=True).item()
 
     CLout, Alpha, CDfp, CDwave, CDind, grad_CL, grad_CDfp, grad_CDwave, grad_CDind = ANN_aerodynamics_main(
         CL_input,

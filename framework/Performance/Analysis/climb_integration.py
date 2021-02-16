@@ -8,13 +8,23 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This module calculates the aircraft performance during climb by integrating
+    in time the point mass equations of movement. 
 Inputs:
-    -
+    - initial mass [kg]
+    - mach_climb
+    - climb_V_cas [knots]
+    - delta_ISA [C deg]
+    - final_altitude [ft]
+    - initial_altitude [ft]
+    - vehicle dictionary
 Outputs:
-    -
+    - final_distance [ft]
+    - total_climb_time [min]
+    - total_burned_fuel [kg]
+    - final_altitude [ft]
 TODO's:
-    -
+    - Include a better description of this module
 
 """
 # =============================================================================
@@ -27,9 +37,9 @@ import matplotlib.pyplot as plt
 
 from framework.Attributes.Airspeed.airspeed import V_cas_to_mach, mach_to_V_cas, crossover_altitude
 from framework.Attributes.Atmosphere.atmosphere_ISA_deviation import atmosphere_ISA_deviation
+from framework.Performance.Analysis.climb_acceleration import acceleration_to_250
 from framework.Performance.Engine.engine_performance import turbofan
 from framework.Performance.Analysis.climb_to_altitude import rate_of_climb_calculation
-from framework.baseline_aircraft import baseline_aircraft
 
 # =============================================================================
 # CLASSES
@@ -40,6 +50,7 @@ from framework.baseline_aircraft import baseline_aircraft
 # =============================================================================
 global GRAVITY
 GRAVITY = 9.8067
+kghr_to_kgmin = 0.01667
 
 
 def climb_integration(mass, mach_climb, climb_V_cas, delta_ISA, final_altitude, initial_altitude, vehicle):
@@ -78,7 +89,6 @@ def climb_integration(mass, mach_climb, climb_V_cas, delta_ISA, final_altitude, 
     total_climb_time = []
 
     throttle_position = 0.95
-    # aircraft_data = baseline_aircraft()
 
     if flag1 == 1:
 
@@ -96,6 +106,10 @@ def climb_integration(mass, mach_climb, climb_V_cas, delta_ISA, final_altitude, 
         final_block_distance, final_block_altitude, final_block_mass, final_block_time = climb_integrator(
             initial_block_distance, initial_block_altitude, initial_block_mass, initial_block_time, final_block_altitude, climb_V_cas, mach_climb, delta_ISA, vehicle)
 
+        _, _, delta_altitude, _ = acceleration_to_250(
+            rate_of_climb, climb_V_cas, delta_ISA, vehicle)
+        final_block_altitude = final_block_altitude + delta_altitude
+
         burned_fuel = initial_block_mass - final_block_mass
         climb_time = final_block_time - initial_block_time
         total_burned_fuel.append(burned_fuel)
@@ -108,7 +122,10 @@ def climb_integration(mass, mach_climb, climb_V_cas, delta_ISA, final_altitude, 
         initial_block_mass = final_block_mass
         initial_block_time = final_block_time
 
-        final_block_altitude = transition_altitude
+        if final_altitude <= transition_altitude:
+            final_block_altitude = final_altitude
+        else:
+            final_block_altitude = transition_altitude
 
         final_block_distance, final_block_altitude, final_block_mass, final_block_time = climb_integrator(
             initial_block_distance, initial_block_altitude, initial_block_mass, initial_block_time, final_block_altitude, climb_V_cas, mach_climb, delta_ISA, vehicle)
@@ -150,14 +167,15 @@ def climb_integrator(initial_block_distance, initial_block_altitude, initial_blo
     t0 = initial_block_time
     z0 = [initial_block_distance, initial_block_altitude, initial_block_mass]
     solver = ode(climb)
-    solver.set_integrator('dopri5')
-    solver.set_f_params(climb_V_cas, mach_climb, delta_ISA, vehicle)
+    solver.set_integrator('vode', nsteps=1000)
+    solver.set_f_params(climb_V_cas, mach_climb, delta_ISA,
+                        final_block_altitude, vehicle)
     solver.set_initial_value(z0, t0)
 
     t0 = initial_block_time
-    t1 = 80
+    t1 = 50
     # N = 50
-    t = np.linspace(t0, t1, 80)
+    t = np.linspace(t0, t1)
     N = len(t)
     sol = np.empty((N, 3))
     sol[0] = z0
@@ -185,13 +203,16 @@ def climb_integrator(initial_block_distance, initial_block_altitude, initial_blo
     return final_block_distance, final_block_altitude, final_block_mass, final_block_time
 
 
-def climb(time, state, climb_V_cas, mach_climb, delta_ISA, vehicle):
+def climb(time, state, climb_V_cas, mach_climb, delta_ISA, final_block_altitude, vehicle):
 
     aircraft = vehicle['aircraft']
-    
+
     distance = state[0]
     altitude = state[1]
     mass = state[2]
+
+    if altitude > final_block_altitude:
+        return
     _, _, _, _, _, rho_ISA, _ = atmosphere_ISA_deviation(altitude, delta_ISA)
     throttle_position = 1.0
 
@@ -202,7 +223,8 @@ def climb(time, state, climb_V_cas, mach_climb, delta_ISA, vehicle):
 
     thrust_force, fuel_flow = turbofan(
         altitude, mach, throttle_position, vehicle)  # force [N], fuel flow [kg/hr]
-    thrust_to_weight = aircraft['number_of_engines'] *thrust_force/(mass*GRAVITY)
+    thrust_to_weight = aircraft['number_of_engines'] * \
+        thrust_force/(mass*GRAVITY)
     rate_of_climb, V_tas, climb_path_angle = rate_of_climb_calculation(
         thrust_to_weight, altitude, delta_ISA, mach, mass, vehicle)
     # if rate_of_climb < 300:
@@ -210,10 +232,9 @@ def climb(time, state, climb_V_cas, mach_climb, delta_ISA, vehicle):
 
     x_dot = (V_tas*101.269)*np.cos(climb_path_angle)  # ft/min
     h_dot = rate_of_climb  # ft/min
-    W_dot = -2*fuel_flow*0.01667  # kg/min
+    W_dot = -2*fuel_flow*kghr_to_kgmin  # kg/min
     time_dot = h_dot
-    dout = np.array([x_dot, h_dot, W_dot])
-
+    dout = np.asarray([x_dot, h_dot, W_dot])
     dout = dout.reshape(3, )
 
     return dout
@@ -224,7 +245,6 @@ def climb(time, state, climb_V_cas, mach_climb, delta_ISA, vehicle):
 # =============================================================================
 # TEST
 # =============================================================================
-
 
 
 # mass = 43112

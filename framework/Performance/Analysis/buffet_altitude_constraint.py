@@ -25,7 +25,6 @@ TODO's:
 from framework.Attributes.Atmosphere.atmosphere_ISA_deviation import atmosphere_ISA_deviation
 import numpy as np
 
-from framework.baseline_aircraft import baseline_aircraft
 from framework.Attributes.Airspeed.airspeed import mach_to_V_tas
 # =============================================================================
 # CLASSES

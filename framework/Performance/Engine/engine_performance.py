@@ -8,27 +8,29 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This function caculates the turbofan performance based in EngineSim from NASA
 Inputs:
-    -
+    - Altitude [ft]
+    - Mach number
+    - Throttle position [0 to 1]
+    - Vehicle dictionary
 Outputs:
-    -
+    - Thrust force [N] 
+    - Fuel flow [kg/hr]
 TODO's:
-    -Change all comments
-    - Replace by function from Mattingly
+    - Change all comments
+    - Change variable naming
 
 """
 # =============================================================================
 # IMPORTS
 # =============================================================================
 import numpy as np
-from framework.Attributes.Atmosphere.atmosphere import atmosphere
-from framework.Attributes.Atmosphere.fair import FAIR
 from scipy import optimize
 import math
 
-# from framework.baseline_aircraft import baseline_engine
-
+from framework.Attributes.Atmosphere.atmosphere import atmosphere
+from framework.Attributes.Atmosphere.fair import FAIR
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -38,14 +40,14 @@ import math
 # =============================================================================
 
 
-def turbofan(h, mach, throttle_position, vehicle):
+def turbofan(altitude, mach, throttle_position, vehicle):
 
     engine = vehicle['engine']
 
     fan_pressure_ratio = engine['fan_pressure_ratio']
     compressor_pressure_ratio = engine['compressor_pressure_ratio']
     bypass_ratio = engine['bypass']
-    fan_diameter = engine['fan_diameter'] 
+    fan_diameter = engine['fan_diameter']
     turbine_inlet_temperature = engine['turbine_inlet_temperature']
 
     # ----- MOTOR DATA INPUT --------------------------------------------------
@@ -176,7 +178,7 @@ def turbofan(h, mach, throttle_position, vehicle):
     a4p = a8 * low_pressure_turbine_pressure_ratio/np.sqrt(T0_15_T0_5)
     a8d = a8
 
-    if ((design_mach == mach) and (design_altitude == h) and (design_throttle_position == throttle_position)):
+    if ((design_mach == mach) and (design_altitude == altitude) and (design_throttle_position == throttle_position)):
         designpoint = 1
     else:
         designpoint = 0
@@ -191,7 +193,7 @@ def turbofan(h, mach, throttle_position, vehicle):
         # ------ FREE STREAM ------------------------------------------------------
         gamma = 1.4                             # gamma do programa
         R = 287.2933                           # R do programa
-        T_0, P_0, rho_0, a_0 = atmosphere(h)
+        T_0, P_0, rho_0, a_0 = atmosphere(altitude)
 
         T0_0 = (1 + (gamma-1)/2*Mach**2)*T_0     # temperatura total
         P0_0 = P_0*(T0_0/T_0)**(gamma/(gamma-1))  # pressão total

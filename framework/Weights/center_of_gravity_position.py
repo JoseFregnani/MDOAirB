@@ -1,21 +1,20 @@
 """
-File name :
-Author    : 
+File name : Center of gravity position function
+Author    : Alejandro Rios
 Email     : aarc.88@gmail.com
-Date      : 
-Last edit :
+Date      : January/2021
+Last edit : January/2021
 Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This module computes the center of gravity x position
 Inputs:
-    -
+    - Vehicle
 Outputs:
-    -
+    - direct operational cost
 TODO's:
     -
-
 """
 # =============================================================================
 # IMPORTS
@@ -31,6 +30,7 @@ import numpy as np
 global deg_to_rad
 deg_to_rad = np.pi/180
 GRAVITY = 9.80665
+
 
 def center_of_gravity(vehicle):
     # == wing ==
@@ -93,7 +93,8 @@ def center_of_gravity(vehicle):
     elif engine['position'] == 4:
         fuselage['center_of_gravity_xposition'] = 0.43*fuselage['length']
 
-    fuselage_moment = fuselage['weight'] * fuselage['center_of_gravity_xposition']
+    fuselage_moment = fuselage['weight'] * \
+        fuselage['center_of_gravity_xposition']
 
     # == engines ==
     aircraft['number_of_engines'] = max(2, engine['position'])
@@ -167,25 +168,29 @@ def center_of_gravity(vehicle):
     # == nacelles==
 
     if engine['position'] == 1:
-        nacelle['center_of_gravity_xposition'] = wing['leading_edge_xposition'] + wing['semi_span_kink']* \
+        nacelle['center_of_gravity_xposition'] = wing['leading_edge_xposition'] + wing['semi_span_kink'] * \
             (wing['span']/2)*np.tan(wing['sweep_leading_edge'] *
                                     deg_to_rad) + 0.4*engine['length']
-        nacelle_moment = nacelle['weight']*nacelle['center_of_gravity_xposition']
+        nacelle_moment = nacelle['weight'] * \
+            nacelle['center_of_gravity_xposition']
     elif engine['position'] == 2:
         nacelle['center_of_gravity_xposition'] = 0.97*fuselage['length'] - \
             vertical_tail['center_chord'] - \
             engine['length'] + 0.35*engine['length']
-        nacelle_moment = nacelle['weight']*nacelle['center_of_gravity_xposition']
+        nacelle_moment = nacelle['weight'] * \
+            nacelle['center_of_gravity_xposition']
     elif engine['position'] == 3:
         nacelle['center_of_gravity_xposition'] = wing['leading_edge_xposition'] + wing['semi_span_kink'] * \
             (wing['span']/2)*np.tan(wing['sweep_leading_edge'] *
                                     deg_to_rad) + 0.4*engine['length']
-        nacelle_moment = nacelle['weight']*nacelle['center_of_gravity_xposition']
+        nacelle_moment = nacelle['weight'] * \
+            nacelle['center_of_gravity_xposition']
     elif engine['position'] == 4:  # CHECK THIS ONE!!!!
         nacelle['center_of_gravity_xposition'] = wing['leading_edge_xposition'] + wing['semi_span_kink'] * \
             (wing['span']/2)*np.tan(wing['sweep_leading_edge'] *
                                     deg_to_rad) + 0.4*engine['length']
-        nacelle_moment = nacelle['weight']*nacelle['center_of_gravity_xposition']
+        nacelle_moment = nacelle['weight'] * \
+            nacelle['center_of_gravity_xposition']
 
     # == landing gear ==
 
@@ -222,7 +227,8 @@ def center_of_gravity(vehicle):
     flight_control_system_wing_moment = 0.5*systems['flight_control_weight'] * \
         flight_control_system_wing_center_of_gravity_xposition
 
-    flight_control_system_tail_center_of_gravity_xposition = vertical_tail['center_of_gravity_xposition']
+    flight_control_system_tail_center_of_gravity_xposition = vertical_tail[
+        'center_of_gravity_xposition']
     flight_control_tail_moment = 0.5*systems['flight_control_weight'] * \
         flight_control_system_tail_center_of_gravity_xposition
 
@@ -277,13 +283,14 @@ def center_of_gravity(vehicle):
     # wing fuel
     wing_tank_center_of_gravity_xposition = wing['leading_edge_xposition'] + \
         wing['tank_center_of_gravity_xposition']
-        
+
     wing_fuel_moment = systems['fuel_weight'] * \
         wing_tank_center_of_gravity_xposition
 
-    aircraft['operational_empty_weight'] = (wing['weight'] + horizontal_tail['weight'] + vertical_tail['weight'] + fuselage['weight'] + aircraft['power_plant_weight'] + nacelle['weight'] + main_landing_gear['weight'] + nose_landing_gear['weight'] + systems['hydraulic_weight'] + systems['flight_control_weight'] + systems['electrical_weight'] + systems['oxygen_weight'] + systems['APU_weight'] + systems['furnishing_weight'] + systems['paint_weight'] + systems['avionics_weight'] + systems['air_weight'] + systems['safety'] + systems['handling_gear'])
+    aircraft['operational_empty_weight'] = (wing['weight'] + horizontal_tail['weight'] + vertical_tail['weight'] + fuselage['weight'] + aircraft['power_plant_weight'] + nacelle['weight'] + main_landing_gear['weight'] + nose_landing_gear['weight'] + systems['hydraulic_weight'] +
+                                            systems['flight_control_weight'] + systems['electrical_weight'] + systems['oxygen_weight'] + systems['APU_weight'] + systems['furnishing_weight'] + systems['paint_weight'] + systems['avionics_weight'] + systems['air_weight'] + systems['safety'] + systems['handling_gear'])
 
-    aircraft_empty_weight_center_of_gravity_xposition = (wing_moment+horizontal_tail_moment+vertical_tail_moment+fuselage_moment+engine_moment+engine_2_moment+propulsion_system_moment+propulsion_system_2_moment+nacelle_moment+nose_landing_gear_moment+main_landig_gear_moment + hydraulic_system_moment + 
+    aircraft_empty_weight_center_of_gravity_xposition = (wing_moment+horizontal_tail_moment+vertical_tail_moment+fuselage_moment+engine_moment+engine_2_moment+propulsion_system_moment+propulsion_system_2_moment+nacelle_moment+nose_landing_gear_moment+main_landig_gear_moment + hydraulic_system_moment +
                                                          fuel_system_moment+flight_control_system_wing_moment+flight_control_tail_moment+electrical_system_moment+avionics_system_moment+air_system_moment+oxygen_system_moment+apu_moment+furnishing_moment+paint_moment)/aircraft['operational_empty_weight']
 
     aircraft_empty_weight_center_of_gravity_mean_aerodynamic_chord_xposition = aircraft_empty_weight_center_of_gravity_xposition / \
@@ -317,8 +324,8 @@ def center_of_gravity(vehicle):
     aircraft_operating_empty_weight = aircraft['operational_empty_weight'] + \
         crew_cockpit_weight + crew_cabine_weight + residual_fuel_weight
 
-    wing_fuel_weight =  wing['fuel_capacity']
-    
+    wing_fuel_weight = wing['fuel_capacity']
+
     fuel_tanks_moment = wing_fuel_weight * \
         wing_tank_center_of_gravity_xposition
 
@@ -339,17 +346,10 @@ def center_of_gravity(vehicle):
 
     configuration_4 = (aircraft_operating_empty_weight_moment +
                        pax_moment)/(aircraft_operating_empty_weight + pax_weight)
-    
-
 
     aircraft['forward_center_of_gravity_xposition'] = min(
         configuration_1, configuration_2, configuration_3, configuration_4)
 
-    # print('01:',configuration_1)
-    # print('02:',configuration_2)
-    # print('03:',configuration_3)
-    # print('04:',configuration_4)
-    # print('--------------------------------------------------------------')
     aircraft['after_center_of_gravity_xposition'] = max(
         configuration_1, configuration_2, configuration_3, configuration_4)
 

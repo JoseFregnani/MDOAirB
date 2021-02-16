@@ -8,11 +8,13 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This module calculate the regulated takeoff and landing weight according to
+    sizing restrictions
 Inputs:
-    -
+    - Vehicle dictionaty
 Outputs:
-    -
+    - Regulated takeoff weight [kg]
+    - Regulated landing weight [kg]
 TODO's:
     -Add sigma effect of engine
 
@@ -36,6 +38,7 @@ from framework.Performance.Analysis.cruise_performance import cruise_performance
 global GRAVITY
 GRAVITY = 9.80665
 lb_to_kg = 0.453592
+
 
 def takeoff_field_length_check(vehicle, weight_takeoff):
 
@@ -89,7 +92,7 @@ def landing_field_length_check(vehicle, maximum_takeoff_weight, weight_landing):
 
     flag = 0
     while flag == 0:
-        aircraft['maximum_landing_weight'] = weight_landing
+        # aircraft['maximum_landing_weight'] = weight_landing
         landing_field_length_computed = landing_field_length(
             vehicle, weight_landing)
 
@@ -185,7 +188,7 @@ def regulated_takeoff_weight(vehicle):
 def regulated_landing_weight(vehicle):
 
     aircraft = vehicle['aircraft']
-    weight_landing = aircraft['maximum_landing_weight']
+    weight_landing = aircraft['maximum_landing_weight']*GRAVITY
 
     maximum_takeoff_weight = aircraft['maximum_takeoff_weight']*GRAVITY
 

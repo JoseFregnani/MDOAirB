@@ -31,7 +31,6 @@ from framework.Attributes.Atmosphere.atmosphere import atmosphere
 from framework.Attributes.Airspeed.airspeed import mach_to_V_tas
 # from framework.Aerodynamics.aerodynamic_coefficients import zero_fidelity_drag_coefficient
 from framework.Aerodynamics.aerodynamic_coefficients_ANN import aerodynamic_coefficients_ANN
-from framework.baseline_aircraft import *
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -44,8 +43,8 @@ GRAVITY = 9.80665
 
 
 def rate_of_climb_calculation(thrust_to_weight, h, delta_ISA, mach, mass, vehicle):
+    aircraft = vehicle['aircraft']  
     wing = vehicle['wing']   
-
     wing_surface = wing['area']
 
     knots_to_feet_minute = 101.268
@@ -65,7 +64,14 @@ def rate_of_climb_calculation(thrust_to_weight, h, delta_ISA, mach, mass, vehicl
     # Input for neural network: 0 for CL | 1 for alpha
     switch_neural_network = 0
     alpha_deg = 1
-    CD, _ = aerodynamic_coefficients_ANN(vehicle, h, mach, CL,alpha_deg,switch_neural_network)
+    CD_wing, _ = aerodynamic_coefficients_ANN(vehicle, h, mach, CL,alpha_deg,switch_neural_network)
+    
+    friction_coefficient = 0.003
+    CD_ubrige = friction_coefficient * \
+        (aircraft['wetted_area'] - wing['wetted_area']) / \
+        wing['area']
+
+    CD = CD_wing + CD_ubrige
 
     L_to_D = CL/CD
 

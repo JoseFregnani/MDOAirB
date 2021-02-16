@@ -1,18 +1,19 @@
 """
-File name :
-Author    : 
+File name : Landing gear position function
+Author    : Alejandro Rios
 Email     : aarc.88@gmail.com
-Date      : 
-Last edit :
+Date      : January 2021
+Last edit : February 2021
 Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This module performs the calculation of the main landing gear position
 Inputs:
-    -
+    - Vehicle dictionary
 Outputs:
-    -
+    - Vehicle dictionary with landing gear information updated
+    - y position trunnion
 TODO's:
     -
 
@@ -33,8 +34,6 @@ deg_to_rad = np.pi/180
 
 
 def landig_gear_position(vehicle):
-
-
 
     engine = vehicle['engine']
     wing = vehicle['wing']

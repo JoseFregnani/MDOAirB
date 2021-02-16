@@ -1,42 +1,43 @@
-"""" 
-Title     : Section Clmax
-Written by: Alejandro Rios
-Date      : 05/11/19
-Language  : Python
-Aeronautical Institute of Technology
+"""
+Function  : Wing structural layout
+Author    : Alejandro Rios
+Email     : aarc.88@gmail.com
+Date      : July 2020
+Last edit : February 2021
+Language  : Python 3.8 or >
+Aeronautical Institute of Technology - Airbus Brazil
 
+Description:
+    - This module computes the wing structural layout and calculates
+    the fuel storage capacity in the wings
 
 Inputs:
-Mach
-AirportElevation
-PROOT
-Craiz
-PKINK
-wing['kink_chord']
-PTIP
-wing['tip_chord']
-
+    - Vehicle dictionary
+    - x and y coordinates of wing chords 
 Outputs:
-clmax_airfoil
-flagsuc
+    - Updated vehicle dictionary
+TODO's:
+    - Clean code
+    - Rename variables
+
 """
-########################################################################################
+# =============================================================================
+# IMPORTS
+# =============================================================================
 import numpy as np
 import os
+
 from framework.Attributes.Atmosphere.atmosphere_ISA_deviation import \
     atmosphere_ISA_deviation
-# from cf_flat_plate import cf_flat_plate
-########################################################################################
-"""Constants declaration"""
+from framework.utilities.logger import get_logger
+# =============================================================================
+# CLASSES
+# =============================================================================
 
-
-class structtype():
-    pass
-
-
-pneu = structtype()
-wlay = structtype()
-########################################################################################
+# =============================================================================
+# FUNCTIONS
+# =============================================================================
+log = get_logger(__file__.split('.')[0])
 
 
 def wing_structural_layout(vehicle, xutip, yutip,
@@ -70,22 +71,19 @@ def wing_structural_layout(vehicle, xutip, yutip,
     nervspacing = 22  # (pol) Roskam Vol III pg 220 suggests 24
     nervspacm = nervspacing * 0.0254  # cm)
     denquerosene = 803  # jet A1 density
-    # wing['trunnion_xposition']     = 0.72
+
     angquebralongtras = 0
     #
     diamfus = fuselage['width'] 
-    # Craiz       = Craiz
-    # wing['tip_chord']      = wingct
-    # wing['kink_chord']     = wingc1
+
     fquebra = wing['semi_span_kink']
-    # posaileron  = 0.75 # inicio do aileron (fracao da semienvergadura)
+
 
     # Variaveis auxiliares
     bdiv2 = 0.50*wing['span']
     xquebraBA = bdiv2*fquebra*np.tan(rad*wing['sweep_leading_edge'])
     yquebra = fquebra*bdiv2
-    #yinfaileron = posaileron*bdiv2
-    # localizacao da longarina dianteira como fracao da corda
+
     if aircraft['slat_presence'] > 0:
         fraclongdi = 0.25
     else:
@@ -94,19 +92,17 @@ def wing_structural_layout(vehicle, xutip, yutip,
     limited = fraclongdi
 
     # Dados do trem de pouso:
-    pneu.diam = 0.80  # diam do pneu em metros
-    pneu.height = 0.25  # largura do pneu (m)
+    pneu_diam = 0.80  # diam do pneu em metros
+    pneu_height = 0.25  # largura do pneu (m)
     lmunhao = 1.3  # Comprimento do munhao (m)
 
     # Intersecao asa-fuselagem
     yfusjunc = diamfus/2
 
     # Vetor para Aramzernar Todas as Nervuras
-    # Nerv = [x1 y1 x2 y2]
     Nerv = np.zeros((0, 4))
 
     # Calcula a corda na intersecao
-
     xbainter = yfusjunc*np.tan(rad*wing['sweep_leading_edge'])  # coord do ba na intersecao
 
     xbfquebra = xquebraBA + wing['kink_chord']
@@ -116,11 +112,8 @@ def wing_structural_layout(vehicle, xutip, yutip,
     else:
         inclinabf = (yquebra-0)/((xquebraBA + wing['kink_chord']) - wing['center_chord'])
         xbfinter = wing['center_chord']+(yfusjunc-0)/inclinabf  # coord do bf na intersecao
-    #
-    Cinter = xbfinter - xbainter
-    wlay.Cinter = Cinter
 
-    #
+    Cinter = xbfinter - xbainter
     aux1 = bdiv2*np.tan(rad*wing['sweep_leading_edge'])
     aux2 = xquebraBA
 
@@ -128,18 +121,10 @@ def wing_structural_layout(vehicle, xutip, yutip,
     xw = [0, xbainter, aux1, (aux1+wing['tip_chord']), (aux2+wing['kink_chord']), xbfinter, wing['center_chord']]
     yw = [0, yfusjunc, bdiv2, bdiv2, yquebra, yfusjunc, 0]
 
-    # figure(7)
-    # #
-    # plot(xw,yw,'k') # Desenha forma em planta
-    # hold on
 
-    #
+
     xfus = [-2, wing['center_chord']+2]
     yfus = [diamfus/2, diamfus/2]
-
-    # plot(xfus,yfus,'--c')
-    # hold on
-    #
 
     # *** Ponta da asa ***
     xcontrolpoint2 = bdiv2*np.tan(rad*wing['sweep_leading_edge'])
@@ -155,17 +140,11 @@ def wing_structural_layout(vehicle, xutip, yutip,
            xprojbfponta, (xcontrolpoint2+wing['tip_chord'])]
     ypp = [bdiv2, (bdiv2+0.025*bdiv2), (bdiv2+0.05*bdiv2), bdiv2]
 
-    # plot(xpp,ypp,'-k')
-    # hold on
 
     # *** Longarina dianteira
-
     xld = [(yfusjunc*np.tan(rad*wing['sweep_leading_edge'])+fraclongdi*Cinter),
            (bdiv2*np.tan(rad*wing['sweep_leading_edge'])+fraclongdi*wing['tip_chord'])]
     yld = [yfusjunc, bdiv2]
-
-    # plot(xld,yld,'-b')
-    # hold on
 
     # *** Fim longarina dianteira ***
 
@@ -176,21 +155,18 @@ def wing_structural_layout(vehicle, xutip, yutip,
     xlte = [x1aux, (bdiv2*np.tan(rad*wing['sweep_leading_edge'])+wing['trunnion_xposition']*wing['tip_chord'])]
     ylte = [bdiv2*fquebra,  bdiv2]
 
-    # plot(xlte,ylte,'-b')
-    # hold on
-
     # LT Interna
 
     inclnt = x1aux-(bdiv2*np.tan(rad*wing['sweep_leading_edge'])+wing['trunnion_xposition']*wing['tip_chord'])
     inclnt = (bdiv2*fquebra - bdiv2)/inclnt
+
     # adiciona angulo graus para aumentar o tamanho do caixao central
     anglti = np.arctan(inclnt)+angquebralongtras*np.pi/180
     xltintern = x1aux+((yfusjunc-bdiv2*fquebra)/np.tan(anglti))
     xlti = [xltintern, x1aux]
     ylti = [yfusjunc, bdiv2*fquebra]
 
-    # plot(xlti,ylti,'-b')
-    # hold on
+
     xlt = []
     xlt = xlti
     xlt[1] = xlte[1]
@@ -220,15 +196,12 @@ def wing_structural_layout(vehicle, xutip, yutip,
         y0 = y1aux
         xnq.append((yquebra-y0)/inclinald + x0)
 
-    #
 
     xnq.append(xquebraBA+wing['trunnion_xposition']*wing['kink_chord'])
     ynq.append(yquebra)
     ynq.append(ynq[0])
 
     Nerv = np.hstack((xnq, ynq))
-    # plot(xnq,ynq,'-b')
-    # hold on
 
     # Coordendas da nervura na quebra
     xtnervq = xnq[1]
@@ -274,24 +247,18 @@ def wing_structural_layout(vehicle, xutip, yutip,
         # acha intersecao com a longarina dianteira
         xnqa.append(xnq[1])  # coord x do ponto da longarina traseira na quebra
         ynqa.append(ynq[1])  # coord y do ponto da longarina traseira na quebra
-        #
+
         term1 = (y02-y01)-inclinanerv*x02+inclinald*x01
         xinerv = term1/(inclinald-inclinanerv)
         yinerv = y01+inclinald*(xinerv-x01)
         xnqa.append(xinerv)
         ynqa.append(yinerv)
-        #
         Nerv = np.vstack((Nerv, np.hstack((xnqa, ynqa))))
 
-        # plot(xnqa,ynqa,'-b')
-        # hold on
     else:
         yinerv = yquebra
 
-    #
     # Restante das nervuras do caixao central externo
-
-    #
     ytnerv = y02
     xtnerv = x02
     ydnerv = yinerv
@@ -325,10 +292,7 @@ def wing_structural_layout(vehicle, xutip, yutip,
         xnq[0] = xdnerv
         ynq[0] = ydnerv
         nnervext = nnervext+1
-
         Nerv = np.vstack((Nerv, np.hstack((xnq, ynq))))
-        # plot(xnq,ynq,'-b')
-        # hold on
 
     # Ultima nervura (fracionaria)
 
@@ -356,19 +320,14 @@ def wing_structural_layout(vehicle, xutip, yutip,
         xnervext_aux2.append(xinerv)
         ynervext_aux2.append(yinerv)
 
-        #xdnerv = xtnerv + (bdiv2-ytnerv)/inclinanerv
         xnq[1] = xdnerv
         ynq[1] = yinerv
         nnervext = nnervext+1
 
         Nerv = np.vstack((Nerv, np.hstack((xnq, ynq))))
-        # plot(xnq,ynq,'-b')
-        # hold on
 
     xnervext = np.vstack((xnervext_aux1, xnervext_aux2))
     ynervext = np.vstack((ynervext_aux1, ynervext_aux2))
-
-    print('\n Nervuras na asa externa (incluindo a da quebra): %2.0f \n' % nnervext)
 
     # Nervuras no caixao central interno
     xtnerv = xtnervq
@@ -400,13 +359,10 @@ def wing_structural_layout(vehicle, xutip, yutip,
         ynervint_aux2.append(ytnerv)
 
         Nerv = np.vstack((Nerv, np.hstack((xnq, ynq))))
-        # plot(xnq,ynq,'-b')
-        # hold on
 
     nni = nni+1
 
     # nervura na juncao asa-fuselagem
-
     xnq[0] = xld[0]
     ynq[0] = yld[0]
     xnervint_aux1.append(xnq[0])
@@ -420,9 +376,6 @@ def wing_structural_layout(vehicle, xutip, yutip,
     ynervint = np.vstack((ynervint_aux1, ynervint_aux2))
 
     Nerv = np.vstack((Nerv, np.hstack((xnq, ynq))))
-    # plot(xnq,ynq,'-b')
-    # hold on
-    print('\n Nervuras na asa interna (excluindo a da quebra): %2.0f \n' % nni)
 
     # *** Aileron ***
     # comprimento estimado do aileron: aprox. 25# da semi-envergadura
@@ -462,15 +415,12 @@ def wing_structural_layout(vehicle, xutip, yutip,
     #
     term1 = (y2-y1)-tg2*x2+tg1*x1
 
-    # xail = []
-    # yail = []
     xail.append(term1/(tg1-tg2))
     yail.append(y1+tg1*(xail[2]-x1))
     #
     xail.append(xnervext[1, mem])
     yail.append(ynervext[1, mem])
-    # fill(xail,yail,'r')
-    # hold on
+
     xcombe = []
     ycombe = []
     # Tanque de combust�vel na asa externa
@@ -493,16 +443,13 @@ def wing_structural_layout(vehicle, xutip, yutip,
         xcombe.append(xnervext[1, memtqe])
         ycombe.append(ynervext[1, memtqe])
 
-    # #
-    # patch(xcombe,ycombe,'g','FaceAlpha',0.2)
-    # hold on
-    #
+
     xcgtqe = sum(xcombe)/4  # CG do tanque externo
     ycgtqe = sum(ycombe)/4
-    #
+
     # Calcula capacidade dos tanques (duas semi-asas)
     limitepe = wing['trunnion_xposition']
-    #
+
     # estacoes da base inf e sup do tanque externo (ymed1 e ymed2)
     ymed1 = 0.50*(ynervext[0, 0]+ynervext[1, 0])
     ymed2 = 0.50*(ynervext[0, memtqe]+ynervext[1, memtqe])
@@ -525,10 +472,7 @@ def wing_structural_layout(vehicle, xutip, yutip,
         aux = max(xnervint[0, nni-1], xnervint[1, nni-1])
         limitepi2 = (aux-yfusjunc*np.tan(rad*wing['sweep_leading_edge']))/Cinter
 
-    #fprintf('\n cheguei aqui: volume de tanque da asa \n')
 
-    #################################################################################
-    #################################################################################
     yinterno = ymed1
     yexterno = ymed2
     # acha perfil externo
@@ -561,12 +505,9 @@ def wing_structural_layout(vehicle, xutip, yutip,
             xpolyi.append(xlkink[i])
             ypolyi.append(ylkink[i])
 
-    # xistosxlkink=xlkink
-    # xistosylkink=ylkink
     # a percentagem da corda na secao da raiz nao eh a memsma da long traseira
     yinterno = yfusjunc
     yexterno = ymed3
-    # xistosquebra=yquebra
     # acha perfil externo
     deltay = yquebra-yinterno
 
@@ -596,8 +537,6 @@ def wing_structural_layout(vehicle, xutip, yutip,
             xpolyroot.append(xuroot[i])
             ypolyroot.append(yuperfilint[i])
 
-    # xistosxlroot=xlroot
-    # xistosylroot=ylroot
     for i in range(len(xuroot), 0, -1):
 
         if xuperfilint[i-1] <= limitepi1 and xuperfilint[i-1] >= limitedr:
@@ -605,7 +544,6 @@ def wing_structural_layout(vehicle, xutip, yutip,
             xpolyroot.append(xuroot[i])
             ypolyroot.append(ylperfilint[i])
 
-    #
     # Area molhada no perfil da interseccao asa-fuselagem
     icount = 0
 
@@ -617,8 +555,6 @@ def wing_structural_layout(vehicle, xutip, yutip,
             xpolyroot1.append(xuroot[i])
             ypolyroot1.append(yuroot[i])
 
-    # xistosxlroot=xlroot
-    # xistosylroot=ylroot
 
     for i in range(len(xuroot), 0, -1):
         if xuroot[i-1] <= limitepi2 and xuroot[i-1] >= limitedr:
@@ -639,16 +575,9 @@ def wing_structural_layout(vehicle, xutip, yutip,
     # 2# de perdas devido a nervuras, revestimento e outros equip
     voltanqueint = 0.98*(deltay/3)*(arearootinf +
                                     arearootsup + np.sqrt(arearootinf*arearootsup))
-#
-    #################################################################################
-    #################################################################################
-    #fprintf('\n Passei por aqui: volume de tanque da asa \n')
 
     capacidadete = 2.*voltanqueext*denquerosene
-    #
-    print('\n Capacidade dos tanques externos:(ambas semiasas) %4.0f kg \n' %
-          capacidadete)
-    #
+
     # Capacidade dos tanques da asa interna
     xcombi = []
     ycombi = []
@@ -670,20 +599,12 @@ def wing_structural_layout(vehicle, xutip, yutip,
         ycombi.append(ynervint[1, nni-1])
         xcombi.append(xnervint[0, nni-1])
         ycombi.append(ynervint[0, nni-1])
-        #fprintf('\n +++  passei por aqui xcombi \n')
+
 
     xcgtqi = sum(xcombi)/4  # CG do tanque interno
     ycgtqi = sum(ycombi)/4
-#     # Desenha tanque da semi-asa interna
-#     patch(xcombi,ycombi,'g','FaceAlpha',0.2)
-#     hold on
-#    # Desenha tanque da semi-asa interna
-#     patch(xcombi,ycombi,'g','FaceAlpha',0.2)
-#     hold on
 
     capacidadeti = 2*voltanqueint*denquerosene
-
-    print('\n Capacidade dos tanques internos: %4.0f kg \n' % capacidadeti)
 
     # Capacidade total dos tanques
     # Considera perdas devido a nervuras, longarinas, revestimento, bombas
@@ -691,12 +612,9 @@ def wing_structural_layout(vehicle, xutip, yutip,
     if capacidadeti > 0 and capacidadete > 0:
         wing['fuel_capacity'] = capacidadeti + capacidadete
 
-    print('\n Capacidade total dos tanques: %4.0f kg \n' % wing['fuel_capacity'])
-
     # Localizacao do CG dos tanques de combustivel
     wing['tank_center_of_gravity_xposition'] = (xcgtqe*capacidadete + xcgtqi*capacidadeti) / \
         (capacidadeti+capacidadete)
-    print('\n Localizacao do CG dos tanques x = %4.2f  \n' % wing['tank_center_of_gravity_xposition'])
 
     # *** Flape externo ***
     xflape = []
@@ -730,30 +648,18 @@ def wing_structural_layout(vehicle, xutip, yutip,
     xflape.append(fquebra*bdiv2*np.tan(rad*wing['sweep_leading_edge'])+wing['kink_chord'])
     yflape.append(fquebra*bdiv2)
 
-    # fill(xflape,yflape,'m')
-    # hold on
-
     def PolyArea(x, y):
         return 0.5*np.abs(np.dot(x, np.roll(y, 1))-np.dot(y, np.roll(x, 1)))
 
     wing['flap_area'] = PolyArea(xflape, yflape)
-    print('\n Area dos flapes externos (recolhidos): %4.0f m2 \n' % (2*wing['flap_area']))
-    # Insere nervura auxiliar para o flape externo
 
+
+    # Insere nervura auxiliar para o flape externo
     xnervaf = []
     ynervaf = []
     xnervaf.append(xflape[1])
     ynervaf.append(yflape[1])
-    # intersecao com a LD
 
-    #tg1 = atan(inclinald) +pi/2
-    # tg1=tan(tg1)
-    #tg2 = inclinald
-    #x1 = xflape[1]
-    #y1 = yflape[1]
-    #x2 = xnervext(mem,2)
-    #y2 = ynervext(mem,2)
-    #term1 = (y2-y1)-tg2*x2+tg1*x1
     x1aux = yfusjunc*np.tan(rad*wing['sweep_leading_edge']) + fraclongdi*Cinter
     y1aux = yfusjunc
     x2aux = bdiv2*np.tan(rad*wing['sweep_leading_edge']) + fraclongdi*wing['tip_chord']
@@ -773,9 +679,6 @@ def wing_structural_layout(vehicle, xutip, yutip,
         xnervaf.append(term1/(tg1-tg2))
         ynervaf.append(y2+tg2*(xnervaf[1]-x2))
 
-    # plot(xnervaf,ynervaf,'-b')
-    # hold on
-
     xflapi = []
     yflapi = []
 
@@ -789,13 +692,9 @@ def wing_structural_layout(vehicle, xutip, yutip,
     yflapi.append(yfusjunc)
     xflapi.append(yfusjunc*(np.tan(rad*wing['sweep_leading_edge'])) + Cinter)
     yflapi.append(yfusjunc)
-    # fill(xflapi,yflapi,'m')
-    # hold on
 
     # posicao em x do munhao
     wing['trunnion_xposition'] = (xflapi[2]+xltintern)/2
-    print('\n Posicao do munhao do trem de pouso principal x= %4.2f \n' % wing['trunnion_xposition'])
-
 
     if os.path.exists('wlayout.jpg'):
         os.remove('wlayout.jpg')
@@ -803,8 +702,7 @@ def wing_structural_layout(vehicle, xutip, yutip,
 
     if os.path.exists('tankprofiles.jpg'):
         os.remove('tankprofiles.jpg')
-    # end
-    # print -djpeg -f11 -r300 'tankprofiles.jpg'
+
     # Check de consistencia
     if wing['fuel_capacity'] <= 0 or wing['flap_area'] <= 0:
         checkconsistency = 1  # fail

@@ -8,13 +8,23 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This module calculates the aircraft performance during descent by integrating
+    in time the point mass equations of movement. 
 Inputs:
-    -
+    - initial mass [kg]
+    - mach_climb
+    - climb_V_cas [knots]
+    - delta_ISA [C deg]
+    - final_altitude [ft]
+    - initial_altitude [ft]
+    - vehicle dictionary
 Outputs:
-    -
+    - final_distance [ft]
+    - total_climb_time [min]
+    - total_burned_fuel [kg]
+    - final_altitude [ft]
 TODO's:
-    -
+    - Include a better description of this module
 
 """
 # =============================================================================
@@ -23,9 +33,8 @@ TODO's:
 from framework.Attributes.Airspeed.airspeed import V_cas_to_mach, mach_to_V_cas, crossover_altitude
 from framework.Attributes.Atmosphere.atmosphere_ISA_deviation import atmosphere_ISA_deviation
 from framework.Performance.Engine.engine_performance import turbofan
-
-from framework.Performance.Analysis.climb_to_altitude import rate_of_climb_calculation
-from framework.baseline_aircraft import baseline_aircraft
+from framework.Performance.Analysis.descent_deceleration import decelaration_to_250
+from framework.Performance.Analysis.descent_to_altitude import rate_of_descent_calculation
 
 import numpy as np
 from scipy.integrate import odeint
@@ -39,10 +48,13 @@ import matplotlib.pyplot as plt
 # =============================================================================
 # FUNCTIONS
 # =============================================================================
+global GRAVITY
+GRAVITY = 9.8067
+kghr_to_kgmin = 0.01667
 
 
 def descent_integration(mass, mach_descent, descent_V_cas, delta_ISA, final_altitude, initial_altitude, vehicle):
-    rate_of_descent = 500
+    rate_of_descent = -500
 
     time_descent1 = 0
     time_descent2 = 0
@@ -110,7 +122,10 @@ def descent_integration(mass, mach_descent, descent_V_cas, delta_ISA, final_alti
         final_block_altitude = 10000
 
         final_block_distance, final_block_altitude, final_block_mass, final_block_time = climb_integrator(
-            initial_block_distance, initial_block_altitude, initial_block_mass, initial_block_time, final_block_altitude, descent_V_cas, mach_descent, delta_ISA, vehicle)
+            initial_block_distance, initial_block_altitude, initial_block_mass, initial_block_time, final_block_altitude, descent_V_cas, 0, delta_ISA, vehicle)
+
+        delta_distance, delta_time, delta_altitude, delta_fuel = decelaration_to_250(
+            rate_of_descent, descent_V_cas, delta_ISA, vehicle)
 
         burned_fuel = initial_block_mass - final_block_mass
         descent_time = final_block_time - initial_block_time
@@ -134,7 +149,7 @@ def descent_integration(mass, mach_descent, descent_V_cas, delta_ISA, final_alti
         final_block_altitude = 1500
 
         final_block_distance, final_block_altitude, final_block_mass, final_block_time = climb_integrator(
-            initial_block_distance, initial_block_altitude, initial_block_mass, initial_block_time, final_block_altitude, 250, mach_descent, delta_ISA, vehicle)
+            initial_block_distance, initial_block_altitude, initial_block_mass, initial_block_time, final_block_altitude, 250, 0, delta_ISA, vehicle)
 
         burned_fuel = initial_block_mass - final_block_mass
 
@@ -146,9 +161,9 @@ def descent_integration(mass, mach_descent, descent_V_cas, delta_ISA, final_alti
 
     final_altitude = final_block_altitude
 
-    final_distance = final_block_distance
-    total_burned_fuel = sum(total_burned_fuel)
-    total_descent_time = sum(total_descent_time)
+    final_distance = final_block_distance + delta_distance
+    total_burned_fuel = sum(total_burned_fuel) + delta_fuel
+    total_descent_time = sum(total_descent_time) + delta_time
 
     return final_distance, total_descent_time, total_burned_fuel, final_altitude
 
@@ -157,14 +172,15 @@ def climb_integrator(initial_block_distance, initial_block_altitude, initial_blo
     t0 = initial_block_time
     z0 = [initial_block_distance, initial_block_altitude, initial_block_mass]
     solver = ode(climb)
-    solver.set_integrator('dopri5')
-    solver.set_f_params(climb_V_cas, mach_climb, delta_ISA, vehicle)
+    solver.set_integrator('vode', nsteps=1000)
+    solver.set_f_params(climb_V_cas, mach_climb, delta_ISA,
+                        final_block_altitude, vehicle)
     solver.set_initial_value(z0, t0)
 
     t0 = initial_block_time
-    t1 = 80
+    t1 = 50
     # N = 50
-    t = np.linspace(t0, t1, 80)
+    t = np.linspace(t0, t1)
     N = len(t)
     sol = np.empty((N, 3))
     sol[0] = z0
@@ -192,15 +208,20 @@ def climb_integrator(initial_block_distance, initial_block_altitude, initial_blo
     return final_block_distance, final_block_altitude, final_block_mass, final_block_time
 
 
-def climb(time, state, climb_V_cas, mach_climb, delta_ISA, vehicle):
+def climb(time, state, climb_V_cas, mach_climb, delta_ISA, final_block_altitude, vehicle):
 
     aircraft = vehicle['aircraft']
     distance = state[0]
     altitude = state[1]
     mass = state[2]
-    _, _, _, _, _, rho_ISA, _ = atmosphere_ISA_deviation(altitude, delta_ISA)
-    throttle_position = 0.3
 
+    # print('current:',altitude)
+    # print('limit altitude:',final_block_altitude )
+    if altitude < final_block_altitude:
+        return
+
+    _, _, _, _, _, rho_ISA, _ = atmosphere_ISA_deviation(altitude, delta_ISA)
+    throttle_position = 0.4
 
     if climb_V_cas > 0:
         mach = V_cas_to_mach(climb_V_cas, altitude, delta_ISA)
@@ -210,27 +231,29 @@ def climb(time, state, climb_V_cas, mach_climb, delta_ISA, vehicle):
     thrust_force, fuel_flow = turbofan(
         altitude, mach, throttle_position, vehicle)  # force [N], fuel flow [kg/hr]
 
-    total_thrust_force = thrust_force*aircraft['number_of_engines'] 
-    total_fuel_flow = fuel_flow*aircraft['number_of_engines'] 
-    step_throttle = 0.1
+    total_thrust_force = thrust_force*aircraft['number_of_engines']
+    total_fuel_flow = fuel_flow*aircraft['number_of_engines']
+    step_throttle = 0.01
 
     while (total_fuel_flow < 0 and throttle_position <= 1):
         thrust_force, fuel_flow = turbofan(
             altitude, mach, throttle_position, vehicle)  # force [N], fuel flow [kg/hr]
         TSFC = (fuel_flow*GRAVITY)/thrust_force
-        total_fuel_flow = aircraft['number_of_engines'] *fuel_flow
+        total_fuel_flow = aircraft['number_of_engines'] * fuel_flow
         throttle_position = throttle_position+step_throttle
 
-    thrust_to_weight = aircraft['number_of_engines'] *thrust_force/(mass*GRAVITY)
-    rate_of_climb, V_tas, climb_path_angle = rate_of_climb_calculation(
+    thrust_to_weight = aircraft['number_of_engines'] * \
+        thrust_force/(mass*GRAVITY)
+    rate_of_climb, V_tas, climb_path_angle = rate_of_descent_calculation(
         thrust_to_weight, altitude, delta_ISA, mach, mass, vehicle)
 
     x_dot = (V_tas*101.269)*np.cos(climb_path_angle)  # ft/min
     h_dot = rate_of_climb  # ft/min
-    W_dot = -2*fuel_flow*0.01667  # kg/min
+    # if (altitude < 10000 and altitude > 1500):
+    #     h_dot = -500
+    W_dot = -2*fuel_flow*kghr_to_kgmin  # kg/min
     # time_dot =  h_dot
-    dout = np.array([x_dot, h_dot, W_dot])
-
+    dout = np.asarray([x_dot, h_dot, W_dot])
     dout = dout.reshape(3, )
 
     return dout
@@ -242,9 +265,6 @@ def climb(time, state, climb_V_cas, mach_climb, delta_ISA, vehicle):
 # =============================================================================
 # TEST
 # =============================================================================
-global GRAVITY
-GRAVITY = 9.8067
-
 # mass = 43112
 # mach_climb = 0.78
 # climb_V_cas = 280

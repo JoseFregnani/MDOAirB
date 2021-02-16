@@ -16,12 +16,19 @@ Description:
         - Alighting water
         - Surface controls
         - Engine
-Future implementations:
-    - 
+
 Inputs:
-    -
+    - Vehicle dictionary
+    - Maximum takeoff weight [kg]
+    - Fuel mass [kg]
+    - Engine static thrust [N]
+    - Mach number
+    - Altitude [ft]
 Outputs:
-    - 
+    - Vehicle dictionary - weights updated
+TODO's:
+    -
+
 """
 # =============================================================================
 # IMPORTS
@@ -635,21 +642,13 @@ def aircraft_empty_weight(vehicle, maximum_takeoff_weight, fuel_mass, engine_sta
 
     return vehicle
 
-
-############00############################################################################
+# =============================================================================
 # MAIN
 # =============================================================================
-'''TODO:
-    - Input parameters from CPACS
-    - Define input names according to only one reference
-    - Improve comments
-    '''
 
-
-############00############################################################################
-"""TEST """
 # =============================================================================
-
+# TEST
+# =============================================================================
 # from framework.baseline_aircraft_parameters import *
 # maximum_takeoff_weight = 43718
 # mach = 0.8

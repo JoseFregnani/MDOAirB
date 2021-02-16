@@ -1,20 +1,24 @@
 """
-File name :
-Author    :
+File name : Wetted area function
+Author    : Alejandro Rios
 Email     : aarc.88@gmail.com
-Date      :
-Last edit :
+Date      : Dezember 2019
+Last edit : January 2021
 Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This function calculates the wetted area of the principal components of the 
+    aircraft.
 Inputs:
-    -
+    - Vehicle dictionaty
 Outputs:
-    -
+    - Updated vehicle dictionary
+    - x and y coordinates of wing chords 
 TODO's:
-    -
+    - Split this function into functions for each component
+    - Rename engine variables
+    - x and y coordinates output into vehicle dictionary
 
 """
 # =============================================================================
@@ -27,6 +31,7 @@ from framework.Sizing.Geometry.wetted_area_fuselage import *
 from framework.Sizing.Geometry.wetted_area_wing import *
 from framework.Sizing.Geometry.sizing_horizontal_tail import *
 from framework.Performance.Engine.engine_performance import turbofan
+from framework.utilities.logger import get_logger
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -34,9 +39,15 @@ from framework.Performance.Engine.engine_performance import turbofan
 # =============================================================================
 # FUNCTIONS
 # =============================================================================
+log = get_logger(__file__.split('.')[0])
+
+global deg_to_rad
 deg_to_rad = np.pi/180
 
+
 def wetted_area(vehicle):
+
+    log.info('---- Start wetted area module ----')
 
     engine = vehicle['engine']
     fuselage = vehicle['fuselage']
@@ -59,7 +70,7 @@ def wetted_area(vehicle):
 
     # Sizing
     fuselage['diameter'] = np.sqrt(fuselage['width']*fuselage['height'])
-    
+
     n = max(2, engine['position'])  # number of engines
 
     if wing['position'] > 2:
@@ -75,7 +86,7 @@ def wetted_area(vehicle):
     if engine['position'] == 2 or engine['position'] == 3:
         horizontal_tail['position'] = 2
 
-    # Fuselage
+    # Fuselage pax cabine length
     fuselage['cabine_length'] = pax_cabine_length(vehicle)
 
     fuselage['tail_length'] = tailcone_sizing(
@@ -104,7 +115,7 @@ def wetted_area(vehicle):
     # Sera feito mais adiante
     fuselage['wetted_area'] = fuselage_wetted_area_forward + \
         fusealge_wetted_area_pax_cabine+fuselage_wetted_area_tailcone
-    
+
     # -----------------------------------------------------------------------------
 
     # Wing
@@ -141,14 +152,15 @@ def wetted_area(vehicle):
         1-wing_trap_taper_ratio)/(1+wing_trap_taper_ratio)))  # [�] enflechamento bordo de fuga
 
     # Reference wing
-    wing['root_chord_yposition'] = fuselage['diameter']/2  # [m] y da raiz da asa
+    wing['root_chord_yposition'] = fuselage['diameter'] / \
+        2  # [m] y da raiz da asa
     wing['kink_chord_yposition'] = wing['semi_span_kink'] * \
         wing['span']/2  # [m] y da quebra
 
     wing['kink_chord'] = (wing['span']/2*np.tan(deg_to_rad*wing['sweep_leading_edge'])+wing['tip_chord'])-(wing['kink_chord_yposition']*np.tan(deg_to_rad *
-                                                                                                                                            wing['sweep_leading_edge'])+(wing['span']/2-wing['kink_chord_yposition'])*np.tan(deg_to_rad*wing['sweep_trailing_edge']))  # [m] corda da quebra
+                                                                                                                                               wing['sweep_leading_edge'])+(wing['span']/2-wing['kink_chord_yposition'])*np.tan(deg_to_rad*wing['sweep_trailing_edge']))  # [m] corda da quebra
     wing_trap_root_chord = (wing['span']/2*np.tan(deg_to_rad*wing['sweep_leading_edge'])+wing['tip_chord'])-(wing['root_chord_yposition']*np.tan(deg_to_rad *
-                                                                                                                                              wing['sweep_leading_edge'])+(wing['span']/2-wing['root_chord_yposition'])*np.tan(deg_to_rad*wing['sweep_trailing_edge']))  # [m] corda da raiz fus trap
+                                                                                                                                                 wing['sweep_leading_edge'])+(wing['span']/2-wing['root_chord_yposition'])*np.tan(deg_to_rad*wing['sweep_trailing_edge']))  # [m] corda da raiz fus trap
     # corda da raiz fus crank
     wing['root_chord'] = wing_trap_root_chord + \
         (wing['kink_chord_yposition']-wing['root_chord_yposition']) * \
@@ -195,16 +207,16 @@ def wetted_area(vehicle):
 
     wing['leading_edge_xposition'] = 0.4250 * \
         fuselage['length']  # inital estimative
-    wing['aerodynamic_center_xposition']  = wing['leading_edge_xposition']+wing_ref_mean_aerodynamic_chord_yposition * \
+    wing['aerodynamic_center_xposition'] = wing['leading_edge_xposition']+wing_ref_mean_aerodynamic_chord_yposition * \
         np.tan(deg_to_rad*wing['sweep_leading_edge']) + \
         0.25*wing_ref_mean_aerodynamic_chord
-    wing_rel_aerodynamic_center_xposition = wing['aerodynamic_center_xposition']  / \
+    wing_rel_aerodynamic_center_xposition = wing['aerodynamic_center_xposition'] / \
         wing_ref_mean_aerodynamic_chord
 
-    wing['aileron_chord']  = (wing['span']/2*np.tan(deg_to_rad*wing['sweep_leading_edge'])+wing['tip_chord'])-((0.75*wing['span']/2)*np.tan(deg_to_rad *
-                                                                                                                                        wing['sweep_leading_edge'])+(wing['span']/2-(0.75*wing['span']/2))*np.tan(deg_to_rad*wing['sweep_trailing_edge']))  # corda no aileron
+    wing['aileron_chord'] = (wing['span']/2*np.tan(deg_to_rad*wing['sweep_leading_edge'])+wing['tip_chord'])-((0.75*wing['span']/2)*np.tan(deg_to_rad *
+                                                                                                                                           wing['sweep_leading_edge'])+(wing['span']/2-(0.75*wing['span']/2))*np.tan(deg_to_rad*wing['sweep_trailing_edge']))  # corda no aileron
     wing['aileron_surface'] = (wing['root_chord']+wing['kink_chord'])*(wing['kink_chord_yposition']-wing['root_chord_yposition'])+(wing['kink_chord'] +
-                                                                                                                          wing['aileron_chord'] )*((0.75*wing['span']/2)-wing['kink_chord_yposition'])  # area exposta com flap
+                                                                                                                                   wing['aileron_chord'])*((0.75*wing['span']/2)-wing['kink_chord_yposition'])  # area exposta com flap
 
     ############################# WING WETTED AREA ############################
     wing['semi_span'] = wing['span']/2
@@ -271,9 +283,9 @@ def wetted_area(vehicle):
     vertical_tail['sweep_leading_edge'] = 1/deg_to_rad*(np.arctan(np.tan(deg_to_rad*vertical_tail['sweep_c_4'])+1/vertical_tail['aspect_ratio']
                                                                   * (1-vertical_tail['taper_ratio'])/(1+vertical_tail['taper_ratio'])))  # [�] enflechamento bordo de ataque
     vertical_tail['sweep_c_2'] = 1/deg_to_rad*(np.arctan(np.tan(deg_to_rad*vertical_tail['sweep_c_4'])-1 /
-                                                      vertical_tail['aspect_ratio']*(1-vertical_tail['taper_ratio'])/(1+vertical_tail['taper_ratio'])))  # [�] enflechamento C/2
+                                                         vertical_tail['aspect_ratio']*(1-vertical_tail['taper_ratio'])/(1+vertical_tail['taper_ratio'])))  # [�] enflechamento C/2
     vertical_tail['sweep_trailing_edge'] = 1/deg_to_rad*(np.arctan(np.tan(deg_to_rad*vertical_tail['sweep_c_4'])-3/vertical_tail['aspect_ratio']
-                                                                * (1-vertical_tail['taper_ratio'])/(1+vertical_tail['taper_ratio'])))  # [�] enflechamento bordo de fuga
+                                                                   * (1-vertical_tail['taper_ratio'])/(1+vertical_tail['taper_ratio'])))  # [�] enflechamento bordo de fuga
     # lv=(0.060*wingref.S*wing['span'])/vertical_tail['area'] # fisrt estimate
     # lv=lh - 0.25*ht.ct - vertical_tail['span'] * tan(deg_to_rad*vertical_tail['sweep_leading_edge']) + 0.25*vertical_tail['center_chord'] + vertical_tail['mean_aerodynamic_chord'] *tan(deg_to_rad*vertical_tail['sweep_c_4']) # braco da EV
     # vt.v=vertical_tail['area']*lv/(wingref.S*wing['span']) # volume de cauda
@@ -293,9 +305,9 @@ def wetted_area(vehicle):
 
     panel_number = 201
     airfoil_name = 'pvt'
-    airfoil_preprocessing(airfoil_name, panel_number)
+    # airfoil_preprocessing(airfoil_name, panel_number)
     # df_pvt = pd.read_table(""+ airfoil_name +'.dat' ,header=None,skiprows=[0],sep=',')
-    df_pvt = pd.read_csv("" + airfoil_name+'.dat', sep=',',
+    df_pvt = pd.read_csv("Database/Airfoils/" + airfoil_name+'.dat', sep=',',
                          delimiter=None, header=None, skiprows=[0])
     df_pvt.columns = ['x', 'y']
 
@@ -345,7 +357,8 @@ def wetted_area(vehicle):
         engine['yposition'] = wing['semi_span_kink'] * \
             wing['span']/2  # [m] y do motor
         # [m] y do motor externo distancia entre os dois 30# de b
-        wing_engine_external_yposition = (engine['yposition']+0.3)*wing['span']/2
+        wing_engine_external_yposition = (
+            engine['yposition']+0.3)*wing['span']/2
         wing['engine_position_chord'] = wing['center_chord'] - engine['yposition'] * \
             np.tan(deg_to_rad*wing['sweep_leading_edge']
                    )  # corda da seccao do motor
@@ -470,7 +483,6 @@ def wetted_area(vehicle):
             ((1-pylon_out_taper_ratio) /
              (pylon_out_aspect_ratio*(1-pylon_out_taper_ratio)))
 
-
     #############################WETTED AREA###################################
     pylon['thickness_ratio'][0] = 0.10  # [#]espessura relativa raiz
     pylon['thickness_ratio'][1] = 0.10  # [#]espessura relativa ponta
@@ -497,6 +509,8 @@ def wetted_area(vehicle):
         vertical_tail['dorsalfin_wetted_area'] + winglet['wetted_area']
     Fuswing_wetted_area_m2 = fuselage['wetted_area']
 
+    log.info('Individual wetted area [m2]: {}'.format(aircraft['wetted_area']))
+    log.info('---- End wetted area module ----')
 
     return (
         vehicle,

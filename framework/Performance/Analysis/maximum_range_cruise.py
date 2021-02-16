@@ -8,13 +8,16 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This module calculates the mach number for maximum range.
 Inputs:
-    -
+    - mass at top of climb [kg]
+    - cruise_altitude [ft]
+    - delta_ISA [C deg]
+    - vehicle dictionary
 Outputs:
-    -
+    - mach_maximum_cruise
 TODO's:
-    -
+    - Comments and References
 
 """
 # =============================================================================
@@ -28,7 +31,6 @@ from framework.Attributes.Atmosphere.atmosphere_ISA_deviation import atmosphere_
 
 import numpy as np
 import matplotlib.pyplot as plt
-from framework.baseline_aircraft import baseline_aircraft
 import operator
 # =============================================================================
 # CLASSES
@@ -37,7 +39,6 @@ import operator
 # =============================================================================
 # FUNCTIONS
 # =============================================================================
-# def maximum_range_cruise_speed():
 global GRAVITY
 GRAVITY = 9.80665
 
@@ -64,8 +65,6 @@ def maximum_range_mach(mass, cruise_altitude, delta_ISA, vehicle):
         (rho_ISA*((knots_to_meters_second*V_tas)**2)*wing_surface)
 
     phase = 'cruise'
-
-    # CD = zero_fidelity_drag_coefficient(aircraft_data, CL_required, phase)
 
     CD = []
     for i in range(len(CL_required)):

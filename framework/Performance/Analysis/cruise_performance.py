@@ -8,13 +8,19 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This module calculates the cruise performance using the Breguet equations
 Inputs:
-    -
+    - Cruise altitude [ft]
+    - Delta ISA [C deg]
+    - Mach number
+    - Mass at top of climb
+    - Cruise distance [mn]
+    - Vehicle dictionary
 Outputs:
-    -
+    - Cruise time [min]
+    - Mass at top of descent [kg]
 TODO's:
-    -
+    - Rename variables 
 
 """
 # =============================================================================
@@ -27,7 +33,6 @@ from scipy.optimize import fsolve
 from framework.Performance.Engine.engine_performance import turbofan
 from framework.Attributes.Atmosphere.atmosphere_ISA_deviation import atmosphere_ISA_deviation
 from framework.Attributes.Airspeed.airspeed import V_cas_to_mach, mach_to_V_cas, mach_to_V_tas, crossover_altitude
-from framework.baseline_aircraft import baseline_aircraft
 # from framework.Aerodynamics.aerodynamic_coefficients import zero_fidelity_drag_coefficient
 from framework.Aerodynamics.aerodynamic_coefficients_ANN import aerodynamic_coefficients_ANN
 # =============================================================================
@@ -37,10 +42,11 @@ from framework.Aerodynamics.aerodynamic_coefficients_ANN import aerodynamic_coef
 # =============================================================================
 # FUNCTIONS
 # =============================================================================
+global GRAVITY
+GRAVITY = 9.80665
 
 
 def cruise_performance(altitude, delta_ISA, mach, mass, distance_cruise, vehicle):
-    aircraft_data = baseline_aircraft()
     n = 10
     step_cruise = distance_cruise/n
     distance = 0
@@ -68,6 +74,7 @@ def cruise_performance(altitude, delta_ISA, mach, mass, distance_cruise, vehicle
 
 
 def specific_fuel_consumption(vehicle, mach, altitude, delta_ISA, mass):
+
     aircraft = vehicle['aircraft']
     wing = vehicle['wing']
     knots_to_meters_second = 0.514444
@@ -102,7 +109,7 @@ def specific_fuel_consumption(vehicle, mach, altitude, delta_ISA, mass):
         thrust_force, fuel_flow = turbofan(
             altitude, mach, throttle_position, vehicle)  # force [N], fuel flow [kg/hr]
         TSFC = (fuel_flow*GRAVITY)/thrust_force
-        total_thrust_force = aircraft['number_of_engines'] *thrust_force
+        total_thrust_force = aircraft['number_of_engines'] * thrust_force
         throttle_position = throttle_position+step_throttle
 
     L_over_D = CL_required/CD
@@ -115,10 +122,7 @@ def mission_segment(mass_0, step_cruise, L_over_D, TSFC, V_tas):
     second_to_miniute = 0.01667
     fixedW = mass_0  # [kg]
     R = step_cruise*1852  # convert 600 nmi to m [m]
-
-    # TSFC = TSFC*GRAVITY*(1/3600) # 1/s
     TSFC = TSFC*(1/3600)  # 1/s
-    # eta_prop = 0.8
 
     V = V_tas*knots_to_meters_second  # [kt]
     segments = [breguet('jet', 'cruise', R, L_over_D, TSFC, V, 'false')]
@@ -126,6 +130,7 @@ def mission_segment(mass_0, step_cruise, L_over_D, TSFC, V_tas):
     FF = (1+fuel_safety_margin)*missionfuelburn(segments)
 
     def EWfunc(w0): return 3.03*w0**-0.235
+
     mass_0 = fuelfractionsizing(EWfunc, fixedW, FF, 'false', 'false')
     mass_fuel = FF*mass_0
     time = 1/TSFC * L_over_D * np.log(1/segments[0])
@@ -211,10 +216,6 @@ def missionfuelburn(varargin):
 # =============================================================================
 # TEST
 # =============================================================================
-global GRAVITY
-GRAVITY = 9.80665
-
-
 # altitude = 39000
 # delta_ISA = 0
 # mach = 0.97

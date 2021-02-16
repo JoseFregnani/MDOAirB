@@ -8,21 +8,23 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    - This function performs the mission analysis of the aircraft. It takes the
-    mission distance as input an computes the DOC.
+    - This function performs the mission analysis of the aircraft and computes the DOC.
 Inputs:
-    - origin-destination distance
+    - Vehicle dictionary
 Outputs:
-    - direct operational cost
+    - Direct operational cost (DOC)
 TODO's:
     -
 """
-import math
 
+#  [120, 8.636673441923826, 0.29650319000289793, 18, -4, 0.37975827133924966, 5.65832918409639, 1.6822333661974933, 30, 1465, 1.6, 78, 5, 2162, 41000, 0.78, 1, 1, 1, 1]
 # =============================================================================
 # IMPORTS
 # =============================================================================
 import numpy as np
+from datetime import datetime
+import math
+
 from framework.Attributes.Airspeed.airspeed import (V_cas_to_mach,
                                                     crossover_altitude,
                                                     mach_to_V_cas)
@@ -47,6 +49,7 @@ from framework.Performance.Engine.engine_performance import turbofan
 
 from framework.Weights.weights import aircraft_empty_weight
 from framework.Performance.Mission.reserve_fuel import reserve_fuel
+from framework.utilities.logger import get_logger
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -54,12 +57,17 @@ from framework.Performance.Mission.reserve_fuel import reserve_fuel
 # =============================================================================
 # FUNCTIONS
 # =============================================================================
+log = get_logger(__file__.split('.')[0])
+
+
 global GRAVITY
 GRAVITY = 9.80665
 gallon_to_liter = 3.7852
 feet_to_nautical_miles = 0.000164579
 
 def mission(vehicle):
+    start_time = datetime.now()
+    log.info('---- Start DOC mission function ----')
 
     performance = vehicle['performance']
 
@@ -67,6 +75,7 @@ def mission(vehicle):
 
     aircraft = vehicle['aircraft']
     engine = vehicle['engine']
+    wing = vehicle['wing']
 
     airport_departure = vehicle['airport_departure']
     airport_destination = vehicle['airport_destination']
@@ -345,6 +354,11 @@ def mission(vehicle):
         if reserve_fuel_calculation_type == 0:
             reserve_fuel_calculated = reserve_fuel(landing_weight, operations['alternative_airport_distance'], holding_time, delta_ISA,)
             final_reserve_fuel = reserve_fuel_calculated + contingency_fuel
+        else:
+            fuel_mass_alterative_airport = mission_alternative(vehicle,landing_weight)
+            fuel_mass_holding = holding_fuel(altitude, delta_ISA, holding_time, vehicle)
+            final_reserve_fuel =fuel_mass_alterative_airport + fuel_mass_holding + contingency_fuel
+            
 
         # Rule of three to estimate fuel flow during taxi
         taxi_fuel_flow = taxi_fuel_flow_reference*max_takeoff_mass/22000
@@ -389,7 +403,7 @@ def mission(vehicle):
     # DOC calculation
     fuel_mass = total_mission_burned_fuel + \
         (average_taxi_out_time + average_taxi_in_time)*taxi_fuel_flow
-
+        
     DOC = direct_operational_cost(
         time_between_overhaul,
         total_mission_flight_time,
@@ -400,6 +414,11 @@ def mission(vehicle):
         engines_number,
         0.35*operational_empty_weight,
         max_takeoff_mass)
+
+
+    log.info('---- End DOC mission function ----')
+    end_time = datetime.now()
+    log.info('DOC mission execution time: {}'.format(end_time - start_time))
 
     return(DOC)
 

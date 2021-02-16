@@ -64,17 +64,17 @@ def wetted_area_wing(vehicle, fileToRead1, fileToRead2, fileToRead3):
         airfoils[j]['name'] = airfoil_names[i]
         airfoils[j]['chord'] = airfoil_chords[i]
 
-    for i in airfoils:
-        airfoil = i
-        airfoil_name = airfoils[airfoil]['name']
-        airfoil_preprocessing(airfoil_name, panel_number)
+    # for i in airfoils:
+    #     airfoil = i
+    #     airfoil_name = airfoils[airfoil]['name']
+    #     airfoil_preprocessing(airfoil_name, panel_number)
 
     ########################################################################################
     """Importing Data"""
     ########################################################################################
     # Load airfoil coordinates
     df = pd.read_csv(
-        "" + airfoil_names[0] + '.dat', sep=',', delimiter=None, header=None, skiprows=[0])
+        "Database/Airfoils/" + airfoil_names[0] + '.dat', sep=',', delimiter=None, header=None, skiprows=[0])
     df.columns = ['x', 'y']
     df_head = df.head()
     n_coordinates = len(df)
@@ -138,7 +138,7 @@ def wetted_area_wing(vehicle, fileToRead1, fileToRead2, fileToRead3):
     ########################################################################################
     # Load airfoil coordinates
     df = pd.read_csv(
-        "" + airfoil_names[1] + '.dat', sep=',', delimiter=None, header=None, skiprows=[0])
+        "Database/Airfoils/" + airfoil_names[1] + '.dat', sep=',', delimiter=None, header=None, skiprows=[0])
     df.columns = ['x', 'y']
     df_head = df.head()
     n_coordinates = len(df)
@@ -201,7 +201,7 @@ def wetted_area_wing(vehicle, fileToRead1, fileToRead2, fileToRead3):
     ########################################################################################
     # Load airfoil coordinates
     df = pd.read_csv(
-        "" + airfoil_names[2] + '.dat', sep=',', delimiter=None, header=None, skiprows=[0])
+        "Database/Airfoils/" + airfoil_names[2] + '.dat', sep=',', delimiter=None, header=None, skiprows=[0])
     df.columns = ['x', 'y']
     df_head = df.head()
     n_coordinates = len(df)

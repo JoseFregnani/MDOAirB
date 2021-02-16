@@ -56,14 +56,16 @@ aircraft['inertia_matrix'] = np.array([[aircraft['Ixx'], -aircraft['Ixy'], -airc
                                         aircraft['Iyy'], -aircraft['Iyz']],
                                        [-aircraft['Ixz'], -aircraft['Iyz'], aircraft['Izz']]])
 
-aircraft['maximum_takeoff_weight'] = 60000 * kg_to_N  # [N]
-aircraft['maximum_landing_weight'] = 60000 * kg_to_N  # [N]
-aircraft['maximum_zero_fuel_weight'] = 31700 * kg_to_N  # [N]
-aircraft['maximum_fuel_capacity'] = 9428 * kg_to_N  # [N]
+aircraft['maximum_takeoff_weight'] = 60000
+aircraft['maximum_landing_weight'] = 60000
+aircraft['maximum_zero_fuel_weight'] = 31700 
+aircraft['maximum_fuel_capacity'] = 9428
 aircraft['number_of_engines'] = 2
 aircraft['neutral_point_xposition'] = 0
-aircraft['operational_empty_weight'] = 21800   # [kg]
-aircraft['payload_weight'] = 5000 * kg_to_N
+aircraft['operational_empty_weight'] = 21800
+aircraft['payload_weight'] = 5000
+aircraft['passenger_capacity'] = 78
+aircraft['power_plant_weight'] = 0
 aircraft['static_margin'] = 0.15
 aircraft['structural_weight'] = 0
 aircraft['slat_presence'] = 1
@@ -71,16 +73,6 @@ aircraft['spoiler_presence'] = 1
 aircraft['wetted_area'] = 589.7500  # [m2]
 aircraft['winglet_presence'] = 0
 aircraft['year_of_technology'] = 2017
-
-
-
-
-
-aircraft['passenger_capacity'] = 78
-
-aircraft['power_plant_weight'] = 0
-
-
 
 wing = {}
 wing['position'] = 1
@@ -327,7 +319,7 @@ operations['mach_maximum_operating'] = 0.82
 operations['mach_cruise'] = operations['mach_maximum_operating'] - 0.02
 operations['max_operating_speed'] = 340
 operations['holding_time'] = 30  # [min]
-operations['alternative_airport_distance'] = 200  # [nm]
+operations['alternative_airport_distance'] = 100  # [nm]
 operations['max_ceiling'] = 41000
 operations['passenger_mass'] = 100  # [kg]
 

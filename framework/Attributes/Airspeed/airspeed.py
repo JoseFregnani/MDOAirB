@@ -67,7 +67,7 @@ def mach_to_V_tas(mach, h, delta_ISA):
         - Altitude [ft]
         - Delta ISA [deg C]
     Outputs:
-        - true airspeed [knots]
+        - True airspeed [knots]
     """
     theta, _, _, _, _, _, _ = atmosphere_ISA_deviation(h, delta_ISA)
     speed_of_sound = 661.4786  # sea level [knots]
@@ -114,7 +114,7 @@ def V_cas_to_mach(V_cas, h, delta_ISA):
 def crossover_altitude(mach, V_cas, delta_ISA):
     """
     Description:
-        - Calculates the transition or crossosver altitude which is the
+        - Calculates the transition or crossosver altitude. The
         altitude at which a specified CAS and Mach value represent the
         same TAS value.
         The curves for constant CAS and constant Mach intersect at this

@@ -1,6 +1,5 @@
 """
-Function  :net_present_value.py
-Title     : Net present value
+File name : Net present value
 Author    : Alejandro Rios
 Email     : aarc.88@gmail.com
 Date      : September/2020
@@ -463,7 +462,7 @@ def material():
                       + materials['flight_controls'] *
                       complexity_factors['flight_controls'] * wing_surface_ft
                       + materials['engines'] * complexity_factors['engines'] *
-                      aircraft['number_of_engines']  * thrust_factor
+                      aircraft['number_of_engines'] * thrust_factor
                       + materials['naceles'] *
                       complexity_factors['nacelles'] * engine_diameter_in
                       + materials['interior'] *

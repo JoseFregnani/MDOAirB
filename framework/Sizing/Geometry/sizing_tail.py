@@ -1,21 +1,23 @@
 """
-File name :
-Author    : 
+File name : Tail sizing function
+Author    : Alejandro Rios
 Email     : aarc.88@gmail.com
-Date      : 
-Last edit :
+Date      : Dezember/2020
+Last edit : January/2021
 Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This function performs an iterative cycle to re-size the vertical and 
+    horizontal stabilizer to decrease the whole airplane weight.
 Inputs:
-    -
+    - Vehicle dictionary
+    - Mach number
+    - Aaltitude [ft]
 Outputs:
-    -
+    - Vehicle dictionary with updated infortmation of tail sizing
 TODO's:
     -
-
 """
 # =============================================================================
 # IMPORTS
@@ -35,20 +37,20 @@ from framework.Weights.center_of_gravity_position import center_of_gravity
 global deg_to_rad
 deg_to_rad = np.pi/180
 
+
 def sizing_tail(vehicle, mach, altitude):
 
-    # np.save('vehicle_test.npy', vehicle) 
+    # np.save('vehicle_test.npy', vehicle)
     wing = vehicle['wing']
     aircraft = vehicle['aircraft']
     horizontal_tail = vehicle['horizontal_tail']
     vertical_tail = vehicle['vertical_tail']
     fuselage = vehicle['fuselage']
     relaxation = 0.7
-    kink_distance = (wing['span']/2)*wing['semi_span_kink'] 
+    kink_distance = (wing['span']/2)*wing['semi_span_kink']
 
     horizontal_tail['aerodynamic_center_ref'] = 0.25
     vertical_tail['aerodynamic_center_ref'] = 0.25
-    
 
     # Calc of cg here
     vehicle = center_of_gravity(vehicle)
@@ -56,54 +58,39 @@ def sizing_tail(vehicle, mach, altitude):
     delta_horizontal_tail = 10000
     delta_vertical_tail = 10000
     margin = aircraft['static_margin']*wing['mean_aerodynamic_chord']
-    # aircraft['after_center_of_gravity_xposition'] = 15.29
 
     while (delta_horizontal_tail > 0.025) or (delta_vertical_tail > 0.025):
         airfoil_aerodynamic_center_reference = 0.25
 
-        aircraft['neutral_point_xposition'] = wing['leading_edge_xposition'] + wing['mean_aerodynamic_chord_yposition']  * \
+        aircraft['neutral_point_xposition'] = wing['leading_edge_xposition'] + wing['mean_aerodynamic_chord_yposition'] * \
             np.tan(wing['sweep_leading_edge']*deg_to_rad) + \
-            airfoil_aerodynamic_center_reference*wing['mean_aerodynamic_chord'] 
-        # print('x_le: ',wing['leading_edge_xposition'] )
-        # print('xneutral point: ',aircraft['neutral_point_xposition'] )
-        distance_xnp_xcg = aircraft['neutral_point_xposition'] - aircraft['after_center_of_gravity_xposition']
-        # print('xcg: ',aircraft['after_center_of_gravity_xposition'])
-        # print('distance xnp xcg:',distance_xnp_xcg )
+            airfoil_aerodynamic_center_reference*wing['mean_aerodynamic_chord']
+
+        distance_xnp_xcg = aircraft['neutral_point_xposition'] - \
+            aircraft['after_center_of_gravity_xposition']
+
         delta_distance = distance_xnp_xcg - margin
-        wing_leading_edge_xposition_new = wing['leading_edge_xposition'] - delta_distance
+        wing_leading_edge_xposition_new = wing['leading_edge_xposition'] - \
+            delta_distance
         wing['leading_edge_xposition'] = wing_leading_edge_xposition_new
 
         # Iteration cycle for vertical tail
         vertical_tail['aerodynamic_center_xposition'] = 0.95*fuselage['length'] - vertical_tail['center_chord'] + vertical_tail['mean_aerodynamic_chord_yposition'] * \
             np.tan(vertical_tail['sweep_leading_edge']*deg_to_rad) + \
-            vertical_tail['aerodynamic_center_ref']*vertical_tail['mean_aerodynamic_chord']
+            vertical_tail['aerodynamic_center_ref'] * \
+            vertical_tail['mean_aerodynamic_chord']
 
-        
-        # print('ac_xpos',vertical_tail['aerodynamic_center_xposition'])
-        # print('xcg_aft',aircraft['after_center_of_gravity_xposition'])
         distance_vtxac_xcg = vertical_tail['aerodynamic_center_xposition'] - \
             aircraft['after_center_of_gravity_xposition']
-        
-        # print('lv',distance_vtxac_xcg)
-
 
         vertical_tail_area_new = (
             wing['area']*vertical_tail['volume']*wing['span'])/distance_vtxac_xcg
 
-        # print('VVH:',vertical_tail['volume'])
-
-        # print('vt_area_new:',vertical_tail_area_new)
-
         delta_vertical_tail = np.abs(
             vertical_tail['area'] - vertical_tail_area_new)
 
-        # print('delta ht:', delta_vertical_tail)
-
-        # print('vt_area_new:',vertical_tail_area_new)
-
         vertical_tail['area'] = relaxation*vertical_tail_area_new + \
             (1-relaxation)*vertical_tail['area']
-        # print('vt_area',vertical_tail['area'])
 
         vehicle = sizing_vertical_tail(
             vehicle,
@@ -111,7 +98,7 @@ def sizing_tail(vehicle, mach, altitude):
             altitude)
 
         # Iteration cycle for horizontal tail
-        if horizontal_tail['position']  == 1:
+        if horizontal_tail['position'] == 1:
             horizontal_tail['aerodynamic_center_xposition'] = 0.95*fuselage['length'] - horizontal_tail['center_chord'] + horizontal_tail['mean_aerodynamic_chord_yposition'] * \
                 np.tan(horizontal_tail['sweep_leading_edge']*deg_to_rad) + \
                 horizontal_tail['aerodynamic_center_ref'] * \
@@ -131,15 +118,13 @@ def sizing_tail(vehicle, mach, altitude):
 
         delta_horizontal_tail = np.abs(
             horizontal_tail['area'] - horizontal_tail_area_new)
-        # print('delta ht:', delta_horizontal_tail)
 
         horizontal_tail['area'] = relaxation*horizontal_tail_area_new + \
             (1-relaxation)*horizontal_tail['area']
 
         vehicle = sizing_horizontal_tail(vehicle, mach, altitude)
-        
+
         vehicle = center_of_gravity(vehicle)
-        
 
     return vehicle
 

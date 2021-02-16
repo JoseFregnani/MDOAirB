@@ -25,7 +25,7 @@ from pulp import *
 import pandas as pd
 
 from framework.Economics.revenue import revenue
-from framework.baseline_aircraft import baseline_aircraft
+from framework.utilities.logger import get_logger
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -33,9 +33,11 @@ from framework.baseline_aircraft import baseline_aircraft
 # =============================================================================
 # FUNCTIONS
 # =============================================================================
+log = get_logger(__file__.split('.')[0])
+log.info('==== Start network optimization module ====')
 
 
-def network_optimization(distances, demand, DOC):
+def network_optimization(distances, demand, DOC, pax_capacity):
     # Definition of cities to be considered as departure_airport, first stop, final airport
     departure_airport = ['CD1', 'CD2', 'CD3', 'CD4',
                          'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
@@ -47,23 +49,7 @@ def network_optimization(distances, demand, DOC):
     # Define minimization problem
     problem = LpProblem("Network", LpMaximize)
 
-    # print(distances)
-    # print(DOC)
-    doc = DOC
-
-    # doc = {}
-    # for i in departure_airport:
-    #     for k in first_stop_airport:
-    #         if i != k:
-    #             doc[(i, k)] = np.round(doc0[i][k])
-    #         else:
-    #             doc[(i, k)] = np.round(doc0[i][k])
-    aircraft_data = baseline_aircraft()
-
-    # print(doc)
-    pax_number = aircraft_data['passenger_capacity']
-    pax_capacity = pax_number
-
+    pax_number = 0.8*pax_capacity
     revenue_ik = defaultdict(dict)
     for i in departure_airport:
         for k in first_stop_airport:
@@ -72,6 +58,8 @@ def network_optimization(distances, demand, DOC):
                     revenue(demand[i][k], distances[i][k], pax_capacity, pax_number))
             else:
                 revenue_ik[(i, k)] = 0
+
+    print(revenue_ik)
 
     planes = {'P1': {'w': pax_number}}
     # =============================================================================
@@ -91,7 +79,7 @@ def network_optimization(distances, demand, DOC):
 
     # Route capacity:
     '''
-    Capacidade da rota (i, k) definida pela somatória de numero de aviões do tipo P fazendo a rota (i, k) vezes a capacidade do avião P
+    Route capacity (i, k) defined as the sum of the number of aircraft type P flying the route (i,k) by the pax capacity of the aicraft P
     '''
     G = {}
     for i in departure_airport:
@@ -102,10 +90,8 @@ def network_optimization(distances, demand, DOC):
     # Objective function
     # =============================================================================
 
-    problem += lpSum(revenue_ik) - lpSum(nika[(i, k)]*2*doc[(i, k)]
+    problem += lpSum(revenue_ik) - lpSum(nika[(i, k)]*2*DOC[(i, k)]
                                          for i in departure_airport for k in first_stop_airport if i != k)
-
-    # problem += lpSum(revenue) - lpSum(nika[(i, k)]*doc[(i, k)] for i in departure_airport for k in first_stop_airport if i != k)
     # =============================================================================
     # Constraints
     # =============================================================================
@@ -117,7 +103,7 @@ def network_optimization(distances, demand, DOC):
                     problem += lpSum(xijk[(i, j, k)]
                                      for k in first_stop_airport) == demand[i][j]
 
-    # Capacity constraint
+    # Capacity constraint I
     for i in departure_airport:
         for j in final_airport:
             for k in first_stop_airport:
@@ -125,7 +111,7 @@ def network_optimization(distances, demand, DOC):
                     problem += lpSum(xijk[(i, j, k)]
                                      for j in final_airport) <= G[(i, k)]
 
-    # Capacity constraint
+    # Capacity constraint II
     for i in departure_airport:
         for j in final_airport:
             for k in first_stop_airport:
@@ -134,12 +120,11 @@ def network_optimization(distances, demand, DOC):
                                      for i in departure_airport) <= G[(j, k)]
 
     # =============================================================================
-    # Solve problem
+    # Solve linear programming problem (Network optimization)
     # =============================================================================
 
-    problem.solve(GLPK(msg=0, timeLimit=60*5))
-
-    # print('Status:', LpStatus[problem.status])
+    problem.solve(GLPK(msg=0, timeLimit=60*3))
+    log.info('Network optimization status: {}'.format(LpStatus[problem.status]))
     # Print solution to CONTINUOUS
     pax = []
     for v in problem.variables():
@@ -154,6 +139,8 @@ def network_optimization(distances, demand, DOC):
 
     profit = value(problem.objective)
     return profit
+
+log.info('==== End network optimization module ====')
 # =============================================================================
 # MAIN
 # =============================================================================

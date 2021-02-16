@@ -20,8 +20,7 @@ TODO's:
 # IMPORTS
 # =============================================================================
 import numpy as np
-
-from framework.baseline_aircraft import *
+from framework.baseline_aircraft_parameters import *
 # =============================================================================
 # CLASSES
 # =============================================================================

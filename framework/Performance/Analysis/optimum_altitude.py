@@ -27,8 +27,6 @@ from framework.Performance.Engine.engine_performance import turbofan
 
 from framework.Performance.Analysis.climb_to_altitude import rate_of_climb_calculation
 from framework.Performance.Analysis.buffet_altitude_constraint import buffet_altitude
-
-from framework.baseline_aircraft import baseline_aircraft
 # =============================================================================
 # CLASSES
 # =============================================================================
