@@ -52,7 +52,7 @@ def get_logger(name):
 
     # Workaround for ReadTheDocs: do not raise an error if we cannot create a log file
     try:
-        file_handler = logging.FileHandler(filename='franework.log', mode='w')
+        file_handler = logging.FileHandler(filename='framework.log', mode='w')
         file_handler.setLevel(logging.DEBUG)     # Level for the logfile
         file_handler.setFormatter(file_formatter)
         logger.addHandler(file_handler)
