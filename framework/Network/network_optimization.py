@@ -1,18 +1,22 @@
 """
-File name :
-Author    :
+File name : Network optimization function
+Author    : Alejandro Rios
 Email     : aarc.88@gmail.com
-Date      :
-Last edit :
+Date      : June 2020
+Last edit : January 2021
 Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This function performs the network optimization using linear programming
+    algorithm
 Inputs:
-    -
+    - Distance matrix
+    - Demand matrix
+    - DOC matrix
+    - Pax capacity
 Outputs:
-    -
+    - Profir [USD]
 TODO's:
     -
 """
@@ -59,7 +63,7 @@ def network_optimization(distances, demand, DOC, pax_capacity):
             else:
                 revenue_ik[(i, k)] = 0
 
-    print(revenue_ik)
+    #print(revenue_ik)
 
     planes = {'P1': {'w': pax_number}}
     # =============================================================================
@@ -123,7 +127,7 @@ def network_optimization(distances, demand, DOC, pax_capacity):
     # Solve linear programming problem (Network optimization)
     # =============================================================================
 
-    problem.solve(GLPK(msg=0, timeLimit=60*3))
+    problem.solve(GLPK(msg=0, timeLimit=60*5))
     log.info('Network optimization status: {}'.format(LpStatus[problem.status]))
     # Print solution to CONTINUOUS
     pax = []
