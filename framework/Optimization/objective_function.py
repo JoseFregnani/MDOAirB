@@ -54,90 +54,90 @@ def objective_function(x, vehicle):
     start_time = datetime.now()
 
     # Try running profit calculation. If error appears during run profit = 0
-    try:
+# try:
+    # =============================================================================
+    # Airplane sizing and checks
+    status, vehicle = airplane_sizing(x, vehicle)
+
+    performance = vehicle['performance']
+    airport_departure = vehicle['airport_departure']
+    airport_destination = vehicle['airport_destination']
+    data_airports = pd.read_csv("Database/Airports/airports.csv")
+    # =============================================================================
+    # If airplane pass checks, status = 0, else status = 1 and profit = 0
+    if status == 0:
+        log.info('Aircraft passed sizing and checks status: {}'.format(status))
+
+        market_share = 0.1
+
+        # Load origin-destination distance matrix [nm]
+        distances_db = pd.read_csv('Database/Distance/distance.csv')
+        distances_db = (distances_db.T)
+        distances = distances_db.to_dict()  # Convert to dictionaty
+
+        # Load daily demand matrix and multiply by market share (10%)
+        demand_db = pd.read_csv('Database//Demand/demand.csv')
+        demand_db = round(market_share*(demand_db.T))
+        demand = demand_db.to_dict()
+
+        pax_capacity = x[11]  # Passenger capacity
+
+        # Airports:
+        # ["FRA", "LHR", "CDG", "AMS",
+        #          "MAD", "BCN", "FCO","DUB","VIE","ZRH"]
+        # departures = ['CD1', 'CD2', 'CD3', 'CD4',
+        #                 'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+        # arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
+        #             'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+
+        departures = ['CD1', 'CD2', 'CD3']
+        arrivals = ['CD1', 'CD2', 'CD3']
         # =============================================================================
-        # Airplane sizing and checks
-        status, vehicle = airplane_sizing(x, vehicle)
+        log.info('---- Start DOC calculation ----')
+        # The DOC is estimated for each city pair and stored in the DOC dictionary
+        DOC_ik = {}
+        for i in departures:
+            for k in arrivals:
+                if (i != k) and (distances[i][k] <= x[13]):
+                    airport_departure['elevation'] = data_airports.loc[data_airports['APT2']
+                                                                       == i, 'ELEV'].iloc[0]
+                    airport_destination['elevation'] = data_airports.loc[data_airports['APT2']
+                                                                         == k, 'ELEV'].iloc[0]
+                    airport_departure['takeoff_field_length'] = data_airports.loc[data_airports['APT2']
+                                                                                  == i, 'TORA'].iloc[0]
+                    airport_destination['takeoff_field_length'] = data_airports.loc[data_airports['APT2']
+                                                                                    == k, 'TORA'].iloc[0]
+                    mission_range = distances[i][k]
+                    DOC_ik[(i, k)] = float(
+                        mission(mission_range,vehicle))*distances[i][k]
+                    # print(DOC_ik[(i, k)])
+                else:
+                    DOC_ik[(i, k)] = 0
+        doc_db = pd.DataFrame(DOC_ik, index=[0])
+        doc_db.to_csv('Database/DOC/DOC.csv')
 
-        performance = vehicle['performance']
-        airport_departure = vehicle['airport_departure']
-        airport_destination = vehicle['airport_destination']
-        data_airports = pd.read_csv("Database/Airports/airports.csv")
+        log.info('Aircraft DOC matrix: {}'.format(DOC_ik))
         # =============================================================================
-        # If airplane pass checks, status = 0, else status = 1 and profit = 0
-        if status == 0:
-            log.info('Aircraft passed sizing and checks status: {}'.format(status))
+        log.info('---- Start Network Optimization ----')
+        # Network optimization that maximizes the network profit
+        profit, vehicle = network_optimization(
+            arrivals, departures, distances, demand, DOC_ik, pax_capacity, vehicle)
 
-            market_share = 0.1
+        log.info('Network profit [$USD]: {}'.format(profit))
+        # =============================================================================
 
-            # Load origin-destination distance matrix [nm]
-            distances_db = pd.read_csv('Database/Distance/distance.csv')
-            distances_db = (distances_db.T)
-            distances = distances_db.to_dict()  # Convert to dictionaty
+        write_optimal_results(vehicle, profit)
+        write_kml_results(arrivals, departures, profit, vehicle)
 
-            # Load daily demand matrix and multiply by market share (10%)
-            demand_db = pd.read_csv('Database//Demand/demand.csv')
-            demand_db = round(market_share*(demand_db.T))
-            demand = demand_db.to_dict()
-
-            pax_capacity = x[11]  # Passenger capacity
-
-            # Airports:
-            # ["FRA", "LHR", "CDG", "AMS",
-            #          "MAD", "BCN", "FCO","DUB","VIE","ZRH"]
-            departures = ['CD1', 'CD2', 'CD3', 'CD4',
-                            'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
-            arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
-                        'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
-
-            # departures = ['CD1', 'CD2', 'CD3']
-            # arrivals = ['CD1', 'CD2', 'CD3']
-            # =============================================================================
-            log.info('---- Start DOC calculation ----')
-            # The DOC is estimated for each city pair and stored in the DOC dictionary
-            DOC_ik = {}
-            for i in departures:
-                for k in arrivals:
-                    if (i != k) and (distances[i][k] <= x[13]):
-                        airport_departure['elevation'] = data_airports.loc[data_airports['APT2']
-                                                                        == i, 'ELEV'].iloc[0]
-                        airport_destination['elevation'] = data_airports.loc[data_airports['APT2']
-                                                                            == k, 'ELEV'].iloc[0]
-                        airport_departure['takeoff_field_length'] = data_airports.loc[data_airports['APT2']
-                                                                                    == i, 'TORA'].iloc[0]
-                        airport_destination['takeoff_field_length'] = data_airports.loc[data_airports['APT2']
-                                                                                        == k, 'TORA'].iloc[0]
-                        mission_range = distances[i][k]
-                        DOC_ik[(i, k)] = float(
-                            mission(mission_range,vehicle))*distances[i][k]
-                        # print(DOC_ik[(i, k)])
-                    else:
-                        DOC_ik[(i, k)] = 0
-            doc_db = pd.DataFrame(DOC_ik, index=[0])
-            doc_db.to_csv('Database/DOC/DOC.csv')
-
-            log.info('Aircraft DOC matrix: {}'.format(DOC_ik))
-            # =============================================================================
-            log.info('---- Start Network Optimization ----')
-            # Network optimization that maximizes the network profit
-            profit, vehicle = network_optimization(
-                arrivals, departures, distances, demand, DOC_ik, pax_capacity, vehicle)
-
-            log.info('Network profit [$USD]: {}'.format(profit))
-            # =============================================================================
-
-            write_optimal_results(vehicle, profit)
-            write_kml_results(arrivals, departures, profit, vehicle)
-
-        else:
-            profit = 0
-            log.info(
-                'Aircraft did not pass sizing and checks, profit: {}'.format(profit))
-    except:
-
+    else:
         profit = 0
-        log.info('Exception ocurred during calculations')
-        log.info('Aircraft not passed sizing and checks, profit: {}'.format(profit))
+        log.info(
+            'Aircraft did not pass sizing and checks, profit: {}'.format(profit))
+# except:
+
+    # profit = 0
+    # log.info('Exception ocurred during calculations')
+    # log.info('Aircraft not passed sizing and checks, profit: {}'.format(profit))
 
     end_time = datetime.now()
     log.info('Network profit excecution time: {}'.format(end_time - start_time))

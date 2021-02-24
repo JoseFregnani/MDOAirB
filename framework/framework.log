@@ -1,54 +1,13 @@
-2021-02-24 17:10:14,170 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
-2021-02-24 17:11:18,735 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
-2021-02-24 17:112021-02-24 17:15:23,111 - /home/alejandro/Documents/Github/MDOAirB/framework/Network/network_optimization     - INFO - Network optimization status: Optimal
-17:11:18,744 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
-2021-02-24 17:12:12,471 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
-2021-02-24 17:12:12,473 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:53.728954
-2021-02-24 17:12:12,510 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
-2021-02-24 17:13:18,354 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
-2021-02-24 17:13:18,356 - /home/alejandro/Documents/Github/MDOAirB/framework2021-02-24 17:15:22,539 - /home/alejandro/Documents/Github/MDOAirB/framework/Optimization/objective_function     - INFO - Aircraft DOC matrix: {('CD1', 'CD1'): 0, ('CD1', 'CD2'): 6164.603857004646, ('CD1', 'CD3'): 4787.305474934355, ('CD2', 'CD1'): 6164.603857004646, ('CD2', 'CD2'): 0, ('CD2', 'CD3'): 3886.597904231278, ('CD3', 'CD1'): 4787.305474934355, ('CD3', 'CD2'): 3886.597904231278, ('CD3', 'CD3'): 0}
-2021-02-24 17:15:22,540 - /home/alejandro/Documents/Github/MDOAirB/framework/Optimization/objective_function     - INFO - ---- Start Network Optimization ----
-2021-02-24 17:15:23,140 - /home/alejandro/Documents/Github/MDOAirB/framework/Optimization/objective_function     - INFO - Network profit [$USD]: 45994.10868780681
-2021-02-24 17:16:29,955 - /home/alejandro/Documents/Github/MDOAirB/framework/Optimization/objective_function     - INFO - Network profit excecution time: 0:10:35.337404
-o/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:55.108648
-2021-02-24 17:14:46,783 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
-2021-02-24 17:15:22,369 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
-2021-02-24 17:15:22,371 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:35.587575
-O - ---- Start sizing loop for tail sizing ----
-2021-02-24 17:10:13,781 - /home/alejandro/Documents/Github/MDOAirB/framework/Sizing/airplane_sizing_check     - INFO - ---- End sizing loop for tail sizing ----
-2021-02-24 17:10:14,025 - /home/alejandro/Documents/Github/MDOAirB/framework/Sizing/airplane_sizing_check     - INFO - Aircraft status (pass = 0, no pass =1): 0
-2021-02-24 17:10:14,028 - /home/alejandro/Documents/Github/MDOAirB/framework/Sizing/airplane_sizing_check     - INFO - ---- End aircraft sizing module ----
-4,574 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - Mission sizing execution time: 0:00:29.332010
-2021-02-24 17:02:44,576 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- Start mission sizing function ----
-2021-02-24 17:03:13,690 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- End mission sizing function ----
-2021-02-24 17:03:13,693 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - Mission sizing execution time: 0:00:29.116777
-2021-02-24 17:03:13,693 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- Start mission sizing function ----
-2021-02-24 17:03:44,616 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- End mission sizing function ----
-2021-02-24 17:03:44,617 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - Mission sizing execution time: 0:00:30.923403
-2021-02-24 17:03:44,618 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- Start mission sizing function ----
-2021-02-24 17:04:16,854 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- End mission sizing function ----
-2021-02-24 17:04:16,855 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - Mission sizing execution time: 0:00:32.237435
-2021-02-24 17:04:16,855 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- Start mission sizing function ----
-2021-02-24 17:04:49,776 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- End mission sizing function ----
-2021-02-24 17:04:49,779 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - Mission sizing execution time: 0:00:32.923176
-2021-02-24 17:04:49,782 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- Start mission sizing function ----
-2021-02-24 17:05:21,713 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- End mission sizing function ----
-2021-02-24 17:05:21,716 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - Mission sizing execution time: 0:00:31.933923
-2021-02-24 17:05:21,718 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- Start mission sizing function ----
-2021-02-24 17:05:52,966 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- End mission sizing function ----
-2021-02-24 17:05:52,969 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - Mission sizing execution time: 0:00:31.250947
-2021-02-24 17:05:59,177 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- Start mission sizing function ----
-2021-02-24 17:06:51,474 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- End mission sizing function ----
-2021-02-24 17:06:51,475 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - Mission sizing execution time: 0:00:52.298060
-2021-02-24 17:06:51,475 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- Start mission sizing function ----
-2021-02-24 17:07:42,073 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- End mission sizing function ----
-2021-02-24 17:07:42,076 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - Mission sizing execution time: 0:00:50.600534
-2021-02-24 17:07:42,089 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- Start mission sizing function ----
-2021-02-24 17:08:31,210 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- End mission sizing function ----
-2021-02-24 17:08:31,211 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - Mission sizing execution time: 0:00:49.122120
-2021-02-24 17:08:31,212 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- Start mission sizing function ----
-2021-02-24 17:09:20,053 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- End mission sizing function ----
-2021-02-24 17:09:20,056 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - Mission sizing execution time: 0:00:48.843940
-2021-02-24 17:09:20,057 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- Start mission sizing function ----
-2021-02-24 17:10:13,776 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- End mission sizing function ----
-2021-02-24 17:10:13,779 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - Mission sizing execution time: 0:00:53.721181
+2021-02-24 17:31:00,116 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- Start mission sizing function ----
+2021-02-24 17:31:38,432 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- End mission sizing function ----
+2021-02-24 17:31:38,434 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - Mission sizing execution time: 0:00:38.318256
+2021-02-24 17:31:38,436 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- Start mission sizing function ----
+2021-02-24 17:32:19,539 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- End mission sizing function ----
+2021-02-24 17:32:19,541 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - Mission sizing execution time: 0:00:41.105017
+2021-02-24 17:32:19,543 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- Start mission sizing function ----
+2021-02-24 17:33:03,170 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- End mission sizing function ----
+2021-02-24 17:33:03,173 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - Mission sizing execution time: 0:00:43.630456
+2021-02-24 17:33:03,174 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- Start mission sizing function ----
+2021-02-24 17:33:48,663 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- End mission sizing function ----
+2021-02-24 17:33:48,665 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - Mission sizing execution time: 0:00:45.491675
+2021-02-24 17:33:48,677 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - ---- Start mission sizing function ----
