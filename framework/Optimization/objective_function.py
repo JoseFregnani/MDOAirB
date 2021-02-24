@@ -37,6 +37,7 @@ import numpy as np
 from datetime import datetime
 
 from framework.utilities.logger import get_logger
+from framework.Output.output import write_optimal_results
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -57,7 +58,11 @@ def objective_function(x, vehicle):
         # =============================================================================
         # Airplane sizing and checks
         status, vehicle = airplane_sizing(x, vehicle)
+
         performance = vehicle['performance']
+        airport_departure = vehicle['airport_departure']
+        airport_destination = vehicle['airport_destination']
+        data_airports = pd.read_csv("Database/Airports/airports.csv")
         # =============================================================================
         # If airplane pass checks, status = 0, else status = 1 and profit = 0
         if status == 0:
@@ -91,20 +96,30 @@ def objective_function(x, vehicle):
             for i in departures:
                 for k in arrivals:
                     if (i != k) and (distances[i][k] <= x[13]):
+                        airport_departure['elevation'] = data_airports.loc[data_airports['APT2'] == i, 'ELEV'].iloc[0]
+                        airport_destination['elevation'] = data_airports.loc[data_airports['APT2'] == k, 'ELEV'].iloc[0]
+                        airport_departure['takeoff_field_length'] = data_airports.loc[data_airports['APT2'] == i, 'TORA'].iloc[0]
+                        airport_destination['takeoff_field_length'] = data_airports.loc[data_airports['APT2'] == k, 'TORA'].iloc[0]
                         performance['range'] = distances[i][k]
                         DOC_ik[(i, k)] = float(
                             mission(vehicle))*distances[i][k]
                         # print(DOC_ik[(i, k)])
                     else:
                         DOC_ik[(i, k)] = 0
+            doc_db = pd.DataFrame(DOC_ik)
+            doc_db.to_csv('Database/DOC/DOC.csv')
+
             log.info('Aircraft DOC matrix: {}'.format(DOC_ik))
             # =============================================================================
             log.info('---- Start Network Optimization ----')
             # Network optimization that maximizes the network profit
-            profit = network_optimization(
-                distances, demand, DOC_ik, pax_capacity)
+            profit, vehicle = network_optimization(
+                distances, demand, DOC_ik, pax_capacity,vehicle)
             log.info('Network profit [$USD]: {}'.format(profit))
             # =============================================================================
+
+            write_optimal_results(vehicle)
+            write_kml_results(vehicle)
 
         else:
             profit = 0

@@ -33,8 +33,8 @@ from deap import algorithms
 from bokeh.io import push_notebook, show, output_notebook
 from bokeh.layouts import row
 from bokeh.plotting import figure
-from framework.Economics.network_profit import network_profit
-from framework.baseline_aircraft_parameters import *
+from framework.Optimization.objective_function import objective_function
+from framework.Database.Aircrafts.baseline_aircraft_parameters import *
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -92,10 +92,10 @@ toolbox.register("select", tools.selTournament, tournsize=2)
 # Declaration of the objective function (network profit)
 
 
-def objective_function(individual):
+def obj_function(individual):
     # This function takes as inputs the current individual (vector of design variavbles) and
     # a predefined dictionary with pre-stored information of the vehicle (aircraft)
-    net_profit = network_profit(individual, vehicle)
+    net_profit = objective_function(individual, vehicle)
     return [net_profit, ]
 
 # Declarate the limits for feasible individuals
@@ -133,7 +133,7 @@ def feaseGeom(x):
     return False
 
 
-toolbox.register("evaluate", objective_function)
+toolbox.register("evaluate", obj_function)
 toolbox.decorate("evaluate", tools.DeltaPenalty(feaseGeom, [1.0, ]))
 
 # The main function that defines the genetic algorithm run

@@ -41,7 +41,7 @@ log = get_logger(__file__.split('.')[0])
 log.info('==== Start network optimization module ====')
 
 
-def network_optimization(distances, demand, DOC, pax_capacity):
+def network_optimization(distances, demand, DOC, pax_capacity,vehicle):
     # Definition of cities to be considered as departure_airport, first stop, final airport
     departure_airport = ['CD1', 'CD2', 'CD3', 'CD4',
                          'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
@@ -129,20 +129,47 @@ def network_optimization(distances, demand, DOC, pax_capacity):
 
     problem.solve(GLPK(msg=0, timeLimit=60*5))
     log.info('Network optimization status: {}'.format(LpStatus[problem.status]))
-    # Print solution to CONTINUOUS
-    pax = []
-    for v in problem.variables():
-        # print(v.name, "=", v.varValue)
-        pax.append(v.varValue)
 
-    # print(sum(pax))
-    df4 = pd.DataFrame(pax)
-    df4.to_csv('PAX.csv')
-    # Print optimal
-    # print('Total profit [$US]:', value(problem.objective))
+    list_airplanes = []
+    list_of_pax = []
+    for v in prob.variables():
+        variable_name = v.name
+        if variable_name.find('nika') != -1:
+            list_airplanes.append(v.varValue)
+            # print(v.name, "=", v.varValue)
+        if variable_name.find('numPac') != -1:
+            # print(v.name, "=", v.varValue)
+            list_of_pax.append(v.varValue)
+    
+    results['aircrafts_used']= sum(list_airplanes)
+    results['covered_demand'] = sum(list_of_pax)
 
+    airplanes_ik = {}
+    n = 0
+    for i in departures:
+        for k in arrivals:
+            if i != k:
+                # print(list_airplanes[n])
+                airplanes_ik[(i,k)] = list_airplanes[n] 
+                n = n+1
+            else:
+                airplanes_ik[(i,k)] = 0
+
+    list_airplanes_db = pd.DataFrame(list_airplanes)
+    list_airplanes_db.to_csv('Database/Network/frequencies.csv')
+    
+    np.save('Database/Network/frequencies.npy', airplanes_ik) 
+
+
+    list_of_pax_db = pd.DataFrame(list_of_pax)
+    list_of_pax_db.to_csv('Database/Network/pax.csv')
+
+    results = vehicle['results']
     profit = value(problem.objective)
-    return profit
+    
+    results['profit'] = profit
+
+    return profit, vehicle
 
 log.info('==== End network optimization module ====')
 # =============================================================================
@@ -152,3 +179,13 @@ log.info('==== End network optimization module ====')
 # =============================================================================
 # TEST
 # =============================================================================
+# # Load origin-destination distance matrix [nm]
+# distances_db = pd.read_csv('Database/Distance/distance.csv')
+# distances_db = (distances_db.T)
+# distances = distances_db.to_dict()  # Convert to dictionaty
+
+# # Load daily demand matrix and multiply by market share (10%)
+# demand_db = pd.read_csv('Database//Demand/demand.csv')
+# demand_db = round(market_share*(demand_db.T))
+# demand = demand_db.to_dict()
+

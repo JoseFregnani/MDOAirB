@@ -137,6 +137,7 @@ wing['aerodynamic_center_xposition'] = 0
 wing['aerodynamic_center_ref'] = 0.25
 wing['aileron_chord'] = 0
 wing['aileron_surface'] = 0
+wing['aileron_position'] = 0
 
 horizontal_tail = {}
 horizontal_tail['position'] = 1
@@ -325,11 +326,14 @@ operations['passenger_mass'] = 100  # [kg]
 
 
 
+
 airport_departure = {}
 airport_departure['takeoff_field_length'] = 2500  # [m]
 airport_departure['landing_field_length'] = 2000  # [m]
 airport_departure['elevation'] = 0*3.28084  # [m]
 airport_departure['delta_ISA'] = 19.95  # [deg C]
+airport_departure['array'] = ["FRA", "LHR", "CDG", "AMS",
+                      "MAD", "BCN", "FCO","DUB","VIE","ZRH"]
 
 airport_destination = {}
 airport_destination['takeoff_field_length'] = 2500  # [m]
@@ -342,6 +346,12 @@ aircraft['maximum_engine_thrust'] = aircraft['number_of_engines'] * \
 aircraft['average_thrust'] = 0.75*aircraft['maximum_engine_thrust'] * \
     ((5 + engine['bypass']) /
         (4 + engine['bypass']))  # [N]
+
+results = {}
+results['profit'] = 0
+results['nodes_number'] = 10
+results['covered_demand'] = 0
+results['aircrafts_used'] = 0
 
 
 vehicle = {}
@@ -361,6 +371,7 @@ vehicle['performance'] = performance
 vehicle['operations'] = operations
 vehicle['airport_departure'] = airport_departure
 vehicle['airport_destination'] = airport_destination
+vehicle['results'] = results
 
 # =============================================================================
 # MAIN
