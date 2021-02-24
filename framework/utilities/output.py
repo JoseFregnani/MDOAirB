@@ -339,7 +339,7 @@ def write_kml_results(arrivals, departures, profit, vehicle):
 
     data_airports = pd.read_csv("Database/Airports/airports.csv")
     frequencies_db = np.load('Database/Network/frequencies.npy',allow_pickle='TRUE').item()
-    with open('Database/Results/Klm/acft_' + str(profit) + '_' + str(start_time) +'.txt','w') as output:
+    with open('Database/Results/Klm/acft_' + str(profit) + '_' + str(start_time) +'.kml','w') as output:
 
         output.write('<?xml version="1.0" encoding="UTF-8"?>\n')
         output.write('<kml xmlns="http://www.opengis.net/kml/2.2">\n')
