@@ -1,0 +1,166 @@
+======== Aircraft and network optimization results ========
+
+
+ ----- Aircraft parameters ----- 
+
+ Performance: 
+RANGE: 188.00 [nm] 
+MMO: 0.82
+VMO: 340.00 [kts] 
+Ceiling: 41000.00 [ft] 
+
+ Fuselage: 
+Pax: 76.00
+Crew: 5.00
+Aisles number: 1.00
+Seats number: 2.00
+Seat width: 0.46 [m] 
+Seat pitch: 0.81 [m] 
+Cabine height: 2.00 [m] 
+Fuselage length: 29.46 [m] 
+Cockpit length: 3.70 [m] 
+Tail length: 6.35 [m] 
+Width: 3.53 [m] 
+Diameter: 3.69 [m] 
+Height: 3.86 [m] 
+Dz floor: 0.28 [m] 
+Wetted area: 292.88 [m2] 
+Weight: [4934.37017691] [kg] 
+
+ Aerodynamics: 
+CLmax: 1.65
+CLmax TO: 2.23
+CLmax LD: 2.83
+
+ Wing: 
+Area: 102.00 [m2] 
+Span: 29.74 [m] 
+Aspect Ratio: 8.45
+Taper Ratio: 0.29
+Sweep c/4: 18.00 [deg] 
+Sweep LE: 21.17 [deg] 
+Twist: -5.00 [deg] 
+Wetted area: 176.36 [m2] 
+Kink position: 0.38 [%] 
+Root incidence: 2.00 [deg] 
+Kink incidence: 0.00 [deg] 
+Tip incidence: -3.00 [deg] 
+Root t/c: 0.12
+Kink t/c: 0.11
+Tip t/c: 0.01
+Center chord: 6.07 [m] 
+Root chord: 5.35 [m] 
+Kink chord: 3.86 [m] 
+Tip chord: 1.58 [m] 
+MAC: 3.88 [m] 
+Leading edge xposition: [11.23646563] [m] 
+Slat presence: 1.00
+Flap span: 0.75 [%] 
+Flap area: 4.36 [m2] 
+Flap def. TO: 35.00 [deg] 
+Flap def. LD: 45.00 [deg] 
+Aileron position: 0.00 [%] 
+Rear spar position: 0.75 [%] 
+
+ Vertical tail: 
+Area: [22.74394256] [m2] 
+Aspect Ratio: 1.20
+Taper Ratio: 0.50
+Sweep c/4: 41.00 [deg] 
+
+ Horizontal tail: 
+Area: [29.13147008] [m2] 
+Aspect Ratio: 4.35
+Taper Ratio: 0.40
+Sweep c/4: 22.00 [deg] 
+
+ Winglet: 
+Aspect Ratio: 2.75
+Taper Ratio: 0.25
+Sweep leading edge: 35.00 [deg] 
+
+ Engine: 
+Maximum thrust: [134968.60114609] [kg] 
+Bypass ratio: 4.78
+Fan diameter: 1.48 [m] 
+Fan pressure ratio: 1.60
+Compressor pressure ratio: 27.00
+Turbine inlet temperature: 1479.00 [deg C] 
+Engine length: 2.97 [m] 
+
+ Pylon: 
+Wetted area: 3.69 [m2] 
+
+ Aircraft: 
+Wing position: 1.00
+Horizontal tail position: 1.00
+Engine position: 1.00
+Wetted area: [602.91525619] [m2] 
+
+ ----- Network parameters ----- 
+
+Referemce values: 
+Mach: 0.00 
+Range: 0.00 [nm] 
+DOC: 0.00 [$/nm] 
+Passengers: 0.00 
+Net present value: 0.00 [$] 
+Price: 0.00 [$] 
+Average fare: 0.00 [$] 
+Average load factor: 0.00 
+Average market share: 0.00 [%] 
+Airports array: ['FRA', 'LHR', 'CDG', 'AMS', 'MAD', 'BCN', 'FCO', 'DUB', 'VIE', 'ZRH']
+
+Daily demand: 
+0 451 294 252 313 298 192 221 324 188
+451 0 342 469 398 215 254 505 227 322
+294 342 0 334 300 374 354 204 255 192
+252 469 334 0 307 374 291 327 255 256
+313 398 300 307 0 697 340 150 150 183
+298 215 374 374 697 0 384 164 175 171
+192 254 354 291 340 384 0 55 144 99
+221 505 204 327 150 164 55 0 63 78
+324 227 255 255 150 175 144 63 0 260
+188 322 192 256 183 171 99 78 260 0
+
+Distances: 
+0 355 243 198 768 591 517 589 336 154
+355 0 188 200 672 620 781 243 690 427
+243 188 0 215 574 463 595 425 561 258
+198 200 215 0 788 670 700 406 519 326
+768 672 574 788 0 261 720 784 977 670
+591 620 463 670 261 0 459 802 741 463
+517 781 595 700 720 459 0 1020 421 375
+589 243 425 406 784 802 1020 0 922 670
+336 690 561 519 977 741 421 922 0 327
+154 427 258 326 670 463 375 670 327 0
+
+Headings: 
+
+DOC: 
+0 6831 4849 4053 14477 11039 9807 11002 6484 3294
+6831 0 3878 4088 12653 11581 14725 4849 12993 8140
+4849 3878 0 4351 10879 8798 11114 8103 10633 5083
+4053 4088 4351 0 14859 12616 13183 7753 9845 6302
+14477 12653 10879 14859 0 5136 13562 14783 18376 12616
+11039 11581 8798 12616 5136 0 8724 15128 13961 8798
+9807 14725 11114 13183 13562 8724 0 19476 8029 5643
+11002 4849 8103 7753 14783 15128 19476 0 17310 12616
+6484 12993 10633 9845 18376 13961 8029 17310 0 6320
+3294 8140 5083 6302 12616 8798 5643 12616 6320 0
+
+Frequencies: 
+{('CD1', 'CD1'): 0, ('CD1', 'CD2'): 0, ('CD1', 'CD3'): 3, ('CD2', 'CD1'): 8, ('CD2', 'CD2'): 0, ('CD2', 'CD3'): 1, ('CD3', 'CD1'): 2, ('CD3', 'CD2'): 5, ('CD3', 'CD3'): 0}
+
+Results: 
+Number of nodes: 10.00 
+Number of arcs: 0.00 
+Average degree of nodes: 0.00 
+Average path length: 0.00 
+Network density: 0.00 
+Average clustering: 0.00
+Total cost: 0.00 [$] 
+Total revenue: 0.00 [$] 
+Total profit: 45994.11 [$] 
+Number of frequencies: 0.00 
+Number of used aircraft: 19.00 

@@ -65,7 +65,7 @@ GRAVITY = 9.80665
 gallon_to_liter = 3.7852
 feet_to_nautical_miles = 0.000164579
 
-def mission(vehicle):
+def mission(mission_range,vehicle):
     start_time = datetime.now()
     log.info('---- Start DOC mission function ----')
 
@@ -179,7 +179,7 @@ def mission(vehicle):
             Dmin = 10*operations['mach_cruise']*min_cruise_time
 
             K2 = (
-                performance['range'] 
+                mission_range
                 - Dmin
                 + g_climb*(airport_departure['elevation'] + 1500)
                 + g_descent*(airport_destination['elevation'] + 1500)
@@ -269,7 +269,7 @@ def mission(vehicle):
 
         distance_climb = final_distance*feet_to_nautical_miles
 
-        distance_cruise = performance['range']  - distance_climb
+        distance_cruise = mission_range  - distance_climb
 
         altitude = initial_cruise_altitude
         flag = 1
@@ -324,7 +324,7 @@ def mission(vehicle):
                 )
                 distance_descent = final_distance*feet_to_nautical_miles
                 distance_mission = distance_climb + distance_cruise + distance_descent
-                distance_error = np.abs(performance['range'] -distance_mission)
+                distance_error = np.abs(mission_range -distance_mission)
 
                 if distance_error <= 1.0:
                     flag = 0

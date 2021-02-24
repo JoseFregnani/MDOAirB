@@ -1,0 +1,27 @@
+======== Aircraft and network optimization results ========
+
+
+ ----- Aircraft parameters ----- 
+
+ Performance: 
+RANGE: 188.00 [nm] 
+MMO: 0.82
+VMO: 340.00 [kts] 
+Ceiling: 41000.00 [ft] 
+
+ Fuselage: 
+Pax: 101.00
+Crew: 5.00
+Aisles number: 1.00
+Seats number: 3.00
+Seat width: 0.46 [m] 
+Seat pitch: 0.81 [m] 
+Cabine height: 2.00 [m] 
+Fuselage length: 28.70 [m] 
+Cockpit length: 3.70 [m] 
+Tail length: 7.21 [m] 
+Width: 4.01 [m] 
+Diameter: 4.19 [m] 
+Height: 4.38 [m] 
+Dz floor: 0.54 [m] 
+Wetted area: 316.59 [m2] 

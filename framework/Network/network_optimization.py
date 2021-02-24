@@ -41,14 +41,13 @@ log = get_logger(__file__.split('.')[0])
 log.info('==== Start network optimization module ====')
 
 
-def network_optimization(distances, demand, DOC, pax_capacity,vehicle):
+def network_optimization(arrivals, departures, distances, demand, DOC, pax_capacity,vehicle):
     # Definition of cities to be considered as departure_airport, first stop, final airport
-    departure_airport = ['CD1', 'CD2', 'CD3', 'CD4',
-                         'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
-    first_stop_airport = ['CD1', 'CD2', 'CD3', 'CD4',
-                          'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
-    final_airport = ['CD1', 'CD2', 'CD3', 'CD4',
-                     'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+    departure_airport = departures
+    first_stop_airport = arrivals
+    final_airport = departures
+
+    results = vehicle['results']
 
     # Define minimization problem
     problem = LpProblem("Network", LpMaximize)
@@ -132,7 +131,7 @@ def network_optimization(distances, demand, DOC, pax_capacity,vehicle):
 
     list_airplanes = []
     list_of_pax = []
-    for v in prob.variables():
+    for v in problem.variables():
         variable_name = v.name
         if variable_name.find('nika') != -1:
             list_airplanes.append(v.varValue)

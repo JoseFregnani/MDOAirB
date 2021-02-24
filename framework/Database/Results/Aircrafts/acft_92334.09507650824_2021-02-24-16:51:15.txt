@@ -1,0 +1,55 @@
+======== Aircraft and network optimization results ========
+
+
+ ----- Aircraft parameters ----- 
+
+ Performance: 
+RANGE: 188.00 [nm] 
+MMO: 0.82
+VMO: 340.00 [kts] 
+Ceiling: 41000.00 [ft] 
+
+ Fuselage: 
+Pax: 94.00
+Crew: 5.00
+Aisles number: 1.00
+Seats number: 3.00
+Seat width: 0.46 [m] 
+Seat pitch: 0.81 [m] 
+Cabine height: 2.00 [m] 
+Fuselage length: 27.89 [m] 
+Cockpit length: 3.70 [m] 
+Tail length: 7.21 [m] 
+Width: 4.01 [m] 
+Diameter: 4.19 [m] 
+Height: 4.38 [m] 
+Dz floor: 0.54 [m] 
+Wetted area: 307.04 [m2] 
+Weight: [4273.85334471] [kg] 
+
+ Aerodynamics: 
+CLmax: 1.65
+CLmax TO: 2.24
+CLmax LD: 2.84
+
+ Wing: 
+Area: 116.00 [m2] 
+Span: 31.08 [m] 
+Aspect Ratio: 8.20
+Taper Ratio: 0.36
+Sweep c/4: 16.00 [deg] 
+Sweep LE: 18.91 [deg] 
+Twist: -3.00 [deg] 
+Wetted area: 196.98 [m2] 
+Kink position: 0.35 [%] 
+Root incidence: 2.00 [deg] 
+Kink incidence: 0.00 [deg] 
+Tip incidence: -1.00 [deg] 
+Root t/c: 0.12
+Kink t/c: 0.11
+Tip t/c: 0.01
+Center chord: 6.12 [m] 
+Root chord: 5.40 [m] 
+Kink chord: 4.25 [m] 
+Tip chord: 2.00 [m] 
+MAC: 4.07 [m] 

@@ -37,7 +37,7 @@ import numpy as np
 from datetime import datetime
 
 from framework.utilities.logger import get_logger
-from framework.Output.output import write_optimal_results
+from framework.utilities.output import write_optimal_results, write_kml_results
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -89,6 +89,9 @@ def objective_function(x, vehicle):
                             'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
             arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
                         'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+
+            # departures = ['CD1', 'CD2', 'CD3']
+            # arrivals = ['CD1', 'CD2', 'CD3']
             # =============================================================================
             log.info('---- Start DOC calculation ----')
             # The DOC is estimated for each city pair and stored in the DOC dictionary
@@ -96,17 +99,21 @@ def objective_function(x, vehicle):
             for i in departures:
                 for k in arrivals:
                     if (i != k) and (distances[i][k] <= x[13]):
-                        airport_departure['elevation'] = data_airports.loc[data_airports['APT2'] == i, 'ELEV'].iloc[0]
-                        airport_destination['elevation'] = data_airports.loc[data_airports['APT2'] == k, 'ELEV'].iloc[0]
-                        airport_departure['takeoff_field_length'] = data_airports.loc[data_airports['APT2'] == i, 'TORA'].iloc[0]
-                        airport_destination['takeoff_field_length'] = data_airports.loc[data_airports['APT2'] == k, 'TORA'].iloc[0]
-                        performance['range'] = distances[i][k]
+                        airport_departure['elevation'] = data_airports.loc[data_airports['APT2']
+                                                                        == i, 'ELEV'].iloc[0]
+                        airport_destination['elevation'] = data_airports.loc[data_airports['APT2']
+                                                                            == k, 'ELEV'].iloc[0]
+                        airport_departure['takeoff_field_length'] = data_airports.loc[data_airports['APT2']
+                                                                                    == i, 'TORA'].iloc[0]
+                        airport_destination['takeoff_field_length'] = data_airports.loc[data_airports['APT2']
+                                                                                        == k, 'TORA'].iloc[0]
+                        mission_range = distances[i][k]
                         DOC_ik[(i, k)] = float(
-                            mission(vehicle))*distances[i][k]
+                            mission(mission_range,vehicle))*distances[i][k]
                         # print(DOC_ik[(i, k)])
                     else:
                         DOC_ik[(i, k)] = 0
-            doc_db = pd.DataFrame(DOC_ik)
+            doc_db = pd.DataFrame(DOC_ik, index=[0])
             doc_db.to_csv('Database/DOC/DOC.csv')
 
             log.info('Aircraft DOC matrix: {}'.format(DOC_ik))
@@ -114,12 +121,13 @@ def objective_function(x, vehicle):
             log.info('---- Start Network Optimization ----')
             # Network optimization that maximizes the network profit
             profit, vehicle = network_optimization(
-                distances, demand, DOC_ik, pax_capacity,vehicle)
+                arrivals, departures, distances, demand, DOC_ik, pax_capacity, vehicle)
+
             log.info('Network profit [$USD]: {}'.format(profit))
             # =============================================================================
 
-            write_optimal_results(vehicle)
-            write_kml_results(vehicle)
+            write_optimal_results(vehicle, profit)
+            write_kml_results(arrivals, departures, profit, vehicle)
 
         else:
             profit = 0
@@ -135,6 +143,7 @@ def objective_function(x, vehicle):
     log.info('Network profit excecution time: {}'.format(end_time - start_time))
 
     return float(profit)
+
 
 log.info('==== End network profit module ====')
 # =============================================================================

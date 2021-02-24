@@ -24,6 +24,7 @@ TODO's:
 import pandas as pd
 import numpy as np
 import json
+from datetime import datetime
 
 # =============================================================================
 # CLASSES
@@ -32,57 +33,30 @@ import json
 # =============================================================================
 # FUNCTIONS
 # =============================================================================
+def write_optimal_results(vehicle, profit):
 
+    start_time = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
 
-def write_individuals_history(vehicle):
-    # f = open)()
-
-    return
-
-# def write_optimal_results(vehicle):
-#     aircraft = vehicle['aircraft']
-#     wing = vehicle['wing']
-#     horizontal_tail = vehicle['horizontal_tail']
-#     vertical_tail = vehicle['vertical_tail']
-
-#     aircraft_list = [f'{key} : {aircraft[key]}' for key in aircraft]
-#     wing_list = [f'{key} : {wing[key]}' for key in wing]
-#     horizontal_tail_list = [ f'{key} : {horizontal_tail[key]}' for key in horizontal_tail]
-#     vertical_list = [f'{key} : {vertical_tail[key]}' for key in vertical_tail]
-
-#     # write string one by one adding newline
-#     with open('Output/output_test.txt', 'w') as output:
-#         [output.write('\n\n')]
-#         [output.write('======== Aircraft parameters ========')]
-#         [output.write('\n\n')]
-#         [output.write(f'{st}\n') for st in aircraft_list]
-#         [output.write('\n\n')]
-#         [output.write('======== Wing parameters ========')]
-#         [output.write('\n\n')]
-#         [output.write(f'{st}\n') for st in wing_list]
-#         [output.write('\n\n')]
-#         [output.write('======== Horizontal tail parameters ========')]
-#         [output.write('\n\n')]
-#         [output.write(f'{st}\n') for st in horizontal_tail_list]
-#         [output.write('\n\n')]
-#         [output.write('======== Vertical tail parameters ========')]
-#         [output.write('\n\n')]
-#         [output.write(f'{st}\n') for st in vertical_list]
-#         [output.write('\n\n')]
-
-#     return
-
-
-def write_optimal_results(vehicle):
     aircraft = vehicle['aircraft']
     wing = vehicle['wing']
+    fuselage = vehicle['fuselage']
     horizontal_tail = vehicle['horizontal_tail']
     vertical_tail = vehicle['vertical_tail']
+    winglet = vehicle['winglet']
+
+    engine = vehicle['engine']
+    pylon = vehicle['pylon']
+
+
     results = vehicle['results']
+    performance = vehicle['performance']
+    operations = vehicle['operations']
+
+    airport_departure = vehicle['airport_departure']
+    airport_destination = vehicle['airport_destination']
 
     # write string one by one adding newline
-    with open('Output/output_test.txt', 'w') as output:
-
+    with open('Database/Results/Aircrafts/acft_' + str(profit) + '_' + str(start_time) +'.txt','a') as output:
         output.write(
             '======== Aircraft and network optimization results ========')
         output.write('\n\n')
@@ -134,7 +108,7 @@ def write_optimal_results(vehicle):
         output.write('Wetted area: ' +
                      str("{:.2f}".format(fuselage['wetted_area'])) + ' [m2] \n')
         output.write(
-            'Weight: ' + str("{:.2f}".format(fuselage['weight'])) + ' [kg] \n')
+            'Weight: ' + str(fuselage['weight']) + ' [kg] \n')
 
         output.write('\n Aerodynamics: \n')
 
@@ -187,7 +161,7 @@ def write_optimal_results(vehicle):
         output.write(
             'MAC: ' + str("{:.2f}".format(wing['mean_aerodynamic_chord'])) + ' [m] \n')
         output.write('Leading edge xposition: ' +
-                     str("{:.2f}".format(wing['leading_edge_xposition'])) + ' [m] \n')
+                     str(wing['leading_edge_xposition']) + ' [m] \n')
         output.write('Slat presence: ' +
                      str("{:.2f}".format(aircraft['slat_presence'])) + '\n')
         output.write('Flap span: ' +
@@ -206,7 +180,7 @@ def write_optimal_results(vehicle):
         output.write('\n Vertical tail: \n')
 
         output.write(
-            'Area: ' + str("{:.2f}".format(vertical_tail['area'])) + ' [m2] \n')
+            'Area: ' + str(vertical_tail['area']) + ' [m2] \n')
         output.write('Aspect Ratio: ' +
                      str("{:.2f}".format(vertical_tail['aspect_ratio'])) + '\n')
         output.write('Taper Ratio: ' +
@@ -217,7 +191,7 @@ def write_optimal_results(vehicle):
         output.write('\n Horizontal tail: \n')
 
         output.write(
-            'Area: ' + str("{:.2f}".format(horizontal_tail['area'])) + ' [m2] \n')
+            'Area: ' + str(horizontal_tail['area']) + ' [m2] \n')
         output.write('Aspect Ratio: ' +
                      str("{:.2f}".format(horizontal_tail['aspect_ratio'])) + '\n')
         output.write(
@@ -236,9 +210,7 @@ def write_optimal_results(vehicle):
 
         output.write('\n Engine: \n')
         output.write('Maximum thrust: ' +
-                     str("{:.2f}".format(engine['maximum_thrust'])) + ' [kg] \n')
-        output.write('Maximum thrust: ' +
-                     str("{:.2f}".format(engine['maximum_thrust'])) + ' [kg] \n')
+                     str(engine['maximum_thrust']) + ' [kg] \n')
         output.write('Bypass ratio: ' +
                      str("{:.2f}".format(engine['bypass'])) + '\n')
         output.write('Fan diameter: ' +
@@ -267,7 +239,7 @@ def write_optimal_results(vehicle):
         output.write('Engine position: ' +
                      str("{:.2f}".format(engine['position'])) + '\n')
         output.write(
-            'Wetted area: ' + str("{:.2f}".format(aircraft['wetted_area'])) + ' [m2] \n')
+            'Wetted area: ' + str(aircraft['wetted_area']) + ' [m2] \n')
     
 
         output.write('\n ----- Network parameters ----- \n')
@@ -293,12 +265,11 @@ def write_optimal_results(vehicle):
         output.write(
             'Average market share: ' + str("{:.2f}".format(0)) + ' [%] \n')
 
-        output.write(
-            'Airports array: ' + airport_departure['array'] + ' \n')
+        output.write('Airports array: ' + str(airport_departure['array']) + "\n")
 
         market_share = 0.1
 
-        demand_db = pd.read_csv('Database//Demand/demand.csv')
+        demand_db = pd.read_csv('Database/Demand/demand.csv')
         demand_db = round(market_share*(demand_db.T))
         output.write('\nDaily demand: \n')
         np.savetxt(output, demand_db.values, fmt='%d')
@@ -308,20 +279,27 @@ def write_optimal_results(vehicle):
         output.write('\nDistances: \n')
         np.savetxt(output, distances_db.values, fmt='%d')
 
-        headings_db = pd.read_csv('Database/DOC/distance.csv')
-        headings_db = (headings_db.T)
+        # headings_db = pd.read_csv('Database/distabces/distance.csv')
+        # headings_db = (headings_db.T)
         output.write('\nHeadings: \n')
-        np.savetxt(output, headings_db.values, fmt='%d')
+        # np.savetxt(output, headings_db.values, fmt='%d')
 
-        doc_db = pd.read_csv('Database/DOC/DOC.csv')
+        doc_db = pd.read_csv('Database/DOC/doc.csv')
         doc_db = (doc_db.T)
         output.write('\nDOC: \n')
         np.savetxt(output, doc_db.values, fmt='%d')
 
-        frequencies_db = pd.read_csv('Database/Network/frequencies.csv')
-        frequencies_db = (frequencies_db.T)
+        frequencies_db = np.load('Database/Network/frequencies.npy',allow_pickle='TRUE').item()
+        # frequencies = pd.DataFrame(frequencies_db, index=False, header=False )
+
+        frequencies = np.array(frequencies_db)
+        
+        # frequencies_db = pd.read_csv('Database/Network/frequencies.npy')
+        # frequencies_db = (frequencies_db.T)
         output.write('\nFrequencies: \n')
-        np.savetxt(output, frequencies_db.values, fmt='%d')
+        # np.savetxt(output, frequencies_db.values, fmt='%d')
+
+        output.write(str(frequencies) + "\n")
 
         output.write('\nResults: \n')
 
@@ -353,16 +331,16 @@ def write_optimal_results(vehicle):
     return
 
 
-def write_kml_results(vehicle):
+def write_kml_results(arrivals, departures, profit, vehicle):
+    start_time = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
 
-    departures = ['CD1', 'CD2', 'CD3', 'CD4', 'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
-    arrivals = ['CD1', 'CD2', 'CD3', 'CD4', 'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+    departures = departures
+    arrivals = arrivals
 
     data_airports = pd.read_csv("Database/Airports/airports.csv")
     frequencies_db = np.load('Database/Network/frequencies.npy',allow_pickle='TRUE').item()
+    with open('Database/Results/Klm/acft_' + str(profit) + '_' + str(start_time) +'.txt','w') as output:
 
-
-    with open('Database/Network/klm_test.klm', 'w') as output:
         output.write('<?xml version="1.0" encoding="UTF-8"?>\n')
         output.write('<kml xmlns="http://www.opengis.net/kml/2.2">\n')
         output.write('<Document>\n')
@@ -390,8 +368,7 @@ def write_kml_results(vehicle):
                     output.write('             </LineString>\n')
                     output.write('     	</Placemark>\n')
                     n = n+1
-                else:
-                    print(0)
+
         output.write('       </Folder>\n')
         output.write('</Document>\n')
         output.write('</kml>\n')
