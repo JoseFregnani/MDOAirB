@@ -140,7 +140,7 @@ toolbox.decorate("evaluate", tools.DeltaPenalty(feaseGeom, [1.0, ]))
 
 
 def main():
-    pop = toolbox.population(n=5)  # Number of individuals by generation
+    pop = toolbox.population(n=10)  # Number of individuals by generation
     hof = tools.HallOfFame(5)  # Hall of fame of top 4 individuals
     stats = tools.Statistics(lambda ind: ind.fitness.values)
     stats.register("avg", np.mean)
@@ -148,7 +148,7 @@ def main():
     stats.register("min", np.min)
     stats.register("max", np.max)
 
-    pop, log = algorithms.eaSimple(pop, toolbox, cxpb=0.5, mutpb=0.2, ngen=10,
+    pop, log = algorithms.eaSimple(pop, toolbox, cxpb=0.5, mutpb=0.2, ngen=30,
                                    stats=stats, halloffame=hof, verbose=True)
     return [pop, log, hof]
 

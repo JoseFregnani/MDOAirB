@@ -126,7 +126,7 @@ def network_optimization(arrivals, departures, distances, demand, DOC, pax_capac
     # Solve linear programming problem (Network optimization)
     # =============================================================================
 
-    problem.solve(GLPK(msg=0, timeLimit=60*5))
+    problem.solve(GLPK(msg=0, timeLimit=60*3))
     log.info('Network optimization status: {}'.format(LpStatus[problem.status]))
 
     list_airplanes = []

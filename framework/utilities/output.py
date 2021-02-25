@@ -20,7 +20,6 @@ TODO's:
 # =============================================================================
 # IMPORTS
 # =============================================================================
-# from framework.baseline_aircraft_parameters import *
 import pandas as pd
 import numpy as np
 import json
@@ -33,7 +32,7 @@ from datetime import datetime
 # =============================================================================
 # FUNCTIONS
 # =============================================================================
-def write_optimal_results(vehicle, profit):
+def write_optimal_results(profit, DOC_ik, vehicle):
 
     start_time = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
 
@@ -284,10 +283,9 @@ def write_optimal_results(vehicle, profit):
         output.write('\nHeadings: \n')
         # np.savetxt(output, headings_db.values, fmt='%d')
 
-        doc_db = pd.read_csv('Database/DOC/doc.csv')
-        doc_db = (doc_db.T)
         output.write('\nDOC: \n')
-        np.savetxt(output, doc_db.values, fmt='%d')
+        for key in DOC_ik.keys():
+            output.write("%s,%s\n\n"%(key,DOC_ik[key]))
 
         frequencies_db = np.load('Database/Network/frequencies.npy',allow_pickle='TRUE').item()
         # frequencies = pd.DataFrame(frequencies_db, index=False, header=False )
@@ -296,7 +294,7 @@ def write_optimal_results(vehicle, profit):
         
         # frequencies_db = pd.read_csv('Database/Network/frequencies.npy')
         # frequencies_db = (frequencies_db.T)
-        output.write('\nFrequencies: \n')
+        output.write('\n\nFrequencies: \n')
         # np.savetxt(output, frequencies_db.values, fmt='%d')
 
         output.write(str(frequencies) + "\n")
@@ -381,6 +379,6 @@ def write_kml_results(arrivals, departures, profit, vehicle):
 # =============================================================================
 # TEST
 # =============================================================================
+# from framework.Database.Aircrafts.baseline_aircraft_parameters import *
 
-
-# write_optimal_results(vehicle)
+# write_optimal_results(vehicle,150000)

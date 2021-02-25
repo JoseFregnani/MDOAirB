@@ -36,7 +36,8 @@ import numpy as np
 from pulp import *
 import pandas as pd
 import pprint
-aircraft_data = baseline_aircraft()
+from framework.Database.Aircrafts.baseline_aircraft_parameters import *
+# aircraft_data = 
 
 # Available cities:
 # ['CD1', 'CD2', 'CD3', 'CD4', 'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
@@ -54,7 +55,7 @@ arrivals_2 = ['CD1', 'CD2', 'CD3', 'CD4',
 # Define minimization problem
 prob = LpProblem("Network", LpMaximize)
 
-df1 = pd.read_csv('Database/distance.csv')
+df1 = pd.read_csv('Database/Distance/distance.csv')
 df1 = (df1.T)
 print('=============================================================================')
 print('Distance matrix:')
@@ -62,7 +63,7 @@ print('-------------------------------------------------------------------------
 print(df1)
 distances = df1.to_dict()
 
-df2 = pd.read_csv('Database/demand.csv')
+df2 = pd.read_csv('Database/Demand/demand.csv')
 df2 = round((df2.T)*0.1)
 print('=============================================================================')
 print('Demand matrix:')
@@ -72,7 +73,7 @@ print('demand:', np.sum(np.sum(df2)))
 df2 = np.round(df2)
 demand = df2.to_dict()
 
-df3 = pd.read_csv('Database/doc.csv')
+df3 = pd.read_csv('Database/DOC/DOC.csv')
 df3 = (df3.T)
 print('=============================================================================')
 print('DOC matrix:')

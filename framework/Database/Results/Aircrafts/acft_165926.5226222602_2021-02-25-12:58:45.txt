@@ -4,75 +4,75 @@
  ----- Aircraft parameters ----- 
 
  Performance: 
-RANGE: 2320.00 [nm] 
+RANGE: 2185.00 [nm] 
 MMO: 0.82
 VMO: 340.00 [kts] 
 Ceiling: 41000.00 [ft] 
 
  Fuselage: 
-Pax: 117.00
+Pax: 101.00
 Crew: 5.00
 Aisles number: 1.00
 Seats number: 2.00
 Seat width: 0.46 [m] 
 Seat pitch: 0.81 [m] 
 Cabine height: 2.00 [m] 
-Fuselage length: 38.40 [m] 
+Fuselage length: 35.15 [m] 
 Cockpit length: 3.70 [m] 
 Tail length: 6.35 [m] 
 Width: 3.53 [m] 
 Diameter: 3.69 [m] 
 Height: 3.86 [m] 
 Dz floor: 0.28 [m] 
-Wetted area: 391.69 [m2] 
-Weight: [10514.48355491] [kg] 
+Wetted area: 355.19 [m2] 
+Weight: [7996.77870741] [kg] 
 
  Aerodynamics: 
 CLmax: 1.65
-CLmax TO: 2.00
-CLmax LD: 2.60
+CLmax TO: 2.07
+CLmax LD: 2.67
 
  Wing: 
-Area: 119.00 [m2] 
-Span: 31.93 [m] 
-Aspect Ratio: 7.75
-Taper Ratio: 0.26
-Sweep c/4: 35.00 [deg] 
-Sweep LE: 37.39 [deg] 
-Twist: -5.00 [deg] 
-Wetted area: 227.44 [m2] 
+Area: 117.00 [m2] 
+Span: 30.98 [m] 
+Aspect Ratio: 7.60
+Taper Ratio: 0.29
+Sweep c/4: 31.00 [deg] 
+Sweep LE: 33.55 [deg] 
+Twist: -4.00 [deg] 
+Wetted area: 217.20 [m2] 
 Kink position: 0.39 [%] 
 Root incidence: 2.00 [deg] 
 Kink incidence: 0.00 [deg] 
-Tip incidence: -3.00 [deg] 
+Tip incidence: -2.00 [deg] 
 Root t/c: 0.12
 Kink t/c: 0.11
 Tip t/c: 0.01
-Center chord: 8.93 [m] 
-Root chord: 7.52 [m] 
-Kink chord: 4.18 [m] 
-Tip chord: 1.68 [m] 
-MAC: 4.60 [m] 
-Leading edge xposition: [13.8313863] [m] 
+Center chord: 8.21 [m] 
+Root chord: 6.98 [m] 
+Kink chord: 4.20 [m] 
+Tip chord: 1.84 [m] 
+MAC: 4.49 [m] 
+Leading edge xposition: [13.24302323] [m] 
 Slat presence: 1.00
 Flap span: 0.75 [%] 
-Flap area: 4.77 [m2] 
+Flap area: 4.83 [m2] 
 Flap def. TO: 35.00 [deg] 
 Flap def. LD: 45.00 [deg] 
 Aileron position: 0.00 [%] 
 Rear spar position: 0.75 [%] 
 
  Vertical tail: 
-Area: [22.35458179] [m2] 
+Area: [24.30278836] [m2] 
 Aspect Ratio: 1.20
 Taper Ratio: 0.50
 Sweep c/4: 41.00 [deg] 
 
  Horizontal tail: 
-Area: [29.91357991] [m2] 
+Area: [32.91984069] [m2] 
 Aspect Ratio: 4.35
 Taper Ratio: 0.40
-Sweep c/4: 39.00 [deg] 
+Sweep c/4: 35.00 [deg] 
 
  Winglet: 
 Aspect Ratio: 2.75
@@ -80,22 +80,22 @@ Taper Ratio: 0.25
 Sweep leading edge: 35.00 [deg] 
 
  Engine: 
-Maximum thrust: [180164.12816168] [kg] 
-Bypass ratio: 6.22
-Fan diameter: 1.09 [m] 
+Maximum thrust: [155811.11500736] [kg] 
+Bypass ratio: 4.83
+Fan diameter: 1.07 [m] 
 Fan pressure ratio: 1.60
-Compressor pressure ratio: 29.00
-Turbine inlet temperature: 1438.00 [deg C] 
-Engine length: 2.21 [m] 
+Compressor pressure ratio: 27.00
+Turbine inlet temperature: 1485.00 [deg C] 
+Engine length: 2.29 [m] 
 
  Pylon: 
-Wetted area: 2.55 [m2] 
+Wetted area: 2.53 [m2] 
 
  Aircraft: 
 Wing position: 1.00
 Horizontal tail position: 1.00
 Engine position: 1.00
-Wetted area: [743.11606944] [m2] 
+Wetted area: [707.15787275] [m2] 
 
  ----- Network parameters ----- 
 
@@ -136,21 +136,25 @@ Distances:
 154 427 258 326 670 463 375 670 327 0
 
 Headings: 
-
-DOC: 
-0 6831 4849 4053 14477 11039 9807 11002 6484 3294
-6831 0 3878 4088 12653 11581 14725 4849 12993 8140
-4849 3878 0 4351 10879 8798 11114 8103 10633 5083
-4053 4088 4351 0 14859 12616 13183 7753 9845 6302
-14477 12653 10879 14859 0 5136 13562 14783 18376 12616
-11039 11581 8798 12616 5136 0 8724 15128 13961 8798
-9807 14725 11114 13183 13562 8724 0 19476 8029 5643
-11002 4849 8103 7753 14783 15128 19476 0 17310 12616
-6484 12993 10633 9845 18376 13961 8029 17310 0 6320
-3294 8140 5083 6302 12616 8798 5643 12616 6320 0
+('CD1', 'CD1'),0
+('CD1', 'CD2'),6999.388169685375
+('CD1', 'CD3'),5483.934678747552
+('CD1', 'CD4'),4887.212242950672
+('CD2', 'CD1'),6999.388169685375
+('CD2', 'CD2'),0
+('CD2', 'CD3'),4755.585356078714
+('CD2', 'CD4'),4913.600279102602
+('CD3', 'CD1'),5483.934678747552
+('CD3', 'CD2'),4755.585356078714
+('CD3', 'CD3'),0
+('CD3', 'CD4'),5111.818225596987
+('CD4', 'CD1'),4887.212242950672
+('CD4', 'CD2'),4913.600279102602
+('CD4', 'CD3'),5111.818225596987
+('CD4', 'CD4'),0
 
 Frequencies: 
-{('CD1', 'CD1'): 0, ('CD1', 'CD2'): 5, ('CD1', 'CD3'): 0, ('CD2', 'CD1'): 0, ('CD2', 'CD2'): 0, ('CD2', 'CD3'): 3, ('CD3', 'CD1'): 3, ('CD3', 'CD2'): 1, ('CD3', 'CD3'): 0}
+{('CD1', 'CD1'): 0, ('CD1', 'CD2'): 2, ('CD1', 'CD3'): 4, ('CD1', 'CD4'): 0, ('CD2', 'CD1'): 4, ('CD2', 'CD2'): 0, ('CD2', 'CD3'): 4, ('CD2', 'CD4'): 6, ('CD3', 'CD1'): 0, ('CD3', 'CD2'): 0, ('CD3', 'CD3'): 0, ('CD3', 'CD4'): 1, ('CD4', 'CD1'): 3, ('CD4', 'CD2'): 0, ('CD4', 'CD3'): 4, ('CD4', 'CD4'): 0}
 
 Results: 
 Number of nodes: 10.00 
@@ -161,6 +165,6 @@ Network density: 0.00
 Average clustering: 0.00
 Total cost: 0.00 [$] 
 Total revenue: 0.00 [$] 
-Total profit: 82825.00 [$] 
+Total profit: 165926.52 [$] 
 Number of frequencies: 0.00 
-Number of used aircraft: 12.00 
+Number of used aircraft: 28.00 

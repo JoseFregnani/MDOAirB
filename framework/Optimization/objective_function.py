@@ -34,6 +34,7 @@ from framework.Sizing.airplane_sizing_check import airplane_sizing
 import pandas as pd
 import pickle
 import numpy as np
+import csv
 from datetime import datetime
 
 from framework.utilities.logger import get_logger
@@ -90,11 +91,10 @@ def objective_function(x, vehicle):
             arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
                         'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
 
-            # departures = ['CD1', 'CD2', 'CD3']
-            # arrivals = ['CD1', 'CD2', 'CD3']
             # =============================================================================
             log.info('---- Start DOC calculation ----')
             # The DOC is estimated for each city pair and stored in the DOC dictionary
+            city_matrix_size = len(departures)*len(arrivals)
             DOC_ik = {}
             for i in departures:
                 for k in arrivals:
@@ -113,8 +113,13 @@ def objective_function(x, vehicle):
                         # print(DOC_ik[(i, k)])
                     else:
                         DOC_ik[(i, k)] = 0
-            doc_db = pd.DataFrame(DOC_ik, index=[0])
-            doc_db.to_csv('Database/DOC/DOC.csv')
+
+                    city_matrix_size = city_matrix_size - 1
+                    print('INFO >>>> city pairs remaining to finish DOC matrix fill: ',city_matrix_size)
+
+            with open('Database/DOC/DOC.csv', 'w') as f:
+                for key in DOC_ik.keys():
+                    f.write("%s,%s\n"%(key,DOC_ik[key]))
 
             log.info('Aircraft DOC matrix: {}'.format(DOC_ik))
             # =============================================================================
@@ -126,7 +131,7 @@ def objective_function(x, vehicle):
             log.info('Network profit [$USD]: {}'.format(profit))
             # =============================================================================
 
-            write_optimal_results(vehicle, profit)
+            write_optimal_results(profit, DOC_ik, vehicle)
             write_kml_results(arrivals, departures, profit, vehicle)
 
         else:
@@ -156,10 +161,10 @@ log.info('==== End network profit module ====')
 # global NN_induced, NN_wave, NN_cd0, NN_CL, num_Alejandro
 # num_Alejandro = 100000000000000000000000
 # global NN_induced, NN_wave, NN_cd0, NN_CL
-# from framework.baseline_aircraft_parameters import *
+# from framework.Database.Aircrafts.baseline_aircraft_parameters import *
 
 # x = [117, 8.204561481970153, 0.3229876327660606, 31, -4, 0.3896951781733875, 4.826332970409506, 1.0650795018081771, 27, 1485, 1.6, 101, 4, 2185, 41000, 0.78, 1, 1, 1, 1]
-# # x = [73, 8.210260198894748, 0.34131954092766925, 28, -5, 0.32042307969643524, 5.000456116634125, 1.337333818504011, 27, 1442, 1.6, 106, 6, 1979, 41000, 0.78, 1, 1, 1, 1]
+# x = [73, 8.210260198894748, 0.34131954092766925, 28, -5, 0.32042307969643524, 5.000456116634125, 1.337333818504011, 27, 1442, 1.6, 106, 6, 1979, 41000, 0.78, 1, 1, 1, 1]
 # x = [106, 9.208279852593964, 0.4714790814543369, 16, -3, 0.34987438995033143, 6.420120321538892, 1.7349297171205607, 29, 1461, 1.6, 74, 6, 1079, 41000, 0.78, 1, 1, 1, 1]
-# result = network_profit(x,vehicle)
+# result = objective_function(x, vehicle)
 # print(result)
