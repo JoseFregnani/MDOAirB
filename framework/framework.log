@@ -1,33 +1,249 @@
-2021-02-25 12:52:06,844 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
-2021-02-25 12:52:31,518 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
-2021-02-25 12:522021-02-25 12:58:45,405 - /home/alejandro/Documents/Github/MDOAirB/framework/Network/network_optimization     - INFO - Network optimization status: Optimal
-12:52:31,524 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
-2021-02-25 12:2021-02-25 12:55:45,224 - /home/alejandro/Documents/Github/MDOAirB/framework/Optimization/objective_function     - INFO - Aircraft DOC matrix: {('CD1', 'CD1'): 0, ('CD1', 'CD2'): 6999.388169685375, ('CD1', 'CD3'): 5483.934678747552, ('CD1', 'CD4'): 4887.212242950672, ('CD2', 'CD1'): 6999.388169685375, ('CD2', 'CD2'): 0, ('CD2', 'CD3'): 4755.585356078714, ('CD2', 'CD4'): 4913.600279102602, ('CD3', 'CD1'): 5483.934678747552, ('CD3', 'CD2'): 4755.585356078714, ('CD3', 'CD3'): 0, ('CD3', 'CD4'): 5111.818225596987, ('CD4', 'CD1'): 4887.212242950672, ('CD4', 'CD2'): 4913.600279102602, ('CD4', 'CD3'): 5111.818225596987, ('CD4', 'CD4'): 0}
-2021-02-25 12:55:45,230 - /home/alejandro/Documents/Github/MDOAirB/framework/Optimization/objective_function     - INFO - ---- Start Network Optimization ----
-2021-02-25 12:58:45,500 - /home/alejandro/Documents/Github/MDOAirB/framework/Optimization/objective_function     - INFO - Network profit [$USD]: 165926.5226222602
-2021-02-25 12:58:45,732 - /home/alejandro/Documents/Github/MDOAirB/framework/Optimization/objective_function     - INFO - Network profit excecution time: 0:08:31.905760
-thub/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:23.644825
-2021-02-25 12:53:28,698 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
-2021-02-25 12:53:46,724 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
-2021-02-25 12:53:46,725 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:18.026932
-2021-02-25 12:53:46,727 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
-2021-02-25 12:54:04,556 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
-2021-02-25 12:54:04,558 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:17.830825
-2021-02-25 12:54:04,574 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
-2021-02-25 12:54:20,095 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
-2021-02-25 12:54:20,097 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:15.522739
-2021-02-25 12:54:20,107 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
-2021-02-25 12:54:35,636 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
-2021-02-25 12:54:35,637 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:15.529737
-2021-02-25 12:54:35,658 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
-2021-02-25 12:54:52,379 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
-2021-02-25 12:54:52,382 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:16.723986
-2021-02-25 12:54:52,385 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
-2021-02-25 12:55:10,023 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
-2021-02-25 12:55:10,025 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:17.639837
-2021-02-25 12:55:10,029 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
-2021-02-25 12:55:28,462 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
-2021-02-25 12:55:28,463 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:18.433427
-2021-02-25 12:55:28,479 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
-2021-02-25 12:55:45,155 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
-2021-02-25 12:55:45,156 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:16.677006
+2021-02-25 17:12:09,721 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:12:51,946 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:122021-02-25 18:33:54,476 - /home/alejandro/Documents/Github/MDOAirB/framework/Network/network_optimization     - INFO - Network optimization status: Undefined
+:12:51,996 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:2021-02-25 18:26:01,996 - /home/alejandro/Documents/Github/MDOAirB/framework/Optimization/objective_function     - INFO - Aircraft DOC matrix: {('CD1', 'CD1'): 0, ('CD1', 'CD2'): 6999.388169685375, ('CD1', 'CD3'): 5483.934678747552, ('CD1', 'CD4'): 4887.212242950672, ('CD1', 'CD5'): 12891.892185900408, ('CD1', 'CD6'): 10318.668940707073, ('CD1', 'CD7'): 9283.060223347446, ('CD1', 'CD8'): 10290.57214940555, ('CD1', 'CD9'): 6740.284466125048, ('CD1', 'CD10'): 4139.932490153178, ('CD2', 'CD1'): 6999.388169685375, ('CD2', 'CD2'): 0, ('CD2', 'CD3'): 4755.585356078714, ('CD2', 'CD4'): 4913.600279102602, ('CD2', 'CD5'): 11462.068848379567, ('CD2', 'CD6'): 10726.885290499287, ('CD2', 'CD7'): 13077.982408706854, ('CD2', 'CD8'): 5483.934678747552, ('CD2', 'CD9'): 11717.443147512146, ('CD2', 'CD10'): 8052.109886260892, ('CD3', 'CD1'): 5483.934678747552, ('CD3', 'CD2'): 4755.585356078714, ('CD3', 'CD3'): 0, ('CD3', 'CD4'): 5111.818225596987, ('CD3', 'CD5'): 10079.97723600175, ('CD3', 'CD6'): 8533.315809551608, ('CD3', 'CD7'): 10374.905729806867, ('CD3', 'CD8'): 8024.323417778858, ('CD3', 'CD9'): 9897.756551463312, ('CD3', 'CD10'): 5684.365544353265, ('CD4', 'CD1'): 4887.212242950672, ('CD4', 'CD2'): 4913.600279102602, ('CD4', 'CD3'): 5111.818225596987, ('CD4', 'CD4'): 0, ('CD4', 'CD5'): 13178.164135158133, ('CD4', 'CD6'): 11433.639154962646, ('CD4', 'CD7'): 11856.98825387288, ('CD4', 'CD8'): 7699.227924045371, ('CD4', 'CD9'): 9310.943962698586, ('CD4', 'CD10'): 6604.288669374507, ('CD5', 'CD1'): 12891.892185900408, ('CD5', 'CD2'): 11462.068848379567, ('CD5', 'CD3'): 10079.97723600175, ('CD5', 'CD4'): 13178.164135158133, ('CD5', 'CD5'): 0, ('CD5', 'CD6'): 5724.534915577886, ('CD5', 'CD7'): 12141.438973702265, ('CD5', 'CD8'): 13120.846107151583, ('CD5', 'CD9'): 15870.90775734811, ('CD5', 'CD10'): 11433.639154962646, ('CD6', 'CD1'): 10318.668940707073, ('CD6', 'CD2'): 10726.885290499287, ('CD6', 'CD3'): 8533.315809551608, ('CD6', 'CD4'): 11433.639154962646, ('CD6', 'CD5'): 5724.534915577886, ('CD6', 'CD6'): 0, ('CD6', 'CD7'): 8477.986105407002, ('CD6', 'CD8'): 13378.873332670433, ('CD6', 'CD9'): 12440.688029856676, ('CD6', 'CD10'): 8533.315809551608, ('CD7', 'CD1'): 9283.060223347446, ('CD7', 'CD2'): 13077.982408706854, ('CD7', 'CD3'): 10374.905729806867, ('CD7', 'CD4'): 11856.98825387288, ('CD7', 'CD5'): 12141.438973702265, ('CD7', 'CD6'): 8477.986105407002, ('CD7', 'CD7'): 0, ('CD7', 'CD8'): 16496.689107389087, ('CD7', 'CD9'): 7969.124415515195, ('CD7', 'CD10'): 7272.725923117168, ('CD8', 'CD1'): 10290.57214940555, ('CD8', 'CD2'): 5483.934678747552, ('CD8', 'CD3'): 8024.323417778858, ('CD8', 'CD4'): 7699.227924045371, ('CD8', 'CD5'): 13120.846107151583, ('CD8', 'CD6'): 13378.873332670433, ('CD8', 'CD7'): 16496.689107389087, ('CD8', 'CD8'): 0, ('CD8', 'CD9'): 15007.50192080664, ('CD8', 'CD10'): 11433.639154962646, ('CD9', 'CD1'): 6740.284466125048, ('CD9', 'CD2'): 11717.443147512146, ('CD9', 'CD3'): 9897.756551463312, ('CD9', 'CD4'): 9310.943962698586, ('CD9', 'CD5'): 15870.90775734811, ('CD9', 'CD6'): 12440.688029856676, ('CD9', 'CD7'): 7969.124415515195, ('CD9', 'CD8'): 15007.50192080664, ('CD9', 'CD9'): 0, ('CD9', 'CD10'): 6617.8882810363775, ('CD10', 'CD1'): 4139.932490153178, ('CD10', 'CD2'): 8052.109886260892, ('CD10', 'CD3'): 5684.365544353265, ('CD10', 'CD4'): 6604.288669374507, ('CD10', 'CD5'): 11433.639154962646, ('CD10', 'CD6'): 8533.315809551608, ('CD10', 'CD7'): 7272.725923117168, ('CD10', 'CD8'): 11433.639154962646, ('CD10', 'CD9'): 6617.8882810363775, ('CD10', 'CD10'): 0}
+2021-02-25 18:26:11,518 - /home/alejandro/Documents/Github/MDOAirB/framework/Optimization/objective_function     - INFO - ---- Start Network Optimization ----
+O - ---- Start DOC mission function ----
+2021-02-25 17:18:41,687 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:18:41,687 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:41.435833
+2021-02-25 17:18:41,693 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:19:09,519 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:19:09,521 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:27.828109
+2021-02-25 17:19:09,528 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:19:37,904 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:19:37,906 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:28.377723
+2021-02-25 17:19:37,913 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:20:18,308 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:20:18,311 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:40.397979
+2021-02-25 17:20:18,319 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:20:59,700 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:20:59,701 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:41.382594
+2021-02-25 17:20:59,707 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:21:41,926 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:21:41,929 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:42.221742
+2021-02-25 17:21:41,947 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:22:08,825 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:22:08,828 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:26.880847
+2021-02-25 17:22:08,834 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:22:50,214 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:22:50,217 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:41.382694
+2021-02-25 17:22:50,224 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:23:31,288 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:23:31,297 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:41.073430
+2021-02-25 17:23:31,331 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:23:59,488 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:23:59,491 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:28.159723
+2021-02-25 17:23:59,498 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:24:27,634 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:24:27,636 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:28.138355
+2021-02-25 17:24:27,679 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:24:53,699 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:24:53,701 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:26.022093
+2021-02-25 17:24:53,744 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:25:33,636 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:25:33,638 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:39.896950
+2021-02-25 17:25:33,645 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:26:16,154 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:26:16,158 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:42.512937
+2021-02-25 17:26:16,166 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:26:55,866 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:26:55,868 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:39.702243
+2021-02-25 17:26:55,876 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:27:35,670 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:27:35,671 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:39.795580
+2021-02-25 17:27:35,694 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:28:18,427 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:28:18,428 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:42.733718
+2021-02-25 17:28:18,434 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:28:46,289 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:28:46,293 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:27.858277
+2021-02-25 17:28:46,328 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:29:14,261 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:29:14,261 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:27.933294
+2021-02-25 17:29:14,267 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:29:42,592 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:29:42,594 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:28.327087
+2021-02-25 17:29:42,600 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:30:10,172 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:30:10,175 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:27.574568
+2021-02-25 17:30:10,212 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:30:52,144 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:30:52,145 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:41.933258
+2021-02-25 17:30:52,179 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:31:34,282 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:31:34,285 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:42.105675
+2021-02-25 17:31:34,292 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:32:17,548 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:32:17,550 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:43.257845
+2021-02-25 17:32:17,558 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:32:57,831 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:32:57,833 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:40.275085
+2021-02-25 17:32:57,845 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:33:41,203 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:33:41,212 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:43.367428
+2021-02-25 17:33:41,219 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:34:23,698 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:34:23,700 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:42.481120
+2021-02-25 17:34:23,710 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:35:02,790 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:35:02,793 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:39.083528
+2021-02-25 17:35:02,799 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:35:40,432 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:35:40,434 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:37.635028
+2021-02-25 17:35:40,446 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:36:18,033 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:36:18,034 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:37.587708
+2021-02-25 17:36:18,040 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:36:57,761 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:36:57,762 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:39.722052
+2021-02-25 17:36:57,768 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:37:23,713 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:37:23,714 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:25.945711
+2021-02-25 17:37:23,748 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:38:02,819 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:38:02,821 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:39.072896
+2021-02-25 17:38:02,828 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:38:43,686 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:38:43,687 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:40.858447
+2021-02-25 17:38:43,693 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:39:27,081 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:39:27,083 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:43.390011
+2021-02-25 17:39:27,112 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:40:06,782 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:40:06,783 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:39.671590
+2021-02-25 17:40:06,789 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:40:49,811 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:40:49,811 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:43.022300
+2021-02-25 17:40:49,824 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:41:30,707 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:41:30,708 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:40.884426
+2021-02-25 17:41:30,717 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:42:13,146 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:42:13,147 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:42.430412
+2021-02-25 17:42:13,153 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:42:55,196 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:42:55,221 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:42.068588
+2021-02-25 17:42:55,240 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:43:23,593 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:43:23,595 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:28.354773
+2021-02-25 17:43:23,602 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:44:04,658 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:44:04,662 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:41.060234
+2021-02-25 17:44:04,670 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:44:46,715 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:44:46,716 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:42.045605
+2021-02-25 17:44:46,762 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:45:29,056 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:45:29,058 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:42.295710
+2021-02-25 17:45:29,067 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:46:10,689 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:46:10,691 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:41.624020
+2021-02-25 17:46:10,698 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:46:52,534 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:46:52,536 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:41.837253
+2021-02-25 17:46:52,550 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:47:34,182 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:47:34,185 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:41.634483
+2021-02-25 17:47:34,192 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:48:15,276 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:48:15,278 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:41.085784
+2021-02-25 17:48:15,286 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:48:54,979 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:48:54,982 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:39.696232
+2021-02-25 17:48:54,989 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:49:36,474 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:49:36,476 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:41.486939
+2021-02-25 17:49:36,483 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:50:20,606 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:50:20,606 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:44.123335
+2021-02-25 17:50:20,613 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:51:00,627 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:51:00,629 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:40.015855
+2021-02-25 17:51:00,634 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:51:40,016 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:51:40,016 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:39.381652
+2021-02-25 17:51:40,029 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:52:21,579 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:52:21,581 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:41.551576
+2021-02-25 17:52:21,589 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:53:04,111 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:53:04,114 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:42.523619
+2021-02-25 17:53:04,120 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:53:31,779 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:53:31,781 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:27.661352
+2021-02-25 17:53:31,788 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:54:11,217 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:54:11,218 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:39.429668
+2021-02-25 17:54:11,223 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:54:51,432 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:54:51,434 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:40.210501
+2021-02-25 17:54:51,442 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:55:33,968 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:55:33,970 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:42.528055
+2021-02-25 17:55:33,978 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:56:16,200 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:56:16,200 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:42.221636
+2021-02-25 17:56:16,206 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:56:55,894 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:56:55,897 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:39.691158
+2021-02-25 17:56:55,943 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:57:36,924 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:57:36,926 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:40.983233
+2021-02-25 17:57:36,934 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:58:17,027 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:58:17,031 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:40.096934
+2021-02-25 17:58:17,039 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:59:00,284 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:59:00,285 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:43.245640
+2021-02-25 17:59:00,290 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 17:59:39,182 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 17:59:39,185 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:38.894590
+2021-02-25 17:59:39,212 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 18:00:19,745 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 18:00:19,746 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:40.533493
+2021-02-25 18:00:19,752 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 18:01:03,569 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 18:01:03,571 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:43.818853
+2021-02-25 18:01:03,576 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 18:01:44,029 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 18:01:44,032 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:40.455418
+2021-02-25 18:01:44,064 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 18:02:25,878 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 18:02:25,880 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:41.815613
+2021-02-25 18:02:25,905 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 18:03:08,579 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 18:03:08,581 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:42.676008
+2021-02-25 18:03:08,590 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 18:03:49,188 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 18:03:49,188 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:40.598655
+2021-02-25 18:03:49,195 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 18:04:31,223 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 18:04:31,226 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:42.031346
+2021-02-25 18:04:31,238 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 18:05:08,247 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 18:05:08,248 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:37.009483
+2021-02-25 18:05:08,253 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 18:05:47,728 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 18:05:47,730 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:39.476680
+2021-02-25 18:05:47,762 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 18:06:15,457 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 18:06:15,460 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:27.698256
+2021-02-25 18:06:15,466 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 18:06:56,558 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 18:06:56,561 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:41.095347
+2021-02-25 18:06:56,593 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 18:07:38,319 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 18:07:38,322 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:41.728396
+2021-02-25 18:07:38,329 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 18:08:21,341 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 18:08:21,343 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:43.014769
+2021-02-25 18:08:21,371 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 18:09:02,294 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 18:09:02,296 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:40.925333
+2021-02-25 18:09:02,328 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 18:09:42,161 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 18:09:42,164 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:39.835761
+2021-02-25 18:09:42,179 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
+2021-02-25 18:10:24,022 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
+2021-02-25 18:10:24,023 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:41.844011
