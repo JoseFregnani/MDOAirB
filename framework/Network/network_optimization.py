@@ -27,7 +27,8 @@ from collections import defaultdict
 import numpy as np
 from pulp import *
 import pandas as pd
-
+import csv
+import sys 
 from framework.Economics.revenue import revenue
 from framework.utilities.logger import get_logger
 # =============================================================================
@@ -41,18 +42,32 @@ log = get_logger(__file__.split('.')[0])
 log.info('==== Start network optimization module ====')
 
 
-def network_optimization(arrivals, departures, distances, demand, DOC, pax_capacity,vehicle):
+def network_optimization(arrivals, departures, distances, demand, pax_capacity,vehicle):
     # Definition of cities to be considered as departure_airport, first stop, final airport
     departure_airport = departures
     first_stop_airport = arrivals
     final_airport = departures
 
+    doc0 = np.load('Database/DOC/DOC.npy',allow_pickle=True)
+    doc0 = doc0.tolist() 
+
+    DOC = {}
+    for i in departures:
+        for k in arrivals:
+            if i != k:
+                DOC[(i, k)] = np.round(doc0[i][k])
+            else:
+                print(i)
+                print(k)
+                DOC[(i, k)] = np.round(doc0[i][k])
+
+
     results = vehicle['results']
-
+    # print(DOC)
     # Define minimization problem
-    problem = LpProblem("Network", LpMaximize)
+    prob = LpProblem("Network", LpMaximize)
 
-    pax_number = 0.8*pax_capacity
+    pax_number = int(0.9*pax_capacity)
     revenue_ik = defaultdict(dict)
     for i in departure_airport:
         for k in first_stop_airport:
@@ -93,7 +108,7 @@ def network_optimization(arrivals, departures, distances, demand, DOC, pax_capac
     # Objective function
     # =============================================================================
 
-    problem += lpSum(revenue_ik) - lpSum(nika[(i, k)]*2*DOC[(i, k)]
+    prob += lpSum(revenue_ik) - lpSum(nika[(i, k)]*2*DOC[(i, k)]
                                          for i in departure_airport for k in first_stop_airport if i != k)
     # =============================================================================
     # Constraints
@@ -103,7 +118,7 @@ def network_optimization(arrivals, departures, distances, demand, DOC, pax_capac
         for j in final_airport:
             for k in first_stop_airport:
                 if i != j:
-                    problem += lpSum(xijk[(i, j, k)]
+                    prob += lpSum(xijk[(i, j, k)]
                                      for k in first_stop_airport) == demand[i][j]
 
     # Capacity constraint I
@@ -111,7 +126,7 @@ def network_optimization(arrivals, departures, distances, demand, DOC, pax_capac
         for j in final_airport:
             for k in first_stop_airport:
                 if i != k:
-                    problem += lpSum(xijk[(i, j, k)]
+                    prob += lpSum(xijk[(i, j, k)]
                                      for j in final_airport) <= G[(i, k)]
 
     # Capacity constraint II
@@ -119,16 +134,15 @@ def network_optimization(arrivals, departures, distances, demand, DOC, pax_capac
         for j in final_airport:
             for k in first_stop_airport:
                 if k != j:
-                    problem += lpSum(xijk[(i, j, k)]
+                    prob += lpSum(xijk[(i, j, k)]
                                      for i in departure_airport) <= G[(j, k)]
 
     # =============================================================================
     # Solve linear programming problem (Network optimization)
     # =============================================================================
 
-    problem.solve(GLPK(msg=0, timeLimit=60*5))
-    log.info('Network optimization status: {}'.format(LpStatus[problem.status]))
-
+    prob.solve(GLPK(timeLimit=60*5))
+    log.info('Network optimization status: {}'.format(LpStatus[prob.status]))
     try:
         condition = LpStatus[prob.status]
         if condition != 'Optimal':
@@ -138,7 +152,7 @@ def network_optimization(arrivals, departures, distances, demand, DOC, pax_capac
 
     list_airplanes = []
     list_of_pax = []
-    for v in problem.variables():
+    for v in prob.variables():
         variable_name = v.name
         if variable_name.find('nika') != -1:
             list_airplanes.append(v.varValue)
@@ -171,7 +185,7 @@ def network_optimization(arrivals, departures, distances, demand, DOC, pax_capac
     list_of_pax_db.to_csv('Database/Network/pax.csv')
 
     results = vehicle['results']
-    profit = value(problem.objective)
+    profit = value(prob.objective)
     
     results['profit'] = profit
 
@@ -194,4 +208,41 @@ log.info('==== End network optimization module ====')
 # demand_db = pd.read_csv('Database//Demand/demand.csv')
 # demand_db = round(market_share*(demand_db.T))
 # demand = demand_db.to_dict()
+# from framework.Database.Aircrafts.baseline_aircraft_parameters import *
+
+# departures = ['CD1', 'CD2', 'CD3', 'CD4',
+#                 'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+# arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
+#             'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+
+# Load origin-destination distance matrix [nm]
+# distances_db = pd.read_csv('Database/Distance/distance.csv')
+# distances_db = (distances_db.T)
+# distances = distances_db.to_dict()  # Convert to dictionaty
+
+# market_share = 0.1
+# # Load dai
+# demand_db= pd.read_csv('Database/Demand/demand.csv')
+# demand_db= round(market_share*(demand_db.T))
+# demand = demand_db.to_dict()
+
+# df3 = pd.read_csv('Database/DOC/doc2.csv')
+# df3 = (df3.T)
+# doc0 = df3.to_dict()
+
+# DOC = {}
+# for i in departures:
+#     for k in arrivals:
+#         if i != k:
+#             DOC[(i, k)] = np.round(doc0[i][k])
+#         else:
+#             DOC[(i, k)] = np.round(doc0[i][k])
+
+# DOC = np.load('Database/DOC/DOC.npy',allow_pickle=True)
+# DOC = DOC.tolist() 
+# print(DOC)
+# pax_capacity = 101
+
+# network_optimization(arrivals, departures, distances, demand, DOC, pax_capacity,vehicle)
+
 

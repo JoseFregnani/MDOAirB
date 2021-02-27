@@ -97,6 +97,7 @@ def objective_function(x, vehicle):
             city_matrix_size = len(departures)*len(arrivals)
             DOC_ik = {}
             for i in departures:
+                DOC_ik[i] = {}
                 for k in arrivals:
                     if (i != k) and (distances[i][k] <= x[13]):
                         airport_departure['elevation'] = data_airports.loc[data_airports['APT2']
@@ -108,14 +109,17 @@ def objective_function(x, vehicle):
                         airport_destination['takeoff_field_length'] = data_airports.loc[data_airports['APT2']
                                                                                         == k, 'TORA'].iloc[0]
                         mission_range = distances[i][k]
-                        DOC_ik[(i, k)] = float(
+                        DOC_ik[i][k]= int(
                             mission(mission_range,vehicle))*distances[i][k]
+                        
                         # print(DOC_ik[(i, k)])
                     else:
-                        DOC_ik[(i, k)] = 0
+                        DOC_ik[i][k] = 0
 
                     city_matrix_size = city_matrix_size - 1
                     print('INFO >>>> city pairs remaining to finish DOC matrix fill: ',city_matrix_size)
+
+            np.save('Database/DOC/DOC.npy',DOC_ik)
 
             with open('Database/DOC/DOC.csv', 'w') as f:
                 for key in DOC_ik.keys():
@@ -126,7 +130,7 @@ def objective_function(x, vehicle):
             log.info('---- Start Network Optimization ----')
             # Network optimization that maximizes the network profit
             profit, vehicle = network_optimization(
-                arrivals, departures, distances, demand, DOC_ik, pax_capacity, vehicle)
+                arrivals, departures, distances, demand, pax_capacity, vehicle)
 
             log.info('Network profit [$USD]: {}'.format(profit))
             # =============================================================================
@@ -164,7 +168,7 @@ log.info('==== End network profit module ====')
 # from framework.Database.Aircrafts.baseline_aircraft_parameters import *
 
 # x = [117, 8.204561481970153, 0.3229876327660606, 31, -4, 0.3896951781733875, 4.826332970409506, 1.0650795018081771, 27, 1485, 1.6, 101, 4, 2185, 41000, 0.78, 1, 1, 1, 1]
-# x = [73, 8.210260198894748, 0.34131954092766925, 28, -5, 0.32042307969643524, 5.000456116634125, 1.337333818504011, 27, 1442, 1.6, 106, 6, 1979, 41000, 0.78, 1, 1, 1, 1]
-# x = [106, 9.208279852593964, 0.4714790814543369, 16, -3, 0.34987438995033143, 6.420120321538892, 1.7349297171205607, 29, 1461, 1.6, 74, 6, 1079, 41000, 0.78, 1, 1, 1, 1]
+# # x = [73, 8.210260198894748, 0.34131954092766925, 28, -5, 0.32042307969643524, 5.000456116634125, 1.337333818504011, 27, 1442, 1.6, 106, 6, 1979, 41000, 0.78, 1, 1, 1, 1]
+# # x = [106, 9.208279852593964, 0.4714790814543369, 16, -3, 0.34987438995033143, 6.420120321538892, 1.7349297171205607, 29, 1461, 1.6, 74, 6, 1079, 41000, 0.78, 1, 1, 1, 1]
 # result = objective_function(x, vehicle)
 # print(result)
