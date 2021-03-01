@@ -1,15 +1,9 @@
-## @ingroupMethods-Noise-Fidelity_One-Airframe
-# noise_clean_wing.py
-# 
-# Created:  Jun 2015, C. Ilario
-# Modified: Jan 2016, E. Botero
 
 # ----------------------------------------------------------------------        
 #   Imports
 # ----------------------------------------------------------------------    
 
 import numpy as np
-from SUAVE.Core import Units
 
 # ----------------------------------------------------------------------
 # Compute the clean wing noise
@@ -17,8 +11,7 @@ from SUAVE.Core import Units
 
 ## @ingroupMethods-Noise-Fidelity_One-Airframe
 def noise_clean_wing(S,b,ND,IsHorz,deltaw,velocity,viscosity,M,phi,theta,distance,frequency):
-    """ SUAVE.Methods.Noise.Fidelity_One.noise_clean_wing(S,b,ND,IsHorz,deltaw,velocity,viscosity,phi,theta,distance,frequency):
-            Computes the 1/3 octave band sound pressure level and the overall sound pressure level from the clean wing,
+    """ Computes the 1/3 octave band sound pressure level and the overall sound pressure level from the clean wing,
             for a wing with area S (sq.ft) and span B (ft).  ND is a constant set to 0 for clean wings and set to 1 for propeller
             airplanes, jet transports with numerous large trailing edge flap tracks, flaps extended, or slats extended. ISHORZ must be set to 1.
             This function can be used for the horizontal tail by inserting the appropriate tail area and span. For a vertical tail, its appropriate

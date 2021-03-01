@@ -28,6 +28,8 @@ TODO's:
 # =============================================================================
 # FUNCTIONS
 # =============================================================================
+kt_2_fts = 1.6878098571
+
 
 def noise_trailing_edge_flap (velocity,mach,phi,theta,distance,frequency,vehicle):
     """ Calculates the noise from the flap trailing edge as a 1/3 octave band sound pressure level.
@@ -51,7 +53,7 @@ def noise_trailing_edge_flap (velocity,mach,phi,theta,distance,frequency,vehicle
     wing = vehicle['wing']
     #Process
     G      = np.zeros(24)
-    kt_2_fts = 1.6878098571
+    
 
     test   = frequency*cf/(velocity/Units.ft*(1-M*np.cos(theta)))
 
