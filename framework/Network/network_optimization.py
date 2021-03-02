@@ -42,7 +42,7 @@ log = get_logger(__file__.split('.')[0])
 log.info('==== Start network optimization module ====')
 
 
-def network_optimization(arrivals, departures, distances, demand, pax_capacity,vehicle):
+def network_optimization(arrivals, departures, distances, demand, pax_capacity, vehicle):
     # Definition of cities to be considered as departure_airport, first stop, final airport
     departure_airport = departures
     first_stop_airport = arrivals

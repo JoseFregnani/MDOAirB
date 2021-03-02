@@ -1,57 +1,77 @@
-# ----------------------------------------------------------------------        
-#   Imports
-# ----------------------------------------------------------------------    
+"""
+File name :
+Author    : 
+Email     : aarc.88@gmail.com
+Date      : 
+Last edit :
+Language  : Python 3.8 or >
+Aeronautical Institute of Technology - Airbus Brazil
+
+Description:
+    -
+Inputs:
+    - main_landing_gear['tyre_diameter']         - Landing gear tyre diameter                                     [ft]
+    - main_landing_gear['piston_length']         - Lading gear strut length                                       [ft]
+    - main_landing_gear['unit_wheels_number']    - Number of main_landing_gear['unit_wheels_number'] per unit                                      [-]
+    - mach         - Mach number                                                    [-]
+    - velocity  - Aircraft speed                                                 [kts]
+    - phi       - Azimuthal angle                                                [rad]
+    - theta     - Polar angle                                                    [rad]
+    - distance  - Distance from airplane to observer, evaluated at retarded time [ft]
+    - frequemcy - Frequency array                                                [Hz] 
+Outputs:
+    - SPL           - Sound Pressure Level of the landing gear         [dB]
+    - OASPL         - Overall Sound Pressure Level of the landing gear [dB]
+TODO's:
+    -
+
+"""
+# =============================================================================
+# IMPORTS
+# =============================================================================
 import numpy as np
-# ----------------------------------------------------------------------
-# Compute the main and nose landing gear noise
-# ----------------------------------------------------------------------
+# =============================================================================
+# CLASSES
+# =============================================================================
 
-## @ingroupMethods-Noise-Fidelity_One-Airframe
-def noise_landing_gear (D,H,wheels,M,velocity,phi,theta,distance,frequency):
-    """Calculates the Landing gear 1/3 octave band sound pressure level and overall sound pressure level
-            for a tyre diameter D, a strut length H and WHEELS number of  wheels per unit.
-
-            Inputs:
-                    D                          - Landing gear tyre diameter [ft]
-                    H                          - Lading gear strut length [ft]
-                    wheels                     - Number of wheels per unit
-                    M                          - Mach number
-                    velocity                   - Aircraft speed [kts]
-                    phi                        - Azimuthal angle [rad]
-                    theta                      - Polar angle [rad]
-                    distance                   - Distance from airplane to observer, evaluated at retarded time [ft]
-                    frequemcy                  - Frequency array [Hz]
+# =============================================================================
+# FUNCTIONS
+# =============================================================================
+kts_2_fts = 1.6878098571
 
 
+def noise_landing_gear(mach, V_cas, phi, theta, distance, frequency, vehicle):
 
-            Outputs: One Third Octave Band SPL [dB]
-                SPL                              - Sound Pressure Level of the landing gear [dB]
-                OASPL                            - Overall Sound Pressure Level of the landing gear [dB]
+    nose_landing_gear = vehicle['nose_langing_gear']
+    main_landing_gear = vehicle['main_langing_gear']
 
-            Assumptions:
-                Correlation based."""
+    velocity_fts = V_cas*kts_2_fts
+    velocity_kts = V_cas
 
-
-    #Process
-    
-    velocity_fts = velocity/Units.ft
-    velocity_kts = velocity/Units.knots
-
-    if (wheels==1 or wheels==2):
-        G1 = 13+np.log10(4.5*((frequency*D/(velocity_fts*(1-M*np.cos(theta))))**2)* \
-            (12.5+((frequency*D/(velocity_fts*(1-M*np.cos(theta))))**2))**-2.25)
-        G2 = (13+np.log10(2.0*(frequency*D/(velocity_fts*(1-M*np.math.cos(theta)))**2.0))* \
-            (30+(frequency*D/(velocity_fts*(1-M*np.cos(theta))))**8)**-1*(0.34*H/D))* \
+    if (main_landing_gear['unit_wheels_number'] == 1 or main_landing_gear['unit_wheels_number'] == 2):
+        G1 = 13+np.log10(4.5*((frequency*main_landing_gear['tyre_diameter']/(velocity_fts*(1-mach*np.cos(theta))))**2) *
+                         (12.5+((frequency*main_landing_gear['tyre_diameter']1/(velocity_fts*(1-mach*np.cos(theta))))**2))**-2.25)
+        G2 = (13+np.log10(2.0*(frequency*main_landing_gear['tyre_diameter']/(velocity_fts*(1-mach*np.math.cos(theta)))**2.0)) *
+              (30+(frequency*main_landing_gear['tyre_diameter']/(velocity_fts*(1-mach*np.cos(theta))))**8)**-1*(0.34*main_landing_gear['piston_length']/main_landing_gear['tyre_diameter'])) * \
             (np.math.sin(phi))**2
-    elif wheels==4:
-        G1 = 12+np.log10(frequency*D/(velocity_fts*(1-M*np.cos(theta))))**2 \
-        *(0.4+(frequency*D/(velocity_fts*(1-M*np.cos(theta))))**2)**(-1.6)
-        G2 = (12+np.log10(7.0*(frequency*D/(velocity_fts*(1-M*np.cos(theta))))**3.0 * \
-            (1.06+(frequency*D/(velocity_fts*(1-M*np.cos(theta))))**2)**(-3.0)*(1)))*(np.sin(phi))**2
+    elif main_landing_gear['unit_wheels_number'] == 4:
+        G1 = 12+np.log10(frequency*main_landing_gear['tyre_diameter']/(velocity_fts*(1-mach*np.cos(theta))))**2 \
+            * (0.4+(frequency*main_landing_gear['tyre_diameter']/(velocity_fts*(1-mach*np.cos(theta))))**2)**(-1.6)
+        G2 = (12+np.log10(7.0*(frequency*main_landing_gear['tyre_diameter']/(velocity_fts*(1-mach*np.cos(theta))))**3.0 *
+                          (1.06+(frequency*main_landing_gear['tyre_diameter']/(velocity_fts*(1-mach*np.cos(theta))))**2)**(-3.0)*(1)))*(np.sin(phi))**2
 
+    G3 = 12.79+np.log10(0.34*main_landing_gear['piston_length'] /
+                        main_landing_gear['tyre_diameter'])*(np.sin(phi))**2
+    SPL = 60.*np.log10(velocity_kts/194.0)+20.*np.log10(
+        main_landing_gear['tyre_diameter']/distance)+10.*np.log10(10.0**G1+10.0**G2)
+    OASPL = 60.*np.log10(velocity_kts/194.0)+20.*np.log10(
+        main_landing_gear['tyre_diameter']/distance)+10.*np.log10(10.0**12.52+10.0**G3)
 
-    G3    = 12.79+np.log10(0.34*H/D)*(np.sin(phi))**2
-    SPL   = 60.*np.log10(velocity_kts/194.0)+20.*np.log10(D/distance)+10.*np.log10(10.0**G1+10.0**G2)
-    OASPL = 60.*np.log10(velocity_kts/194.0)+20.*np.log10(D/distance)+10.*np.log10(10.0**12.52+10.0**G3)
+    return SPL
+# =============================================================================
+# MAIN
+# =============================================================================
 
-    return(SPL)
+# =============================================================================
+# TEST
+# =============================================================================

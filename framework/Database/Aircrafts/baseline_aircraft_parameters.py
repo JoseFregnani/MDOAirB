@@ -124,10 +124,19 @@ wing['engine_position_chord'] = 0
 
 wing['mean_aerodynamic_chord'] = 3.53
 wing['wetted_area'] = 168.6500  # [m2]
+
 wing['flap_deflection_takeoff'] = 35  # [deg]
 wing['flap_deflection_landing'] = 45  # [deg]
 wing['flap_span'] = 0.75
 wing['flap_area'] = 0
+wing['flap_chord'] = 0
+wing['flap_slots_number'] = 2
+
+wing['slat_span'] = 0.75
+wing['slat_area'] = 0
+wing['slat_chord'] = 0
+wing['slat_slots_number'] = 1
+
 wing['mean_aerodynamic_chord_yposition'] = 0
 wing['weight'] = 0
 wing['mean_thickness'] = 0.11
@@ -284,6 +293,7 @@ nose_landing_gear['weight'] = 0
 nose_landing_gear['tyre_diameter'] = 0
 nose_landing_gear['piston_length'] = 0
 nose_landing_gear['center_of_gravity_xposition'] = 0
+nose_landing_gear['unit_wheels_number'] = 2
 
 main_landing_gear = {}
 main_landing_gear['pressure'] = 200
@@ -292,6 +302,7 @@ main_landing_gear['weight'] = 0
 main_landing_gear['tyre_diameter'] = 0
 main_landing_gear['piston_length'] = 0
 main_landing_gear['center_of_gravity_xposition'] = 0
+main_landing_gear['unit_wheels_number'] = 2
 
 systems = {}
 systems['fuel_weight'] = 0

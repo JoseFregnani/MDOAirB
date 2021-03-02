@@ -653,6 +653,8 @@ def wing_structural_layout(vehicle, xutip, yutip,
 
     wing['flap_area'] = PolyArea(xflape, yflape)
 
+    wing['flap_chord'] = wing['flap_area']/(wing['flap_span']*(wing['span']/2))
+
 
     # Insere nervura auxiliar para o flape externo
     xnervaf = []
