@@ -6,9 +6,7 @@ PhD_Optimization_Framework.egg-info/dependency_links.txt
 PhD_Optimization_Framework.egg-info/top_level.txt
 framework/__init__.py
 framework/__version__.py
-framework/baseline_aircraft_parameters.py
 framework/file_template.py
-framework/optimization.py
 framework/profile_code.py
 framework/Aerodynamics/__init__.py
 framework/Aerodynamics/aerodynamic_coefficients.py
@@ -24,16 +22,21 @@ framework/Economics/__init__.py
 framework/Economics/crew_salary.py
 framework/Economics/direct_operational_cost.py
 framework/Economics/net_present_value.py
-framework/Economics/network_profit.py
 framework/Economics/revenue.py
 framework/Network/__init__.py
 framework/Network/density_table_plot.py
 framework/Network/network_optimization.py
 framework/Network/plot_network.py
 framework/Noise/__init__.py
-framework/Noise/aircraft_noise.py
-framework/Noise/approach_noise.py
+framework/Noise/noise_airframe_Fink.py
+framework/Noise/noise_clean_wing.py
+framework/Noise/noise_landing_gear.py
+framework/Noise/noise_leading_edge_slat.py
+framework/Noise/noise_trailing_edge_flap.py
 framework/Noise/takeoff_noise.py
+framework/Optimization/__init__.py
+framework/Optimization/main.py
+framework/Optimization/objective_function.py
 framework/Performance/__init__.py
 framework/Performance/Analysis/__init__.py
 framework/Performance/Analysis/balanced_field_length.py
@@ -87,7 +90,6 @@ framework/Sizing/Geometry/wetted_area_wing.py
 framework/Sizing/Geometry/wing_structural_layout_fuel_storage.py
 framework/Stability/__init__.py
 framework/Test/__init__.py
-framework/Test/main.py
 framework/Test/test_network_optimization.py
 framework/Test/test_wing_load.py
 framework/Weights/__init__.py
@@ -96,3 +98,4 @@ framework/Weights/inertias.py
 framework/Weights/weights.py
 framework/utilities/__init__.py
 framework/utilities/logger.py
+framework/utilities/output.py

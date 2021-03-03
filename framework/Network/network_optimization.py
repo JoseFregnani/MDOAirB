@@ -57,8 +57,6 @@ def network_optimization(arrivals, departures, distances, demand, pax_capacity, 
             if i != k:
                 DOC[(i, k)] = np.round(doc0[i][k])
             else:
-                print(i)
-                print(k)
                 DOC[(i, k)] = np.round(doc0[i][k])
 
 
@@ -141,7 +139,7 @@ def network_optimization(arrivals, departures, distances, demand, pax_capacity, 
     # Solve linear programming problem (Network optimization)
     # =============================================================================
 
-    prob.solve(GLPK(timeLimit=60*5))
+    prob.solve(GLPK(timeLimit=60*3))
     log.info('Network optimization status: {}'.format(LpStatus[prob.status]))
     try:
         condition = LpStatus[prob.status]

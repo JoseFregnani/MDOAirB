@@ -24,7 +24,7 @@ import pandas as pd
 import numpy as np
 import json
 from datetime import datetime
-
+from framework.utilities.logger import get_logger
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -32,9 +32,13 @@ from datetime import datetime
 # =============================================================================
 # FUNCTIONS
 # =============================================================================
+log = get_logger(__file__.split('.')[0])
+
 def write_optimal_results(profit, DOC_ik, vehicle):
 
-    start_time = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
+    log.info('==== Start writing aircraft results ====')
+
+    start_time = datetime.today().strftime('%Y-%m-%d-%H%M')
 
     aircraft = vehicle['aircraft']
     wing = vehicle['wing']
@@ -55,7 +59,8 @@ def write_optimal_results(profit, DOC_ik, vehicle):
     airport_destination = vehicle['airport_destination']
 
     # write string one by one adding newline
-    with open('Database/Results/Aircrafts/acft_' + str(profit) + '_' + str(start_time) +'.txt','a') as output:
+    with open(r'Database/Results/Aircrafts/acft_' + str(profit) + '_' + str(start_time) +'.txt','a') as output:
+    # with open('Database/Results/Aircrafts/acft_' + str(profit) +'.txt','a') as output:
         output.write(
             '======== Aircraft and network optimization results ========')
         output.write('\n\n')
@@ -325,19 +330,23 @@ def write_optimal_results(profit, DOC_ik, vehicle):
             'Number of frequencies: ' + str("{:.2f}".format(0)) + ' \n')
         output.write(
             'Number of used aircraft: ' + str("{:.2f}".format(results['aircrafts_used'])) + ' \n')
+    
+    log.info('==== End writing aircraft results ====')
 
     return
 
 
 def write_kml_results(arrivals, departures, profit, vehicle):
-    start_time = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
+    log.info('==== Start writing klm results ====')
+    start_time = datetime.today().strftime('%Y-%m-%d-%H%M')
 
     departures = departures
     arrivals = arrivals
 
     data_airports = pd.read_csv("Database/Airports/airports.csv")
     frequencies_db = np.load('Database/Network/frequencies.npy',allow_pickle='TRUE').item()
-    with open('Database/Results/Klm/acft_' + str(profit) + '_' + str(start_time) +'.kml','w') as output:
+    with open('Database/Results/Kml/acft_' + str(profit) + '_' + str(start_time) +'.kml','w') as output:
+    # with open(r'Database/Results/Klm/acft_' + str(profit) + '.kml','w') as output:
 
         output.write('<?xml version="1.0" encoding="UTF-8"?>\n')
         output.write('<kml xmlns="http://www.opengis.net/kml/2.2">\n')
@@ -370,6 +379,8 @@ def write_kml_results(arrivals, departures, profit, vehicle):
         output.write('       </Folder>\n')
         output.write('</Document>\n')
         output.write('</kml>\n')
+
+    log.info('==== End writing klm results ====')
 
     return
 # =============================================================================
