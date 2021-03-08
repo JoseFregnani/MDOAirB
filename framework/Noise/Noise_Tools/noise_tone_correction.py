@@ -8,11 +8,13 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This method calculates de correction for spectral irregularities by means of
+        a correction tone factor.
+    Adapted from SUAVE
 Inputs:
-    -
+    - SPL                     - Sound Pressure Level in 1/3 octave band
 Outputs:
-    -
+    - tone_correction_max     - Maximum tone correction for a time history signal
 TODO's:
     -
 

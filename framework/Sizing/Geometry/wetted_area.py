@@ -221,7 +221,7 @@ def wetted_area(vehicle):
     ############################# WING WETTED AREA ############################
     wing['semi_span'] = wing['span']/2
 
-    engine['diamater'] = engine['fan_diameter']/0.98  # [m]
+    engine['diameter'] = engine['fan_diameter']/0.98  # [m]
     engine['yposition'] = wing['semi_span_kink']
 
     (vehicle, xutip, yutip, xltip, yltip,
@@ -342,7 +342,7 @@ def wetted_area(vehicle):
                    )  # corda da seccao do motor
     elif engine['position'] == 2:
         engine['yposition'] = fuselage['diameter']/2+0.65 * \
-            engine['diamater']*np.cos(15*deg_to_rad)
+            engine['diameter']*np.cos(15*deg_to_rad)
         wing_engine_external_yposition = engine['yposition']
     elif engine['position'] == 3:
         # livro 6 pag 111 fig 4.41 x/l=0.6
@@ -369,15 +369,15 @@ def wetted_area(vehicle):
 
     ########################## Engine #########################################
     # aux1=(1-2/auxdiv)**2/3
-    # engine.wing_wetted_area=pi*engine['diamater']*engine_length*aux1*(1+1/((engine_length/engine['diamater'])**2)) # [m2]
+    # engine.wing_wetted_area=pi*engine['diameter']*engine_length*aux1*(1+1/((engine_length/engine['diameter'])**2)) # [m2]
     ln = 0.50*engine['length']  # Fan cowling
     ll = 0.25*ln
     lg = 0.40*engine['length']  # Gas generator
     lp = 0.10*engine['length']  # Plug
     esp = 0.12
-    Dn = (1.+esp)*engine['diamater']
-    Dhl = engine['diamater']
-    Def = (1+esp/2)*engine['diamater']
+    Dn = (1.+esp)*engine['diameter']
+    Dhl = engine['diameter']
+    Def = (1+esp/2)*engine['diameter']
     Dg = 0.50*Dn
     Deg = 0.90*Dg
     Dp = lp/2
@@ -404,7 +404,7 @@ def wetted_area(vehicle):
             (1+pylon['taper_ratio']+pylon['taper_ratio']**2) / \
             (1+pylon['taper_ratio'])  # mac
         # x/l=-0.6 e z/d = 0.85 figure 4.41 pag 111
-        pylon['span'] = 0.85*engine['diamater'] - 0.5*engine['diamater']
+        pylon['span'] = 0.85*engine['diameter'] - 0.5*engine['diameter']
         pylon['xposition'] = 0.6*wing['engine_position_chord']
         pylon['aspect_ratio'] = pylon['span']/pylon['mean_geometrical_chord']
         pylon['area'] = pylon['span']*pylon['mean_geometrical_chord']
@@ -424,7 +424,7 @@ def wetted_area(vehicle):
             (1+pylon['taper_ratio']+pylon['taper_ratio']**2) / \
             (1+pylon['taper_ratio'])  # mac
         # t/d=0.65 figure 4.42 pag 113  ang=15
-        pylon['span'] = 0.65*engine['diamater']-engine['diamater']/2
+        pylon['span'] = 0.65*engine['diameter']-engine['diameter']/2
         pylon['aspect_ratio'] = pylon['span']/pylon['mean_geometrical_chord']
         pylon['area'] = pylon['span']*pylon['mean_geometrical_chord']
         pylon['sweep_c_4'] = 0
@@ -439,7 +439,7 @@ def wetted_area(vehicle):
             (1+pylon['taper_ratio']+pylon['taper_ratio']**2) / \
             (1+pylon['taper_ratio'])  # mac
         # t/d=0.65 figure 4.42 pag 113  ang=15
-        pylon['span'] = 0.65*engine['diamater']-engine['diamater']/2
+        pylon['span'] = 0.65*engine['diameter']-engine['diameter']/2
         pylon['aspect_ratio'] = pylon['span']/pylon['mean_geometrical_chord']
         pylon['area'] = pylon['span']*pylon['mean_geometrical_chord']
         pylon['sweep_c_4'] = 0
@@ -454,7 +454,7 @@ def wetted_area(vehicle):
             (1+pylon['taper_ratio']+pylon['taper_ratio']**2) / \
             (1+pylon['taper_ratio'])  # mac
         # x/l=-0.6 e z/d = 0.85 figure 4.41 pag 111
-        pylon['span'] = 0.85*engine['diamater'] - 0.5*engine['diamater']
+        pylon['span'] = 0.85*engine['diameter'] - 0.5*engine['diameter']
         pylon['xposition'] = 0.6*wing['engine_position_chord']
         pylon['aspect_ratio'] = pylon['span']/pylon['mean_geometrical_chord']
         pylon['area'] = pylon['span']*pylon['mean_geometrical_chord']
@@ -473,7 +473,7 @@ def wetted_area(vehicle):
             (1+pylon_out_taper_ratio+pylon_out_taper_ratio**2) / \
             (1+pylon_out_taper_ratio)  # mac
         # x/l=-0.6 e z/d = 0.85 figure 4.41 pag 111
-        ppylon_out_span = 0.85*engine['diamater'] - 0.5*engine['diamater']
+        ppylon_out_span = 0.85*engine['diameter'] - 0.5*engine['diameter']
         pylon_out_xposition = 0.6*wing_engine_external_position_chord
         pylon_out_aspect_ratio = ppylon_out_span/pylon_out_mean_geometrical_chord
         pylon_out_surface = ppylon_out_span*pylon_out_mean_geometrical_chord

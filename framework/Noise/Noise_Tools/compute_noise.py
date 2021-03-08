@@ -8,11 +8,12 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This method calculates approach noise of a turbofan aircraft. Adapted from SUAVE.
 Inputs:
-    -
+    - mission
+    - aircraft configuration 
 Outputs:
-    -
+    - SPL    -  [dB]
 TODO's:
     -
 
@@ -29,26 +30,6 @@ import numpy as np
 # FUNCTIONS
 # =============================================================================
 def compute_noise(config,noise_segment,noise_analyses):
-    """This method calculates approach noise of a turbofan aircraft
-            
-    Assumptions:
-        N/A
-
-    Source:
-        N/A 
-
-    Inputs:
-        mission
-        aircraft configuration 
-
-    Outputs: 
-        SPL    -  [dB]
-
-    Properties Used:
-        N/A 
-        
-    """ 
-    
     
     engine_flag    = config.engine_flag  #remove engine noise component from the approach segment 
     turbofan       = config.propulsors['turbofan']

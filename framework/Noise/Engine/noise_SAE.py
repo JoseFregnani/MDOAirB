@@ -8,11 +8,39 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This method predicts the free-field 1/3 Octave Band SPL of coaxial subsonic
+       jets for turbofan engines under the following conditions:
+       a) Flyover (observer on ground)
+       b) Static (observer on ground)
+       c) In-flight or in-flow (observer on airplane or in a wind tunnel)
+       Adapted from SUAVE.
 Inputs:
-    -
+    - Velocity_primary           - Primary jet flow velocity
+    - Temperature_primary        - Primary jet flow temperature
+    - Pressure_primary           - Primary jet flow pressure
+    - Area_primary               - Area of the primary nozzle
+    - Velocity_secondary         - Secondary jet flow velocity
+    - Temperature_secondary      - Secondary jet flow temperature
+    - Pressure_secondary         - Secondary jet flow pressure
+    - Area_secondary             - Area of the secondary nozzle
+    - AOA                        - Angle of attack
+    - Velocity_aircraft          - Aircraft velocity
+    - Altitude                   - Altitude
+    - N1                         - Fan rotational speed [rpm]
+    - EXA                        - Distance from fan face to fan exit/ fan diameter
+    - Plug_diameter              - Diameter of the engine external plug [m]
+    - Engine_height              - Engine centerline height above the ground plane
+    - distance_microphone        - Distance from the nozzle exhaust to the microphone
+    - angles                     - Array containing the desired polar angles
+    - atmosphere                 - Airport atmosphere (SUAVE type)
+    - altitude                   - Airport altitude
+    - delta_isa                  - ISA Temperature deviation
+
 Outputs:
-    -
+    - SPL_p                           - Sound Pressure Level of the primary jet
+    - SPL_s                           - Sound Pressure Level of the secondary jet
+    - SPL_m                           - Sound Pressure Level of the mixed jet
+    - SPL_total                       - Sound Pressure Level of the total jet noise 
 TODO's:
     -
 

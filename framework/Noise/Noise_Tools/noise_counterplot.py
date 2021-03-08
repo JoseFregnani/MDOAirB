@@ -8,11 +8,18 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This computes the geometric parameters for the noise tools at any microphone potsition, not only the certification points:
+    distance and emission angles for both polar and azimuthal angles.
+    Adapted from SUAVE
 Inputs:
-    -
+    - noise_segment	 - SUAVE type vehicle
+    - analyses
+    - config
+
 Outputs:
-    -
+    - dist            - Distance vector from the aircraft position in relation to the microphone coordinates,    [meters]
+    - theta           - Polar angle emission vector relatively to the aircraft to the microphone coordinates,    [rad]
+    - phi             - Azimuthal angle emission vector relatively to the aircraft to the microphone coordinates, [rad]
 TODO's:
     -
 

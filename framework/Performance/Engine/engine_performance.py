@@ -69,12 +69,12 @@ def turbofan(altitude, mach, throttle_position, vehicle):
 
     # ------ EFICIÊNCIAS ------------------------------------------------------
 
-    inlet_efficiency = 0.98
-    compressor_efficiency = 0.85
+    inlet_efficiency = 0.99
+    compressor_efficiency = 0.95
     combustion_chamber_efficiency = 0.99
-    turbine_efficiency = 0.90
-    nozzle_efficiency = 0.98
-    fan_efficiency = 0.97
+    turbine_efficiency = 0.98
+    nozzle_efficiency = 0.99
+    fan_efficiency = 0.90
 
     # Atualizado tabela acima em setembro de 2013 de acordo com as anotacoes
     # de aula do Ney
@@ -123,12 +123,18 @@ def turbofan(altitude, mach, throttle_position, vehicle):
     _, _, _, _, Cp_4, _, gamma_4, _ = FAIR(item=1, f=0, T=T0_13)
     del_h_c = Cp_4*T0_13/compressor_efficiency * \
         (compressor_pressure_ratio**((gamma_4-1)/gamma_4)-1)
+    tau_r_R = T0_0
+    pi_cl_R = fan_pressure_ratio
+    T_0R = T_0
     del_t_c = del_h_c/Cp_4
     T0_3 = T0_13 + del_t_c
     P0_3 = P0_13 * compressor_pressure_ratio
     T0_3_T0_13 = T0_3 / T0_13
 
     _, _, _, _, Cp_3, _, _, _ = FAIR(item=1, f=0, T=T0_3)
+
+    tau_cl_R = T0_13_T0_2
+    pi_ch_R = compressor_compression_rate
 
     # ----- COMBUSTOR ---------------------------------------------------------
     T0_4 = design_throttle_position * \
@@ -182,6 +188,12 @@ def turbofan(altitude, mach, throttle_position, vehicle):
         designpoint = 1
     else:
         designpoint = 0
+
+    T_0A = T_0
+    tau_r_A = T0_0
+    pi_cl_A = fan_pressure_ratio
+    tau_cl_A = T0_13_T0_2
+    pi_ch_A = compressor_pressure_ratio
 
     if not designpoint:
         # #########################################################################
@@ -240,6 +252,9 @@ def turbofan(altitude, mach, throttle_position, vehicle):
         T0_13_T0_2 = T0_13 / T0_2
         fan_pressure_ratio = (
             1-(1-T0_13_T0_2)*fan_efficiency)**(gamma_2/(gamma_2-1))
+        tau_r_A = T0_0
+        pi_cl_A = fan_pressure_ratio
+        T_0A = T_0
 
         # ----- COMPRESSOR --------------------------------------------------------
         del_h_c = del_h_ht
@@ -251,6 +266,9 @@ def turbofan(altitude, mach, throttle_position, vehicle):
         compressor_pressure_ratio = (
             1-(1-T0_3_T0_13)*compressor_efficiency)**(gamma_13/(gamma_13-1))
         T0_4_T0_3 = T0_4 / T0_3
+
+        tau_cl_A = T0_13_T0_2
+        pi_ch_A = compressor_pressure_ratio
 
         # ----- total pressures definition ----------------------------------------
         P0_13 = P0_2 * fan_pressure_ratio
@@ -286,18 +304,32 @@ def turbofan(altitude, mach, throttle_position, vehicle):
     fact1 = (gamma_exit-1)/gamma_exit
     uexit = np.sqrt(2*R/(gamma_exit-1)*gamma_exit*T0_8 *
                     nozzle_efficiency*(1-(1/npr)**fact1))  # ????
+    
+    N1ratio = ((T_0A*tau_r_A*pi_cl_A**((gamma-1)/gamma)-1)/(T_0R*tau_r_R*pi_cl_R**((gamma-1)/gamma)-1))**0.5
+    N1A = N1ratio*engine['RPM_ref_1']
+    N2ratio = ((T_0A*tau_r_A*tau_cl_A*pi_ch_A**((gamma-1)/gamma)-1)/(T_0R*tau_r_R*tau_cl_R*pi_ch_R**((gamma-1)/gamma)-1))**0.5
+    N2A = N2ratio**engine['RPM_ref_2']
+    
+    # Contribuição do núcleo --------------------------------------------------
+    npr = max((P0_8/P_0),1)                                    # definição da razão entre a pressão de saída do motor e a pressão ambiente
+    fact1 = (gamma_exit-1)/gamma_exit                                      # constante 1
+    u0_8 = np.sqrt((2*R/(gamma_exit-1))*(gamma_exit*T0_8*nozzle_efficiency)*(1-(1/npr)**fact1))
+     
 
     if (npr <= 1.893):
         pexit = P_0
     else:
         pexit = 0.52828*P0_8
 
-    fgros = uexit + (pexit-P_0)*a8/mdot/g
+    fgros = u0_8 + (pexit-P_0)*a8/mdot/g
 
     # ------ contribuição do fan -------------------------------------------
     snpr = P0_13 / P_0
     fact1 = (gamma-1)/gamma
     ues = np.sqrt(2*R/fact1*T0_13*nozzle_efficiency*(1-1/snpr**fact1))
+
+    uexit = np.sqrt(2*R/(gamma_exit-1)*gamma_exit*T0_8 *
+                    nozzle_efficiency*(1-(1/npr)**fact1))  # ????
 
     if (snpr <= 1.893):
         pfexit = P_0
@@ -329,6 +361,15 @@ def turbofan(altitude, mach, throttle_position, vehicle):
     force = fnet*mdot  # [tracao em Newtons]
     # [kg/h]   # correção de 15# baseado em dados de motores reais
     fuel_flow = 1.15*fuel_air*mdot*3600
+
+
+    engine['performance_parameters'] = np.array([force, fuel_flow, 0, 0, 0, 0, 0, 0, weight],dtype=object)
+    engine['total_pressures'] = np.array([P0_0, P0_1, P0_2, P0_3, P0_4, P0_5, P0_8, P0_13, P0_15],dtype=object)
+    engine['total_temperatures'] = np.array([T0_0, T0_1, T0_2, T0_3, T0_4, T0_5, T0_8, T0_13, T0_15],dtype=object)
+    engine['exit_areas'] = np.array([acore, a8, a8*bypass_ratio, 0, 0, 0, 0, 0, 0],dtype=object)
+    engine['fuel_flows'] = np.array([mdot, mdot*bypass_ratio, 0, 0, 0, 0, 0, 0, 0],dtype=object)
+    engine['gas_exit_speeds'] = np.array([u0_8, ues, 0, 0, 0, 0, 0, 0, 0],dtype=object)
+    engine['rotation_speeds'] = np.array([N1A, N2A, 0, 0, 0, 0, 0, 0, 0],dtype=object)
 
     return force, fuel_flow
 

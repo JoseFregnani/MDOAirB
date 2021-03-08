@@ -8,7 +8,7 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description: 
-    - Trailing edge flap noise calcilation. Adated from SUAVE.
+    - Trailing edge flap noise calcilation. Adapted from SUAVE.
     - Reference: Martin R. Fink, Airframe noise prediction method
     - pag 34, equation 22
 Inputs:

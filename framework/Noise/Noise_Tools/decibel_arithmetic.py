@@ -8,11 +8,17 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This compute the total SPL given mutiple acoustic pressure ratios 
+    of one of mutiple sources
+    - This computes the total SPL from multiple sources 
+    using decibel arithmetic  
+    
 Inputs:
-    -
+    - Pressure Ratios       [unitless]
+    - Sound Pressure Level        [decibel]
 Outputs:
-    -
+    - Sound Pressure Level  [decibel]
+    - Sound Pressure Level        [decibel]
 TODO's:
     -
 

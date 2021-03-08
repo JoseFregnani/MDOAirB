@@ -8,11 +8,19 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This computes the geometric parameters for the noise tools: distance and emission angles for 
+    both polar and azimuthal angles.
+    Assumptions:
+        For sideline condition we assume the maximum noise at takeoff occurs at 1000ft from the ground.
 Inputs:
-    -
+    - noise_segment	 - SUAVE type vehicle
+    - analyses
+    - config
+    - mic_loc          - ground microphone index
 Outputs:
-    -
+    - dist  - Distance vector from the aircraft position in relation to the microphone coordinates,    [meters]
+    - theta - Polar angle emission vector relatively to the aircraft to the microphone coordinates,     [rad]
+    - phi   - Azimuthal angle emission vector relatively to the aircraft to the microphone coordinates, [rad]
 TODO's:
     -
 
@@ -169,7 +177,22 @@ def noise_geometric(noise_segment,analyses,config,mic_loc = 0):
 
 
 def geometric_propeller(noise_data):
-
+    """This computes the geometric parameters for the noise tools: distance and emission angles for both polar and azimuthal angles.
+    
+    Assumptions:
+        Propeller-driven aircraft has to comply only with the take-off noise limit.   
+        
+    Inputs:
+        noise_data	 - SUAVE type vehicle
+    
+    Outputs:
+        dist  - Distance vector from the aircraft position in relation to the microphone coordinates,     [meters]
+        theta - Polar angle emission vector relatively to the aircraft to the microphone coordinates,     [rad]
+        phi   - Azimuthal angle emission vector relatively to the aircraft to the microphone coordinates, [rad]
+        
+    Properties Used:
+        None           
+    """     
     # unpack
     position_vector = noise_data.position
     altitude        = noise_data.altitude

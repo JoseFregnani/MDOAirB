@@ -8,11 +8,13 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This method calculates the effective perceived noise level (EPNL) based on a time history 
+    Perceived Noise Level with Tone Correction (PNLT).
+    Adapted from SUAVE
 Inputs:
-    -
+    - PNLT                     - Perceived Noise Level with Tone Correction
 Outputs:
-    -
+    - EPNL                     - Effective Perceived Noise Level in EPNdB
 TODO's:
     -
 

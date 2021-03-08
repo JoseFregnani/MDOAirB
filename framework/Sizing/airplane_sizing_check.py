@@ -84,11 +84,11 @@ def airplane_sizing(x, vehicle):
 
     # Upload dictionary variables with optimization variables input vector x
     wing['area'] = x[0]
-    wing['aspect_ratio'] = x[1]
-    wing['taper_ratio'] = x[2]
+    wing['aspect_ratio'] = x[1]/10
+    wing['taper_ratio'] = x[2]/100
     wing['sweep_c_4'] = x[3]
     wing['twist'] = x[4]
-    wing['semi_span_kink'] = x[5]
+    wing['semi_span_kink'] = x[5]/100
     aircraft['passenger_capacity'] = x[11]
     fuselage['seat_abreast_number'] = x[12]
     performance['range'] = x[13]
@@ -96,13 +96,13 @@ def airplane_sizing(x, vehicle):
     aircraft['slat_presence'] = x[18]
     horizontal_tail['position'] = x[19]
 
-    engine['bypass'] = x[6]
-    engine['fan_diameter'] = x[7]
+    engine['bypass'] = x[6]/10
+    engine['fan_diameter'] = x[7]/10
     engine['compressor_pressure_ratio'] = x[8]
     engine['turbine_inlet_temperature'] = x[9]
-    engine['fan_pressure_ratio'] = x[10]
+    engine['fan_pressure_ratio'] = x[10]/10
     engine['design_point_pressure'] = x[14]
-    engine['design_point_mach'] = x[15]
+    engine['design_point_mach'] = x[15]/100
     engine['position'] = x[16]
 
     # Aerodynamics parameters

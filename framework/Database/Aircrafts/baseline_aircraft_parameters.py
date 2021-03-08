@@ -249,7 +249,7 @@ fuselage['center_of_gravity_xposition'] = 0
 
 engine = {}
 engine['fan_diameter'] = 1.36  # [m]
-engine['diamater'] = engine['fan_diameter']/0.98
+engine['diameter'] = engine['fan_diameter']/0.98
 engine['bypass'] = 5.0
 engine['fan_pressure_ratio'] = 1.46
 engine['compressor_pressure_ratio'] = 28.5
@@ -264,6 +264,17 @@ engine['wetted_area'] = 0
 engine['length'] = 0
 engine['weight'] = 0
 engine['center_of_gravity_xposition'] = 0
+engine['RPM_ref_1'] = 4952
+engine['RPM_ref_2'] = 14950
+
+
+engine['performance_parameters'] = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0])
+engine['total_pressures'] = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0])
+engine['total_temperatures'] = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0])
+engine['exit_areas'] = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0])
+engine['fuel_flows'] = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0])
+engine['gas_exit_speeds'] = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0])
+engine['rotation_speeds'] = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0])
 
 nacelle = {}
 nacelle['weight'] = 0

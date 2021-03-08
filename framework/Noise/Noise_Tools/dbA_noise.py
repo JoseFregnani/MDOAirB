@@ -8,11 +8,15 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This method calculates the A-weighted level from a 1/3 octave band noise spectra 
+    - This method calculates the A-weighted weighted level SPL given its stectra
+    Adapted from SUAVE
 Inputs:
-    -
+    - SPL     - Sound Pressure Level in 1/3 octave band
+    - SPL     - Sound Pressure Level             [dB] 
 Outputs:
-    -
+    - SPL_dbA - A-weighted Sound Pressure Level in dBA
+    - SPL_dbA - A-weighted Sound Pressure Level  [dBA] 
 TODO's:
     -
 

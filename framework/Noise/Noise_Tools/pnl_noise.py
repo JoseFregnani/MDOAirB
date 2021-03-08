@@ -8,11 +8,12 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This method calculates de Perceived Noise Level PNL from a 1/3 octave band noise spectra.
+    Adapted from SUAVE
 Inputs:
-    -
+    - SPL - Sound Pressure Level in 1/3 octave band  [dB]
 Outputs:
-    -
+    - PNL - Perceived Noise Level                    [dB]
 TODO's:
     -
 

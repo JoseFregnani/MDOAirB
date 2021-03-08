@@ -8,11 +8,13 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This method converts the SPL spectrum from blade harmonic passing frequency
+    to thrid octave spectrum.
+    Adapted from SUAVE
 Inputs:
-    -
+    - SPL     - Sound Pressure Level             [dB]
 Outputs:
-    -
+    - [dB] 
 TODO's:
     -
 

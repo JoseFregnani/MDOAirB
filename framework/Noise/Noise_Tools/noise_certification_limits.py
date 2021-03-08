@@ -8,11 +8,16 @@ Language  : Python 3.8 or >
 Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
-    -
+    - This computes the certification noise limits as a function of the aircraft weight [lbs] 
+    and number of engines for each segment. 
+    Adapted from SUAVE
 Inputs:
-    -
+    - vehicle
+    - results
 Outputs:
-    -
+    - noise_approach_limit  - Approach noise limit as a function of the landing weight, [EPNdB]
+    - noise_flyover_limit   - Flyover noise limit as a function of the takeoff weight,  [EPNdB]
+    - noise_sideline_limit  - Sideline noise limit as a function of the takeoff weight, [EPNdB]
 TODO's:
     -
 
