@@ -221,7 +221,7 @@ def climb(time, state, climb_V_cas, mach_climb, delta_ISA, final_block_altitude,
     else:
         mach = mach_climb
 
-    thrust_force, fuel_flow = turbofan(
+    thrust_force, fuel_flow, vehicle = turbofan(
         altitude, mach, throttle_position, vehicle)  # force [N], fuel flow [kg/hr]
     thrust_to_weight = aircraft['number_of_engines'] * \
         thrust_force/(mass*GRAVITY)

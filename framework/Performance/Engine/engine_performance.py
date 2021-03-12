@@ -306,9 +306,10 @@ def turbofan(altitude, mach, throttle_position, vehicle):
                     nozzle_efficiency*(1-(1/npr)**fact1))  # ????
     
     N1ratio = ((T_0A*tau_r_A*pi_cl_A**((gamma-1)/gamma)-1)/(T_0R*tau_r_R*pi_cl_R**((gamma-1)/gamma)-1))**0.5
-    N1A = N1ratio*engine['RPM_ref_1']
+    N1A = N1ratio*engine['fan_rotation_ref']
+
     N2ratio = ((T_0A*tau_r_A*tau_cl_A*pi_ch_A**((gamma-1)/gamma)-1)/(T_0R*tau_r_R*tau_cl_R*pi_ch_R**((gamma-1)/gamma)-1))**0.5
-    N2A = N2ratio**engine['RPM_ref_2']
+    N2A = N2ratio*engine['compressor_rotation_ref']
     
     # Contribuição do núcleo --------------------------------------------------
     npr = max((P0_8/P_0),1)                                    # definição da razão entre a pressão de saída do motor e a pressão ambiente
@@ -371,7 +372,10 @@ def turbofan(altitude, mach, throttle_position, vehicle):
     engine['gas_exit_speeds'] = np.array([u0_8, ues, 0, 0, 0, 0, 0, 0, 0],dtype=object)
     engine['rotation_speeds'] = np.array([N1A, N2A, 0, 0, 0, 0, 0, 0, 0],dtype=object)
 
-    return force, fuel_flow
+    engine['fan_rotation'] = N1A
+    engine['compressor_rotation'] = N2A
+
+    return force, fuel_flow, vehicle
 
 
 def find_turbine_temperature_ratio(x, a, b, c):
@@ -389,7 +393,7 @@ def find_turbine_temperature_ratio(x, a, b, c):
 # h = 457.2014
 # mach = 0.388
 # throttle_position = 0.95
-# force, fuel_flow = turbofan(h, mach, throttle_position)
+# force, fuel_flow , vehicle = turbofan(h, mach, throttle_position)
 
 # print(force)
 # print(fuel_flow)

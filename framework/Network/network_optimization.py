@@ -39,10 +39,9 @@ from framework.utilities.logger import get_logger
 # FUNCTIONS
 # =============================================================================
 log = get_logger(__file__.split('.')[0])
-log.info('==== Start network optimization module ====')
-
 
 def network_optimization(arrivals, departures, distances, demand, pax_capacity, vehicle):
+    log.info('==== Start network optimization module ====')
     # Definition of cities to be considered as departure_airport, first stop, final airport
     departure_airport = departures
     first_stop_airport = arrivals
@@ -138,7 +137,7 @@ def network_optimization(arrivals, departures, distances, demand, pax_capacity, 
     # =============================================================================
     # Solve linear programming problem (Network optimization)
     # =============================================================================
-
+    log.info('==== Start PuLP optimization ====')
     prob.solve(GLPK(timeLimit=60*3))
     log.info('Network optimization status: {}'.format(LpStatus[prob.status]))
     try:
@@ -187,9 +186,10 @@ def network_optimization(arrivals, departures, distances, demand, pax_capacity, 
     
     results['profit'] = profit
 
+    log.info('==== End network optimization module ====')
     return profit, vehicle
 
-log.info('==== End network optimization module ====')
+
 # =============================================================================
 # MAIN
 # =============================================================================

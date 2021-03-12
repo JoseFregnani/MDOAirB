@@ -47,11 +47,9 @@ from framework.utilities.output import write_optimal_results, write_kml_results
 # FUNCTIONS
 # =============================================================================
 log = get_logger(__file__.split('.')[0])
-log.info('==== Start network profit module ====')
-
 
 def objective_function(x, vehicle):
-
+    log.info('==== Start network profit module ====')
     start_time = datetime.now()
 
     # Try running profit calculation. If error appears during run profit = 0
@@ -150,11 +148,12 @@ def objective_function(x, vehicle):
 
     end_time = datetime.now()
     log.info('Network profit excecution time: {}'.format(end_time - start_time))
+    log.info('==== End network profit module ====')
 
     return float(profit)
 
 
-log.info('==== End network profit module ====')
+
 # =============================================================================
 # MAIN
 # =============================================================================

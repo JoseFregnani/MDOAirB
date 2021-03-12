@@ -96,7 +96,7 @@ def specific_fuel_consumption(vehicle, mach, altitude, delta_ISA, mass):
     L_over_D = CL_required/CD
     throttle_position = 0.6
 
-    thrust_force, fuel_flow = turbofan(
+    thrust_force, fuel_flow , vehicle = turbofan(
         altitude, mach, throttle_position, vehicle)  # force [N], fuel flow [kg/hr]
 
     FnR = mass*GRAVITY/L_over_D
@@ -106,7 +106,7 @@ def specific_fuel_consumption(vehicle, mach, altitude, delta_ISA, mass):
     total_thrust_force = 0
 
     while (total_thrust_force < FnR and throttle_position <= 1):
-        thrust_force, fuel_flow = turbofan(
+        thrust_force, fuel_flow , vehicle = turbofan(
             altitude, mach, throttle_position, vehicle)  # force [N], fuel flow [kg/hr]
         TSFC = (fuel_flow*GRAVITY)/thrust_force
         total_thrust_force = aircraft['number_of_engines'] * thrust_force

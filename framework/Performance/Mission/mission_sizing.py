@@ -496,7 +496,7 @@ def mission_sizing(vehicle):
     total_mission_distance_complete = total_mission_distance + total_mission_distance_alternative
 
 
-    engine_static_thrust, fuel_flow = turbofan(
+    engine_static_thrust, fuel_flow , vehicle = turbofan(
         0, 0, 1, vehicle)
 
     MTOW_error = 1E06

@@ -66,9 +66,9 @@ def acceleration_to_250(rate_of_climb, climb_V_cas, delta_ISA, vehicle):
             10000+delta_altitude_initial, delta_ISA, mach_2)
 
         # force [N], fuel flow [kg/hr]
-        _, fuel_flow_1 = turbofan(10000, mach_1, 0.95, vehicle)
+        _, fuel_flow_1 , vehicle = turbofan(10000, mach_1, 0.95, vehicle)
         # force [N], fuel flow [kg/hr]
-        _, fuel_flow_2 = turbofan(
+        _, fuel_flow_2 , vehicle = turbofan(
             10000+delta_altitude_initial, mach_2, 0.95, vehicle)
 
         a_1 = GRAVITY*(rate_of_climb*(1+acceleration_factor_V_CAS_1))/V_1  # [m/s2]

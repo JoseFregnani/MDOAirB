@@ -198,7 +198,7 @@ def airplane_sizing(x, vehicle):
         (fuselage['tail_length']+fuselage['cockpit_length'])
 
     engine['diameter'] = engine['fan_diameter']*1.1
-    engine['maximum_thrust'], _ = turbofan(
+    engine['maximum_thrust'], _ , vehicle = turbofan(
         0, 0, 1, vehicle)
 
     engine_static_trhust = engine['maximum_thrust']*0.95

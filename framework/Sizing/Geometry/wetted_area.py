@@ -63,7 +63,7 @@ def wetted_area(vehicle):
     fileToRead2 = 'PQ1'
     fileToRead3 = 'PT4'
 
-    engine_thrust, _ = turbofan(
+    engine_thrust, _ , vehicle = turbofan(
         0, 0, 1, vehicle)  # force [N], fuel flow [kg/hr]
 
     engine['maximum_thrust'] = engine_thrust*0.2248089431

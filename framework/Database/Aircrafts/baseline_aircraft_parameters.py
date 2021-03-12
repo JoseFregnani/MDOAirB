@@ -264,9 +264,13 @@ engine['wetted_area'] = 0
 engine['length'] = 0
 engine['weight'] = 0
 engine['center_of_gravity_xposition'] = 0
-engine['RPM_ref_1'] = 4952
-engine['RPM_ref_2'] = 14950
-
+engine['fan_rotation_ref'] = 4952
+engine['compressor_rotation_ref'] = 14950
+engine['fan_rotation'] = 0
+engine['compressor_rotation'] = 0
+engine['T0'] = 0
+engine['T1'] = 0
+engine['T2'] = 0
 
 engine['performance_parameters'] = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0])
 engine['total_pressures'] = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0])

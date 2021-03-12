@@ -48,7 +48,7 @@ def takeoff_noise(vehicle):
     V_vector = np.array([0, (V_2 + 20)/2, (V_2+20)])
     thrust_vector = V_vector/a
 
-    thrust_force, fuel_flow = turbofan(altitude, mach, 1.0, vehicle)
+    thrust_force, fuel_flow , vehicle = turbofan(altitude, mach, 1.0, vehicle)
 
     i_2 = 1
     time_history = np.array([0, 0, 0, 0, 0,   ])
