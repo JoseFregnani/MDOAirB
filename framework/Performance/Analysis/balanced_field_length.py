@@ -63,7 +63,7 @@ def balanced_field_length(vehicle, weight_takeoff):
     g = 9.807  # [m/s2]
     CL_2 = 0.694*CL_max_takeoff
     mu = 0.01*CL_max_takeoff + 0.02
-    _, _, sigma, _, _, rho, _ = atmosphere_ISA_deviation(
+    _, _, sigma, _, _, rho, _, _ = atmosphere_ISA_deviation(
         airfield_elevation, delta_ISA)  # [kg/m3]
 
     aux1 = 0.863/(1 + (2.3*delta_gamma2))

@@ -257,7 +257,7 @@ def mission_sizing(vehicle):
             cruise_V_cas,
             delta_ISA
         )
-        _, _, _, _, _, rho_ISA, _ = atmosphere_ISA_deviation(
+        _, _, _, _, _, rho_ISA, _, _ = atmosphere_ISA_deviation(
             initial_cruise_altitude,
             delta_ISA
         )
@@ -430,7 +430,7 @@ def mission_sizing(vehicle):
             cruise_V_cas,
             delta_ISA
         )
-        _, _, _, _, _, rho_ISA, _ = atmosphere_ISA_deviation(
+        _, _, _, _, _, rho_ISA, _, _ = atmosphere_ISA_deviation(
             initial_cruise_altitude,
             delta_ISA
         )

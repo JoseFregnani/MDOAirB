@@ -103,7 +103,7 @@ def sizing_horizontal_tail(vehicle, mach, ceiling):
             horizontal_tail['mean_aerodynamic_chord']+horizontal_tail['mean_aerodynamic_chord_yposition'] *np.tan(deg_to_rad*horizontal_tail['sweep_leading_edge'])
 
     # EMPENAGEM HORIZONTAL (HORIZONTAL TAIL)
-    theta, delta, sigma, T_ISA, P_ISA, rho_ISA, a = atmosphere_ISA_deviation(
+    theta, delta, sigma, T_ISA, P_ISA, rho_ISA, _, a = atmosphere_ISA_deviation(
         ceiling, 0)                                 # propriedades da atmosfera
     va = a                                         # velocidade do som [m/s]
     sigma = sigma

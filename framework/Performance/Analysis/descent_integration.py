@@ -220,7 +220,7 @@ def climb(time, state, climb_V_cas, mach_climb, delta_ISA, final_block_altitude,
     if altitude < final_block_altitude:
         return
 
-    _, _, _, _, _, rho_ISA, _ = atmosphere_ISA_deviation(altitude, delta_ISA)
+    _, _, _, _, _, rho_ISA, _, _ = atmosphere_ISA_deviation(altitude, delta_ISA)
     throttle_position = 0.4
 
     if climb_V_cas > 0:

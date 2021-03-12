@@ -10,7 +10,7 @@ load_factor = 1.3
 weight = 43112
 
 maximum_altitude = 41000
-theta, delta, sigma, T_ISA, P_ISA, rho_ISA, a = atmosphere_ISA_deviation(
+theta, delta, sigma, T_ISA, P_ISA, rho_ISA, _, a = atmosphere_ISA_deviation(
     maximum_altitude, delta_ISA)
 mach_design = 0.78
 CL_constraint = ((2)/(gamma*P_ISA*mach_design*mach_design))*6000
@@ -19,7 +19,7 @@ print(CL_constraint)
 aircraft_data = baseline_aircraft()
 wing_surface = wing['area']
 # altitude = 20000
-# theta, delta, sigma, T_ISA, P_ISA, rho_ISA, a = atmosphere_ISA_deviation(altitude, delta_ISA)
+# theta, delta, sigma, T_ISA, P_ISA, rho_ISA, _, a = atmosphere_ISA_deviation(altitude, delta_ISA)
 
 
 # CL = (2*load_factor*weight*9.81)/(1.4*P_ISA*M*M*S)
@@ -31,7 +31,7 @@ CL = 0
 
 while CL < CL_constraint:
 
-    theta, delta, sigma, T_ISA, P_ISA, rho_ISA, a = atmosphere_ISA_deviation(
+    theta, delta, sigma, T_ISA, P_ISA, rho_ISA, _, a = atmosphere_ISA_deviation(
         altitude, delta_ISA)
     CL = ((2*load_factor)/(gamma*P_ISA*mach_design*mach_design)) * \
         (weight*9.81/wing_surface)
@@ -45,7 +45,7 @@ while CL < CL_constraint:
 # altitude = 10000
 # CL_tot = []
 # for Mach in (altitude):
-#     theta, delta, sigma, T_ISA, P_ISA, rho_ISA, a = atmosphere_ISA_deviation(altitude, delta_ISA)
+#     theta, delta, sigma, T_ISA, P_ISA, rho_ISA, _, a = atmosphere_ISA_deviation(altitude, delta_ISA)
 #     CL = ((2*load_factor)/(gamma*P_ISA*Mach*Mach))*5000
 
 #     CL_tot.append(CL)

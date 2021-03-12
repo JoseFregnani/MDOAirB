@@ -81,7 +81,7 @@ def specific_fuel_consumption(vehicle, mach, altitude, delta_ISA, mass):
     wing_surface = wing['area']
 
     V_tas = mach_to_V_tas(mach, altitude, delta_ISA)
-    _, _, _, _, _, rho_ISA, _ = atmosphere_ISA_deviation(altitude, delta_ISA)
+    _, _, _, _, _, rho_ISA, _, _ = atmosphere_ISA_deviation(altitude, delta_ISA)
 
     CL_required = (2*mass*GRAVITY) / \
         (rho_ISA*((knots_to_meters_second*V_tas)**2)*wing_surface)

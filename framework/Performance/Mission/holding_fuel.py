@@ -59,7 +59,7 @@ def best_holding_speed(altitude, delta_ISA, vehicle):
     race_track_factor = 1.05
     bank_angle = 40
 
-    _, _, _, _, _, rho_ISA, _ = atmosphere_ISA_deviation(altitude, delta_ISA)
+    _, _, _, _, _, rho_ISA, _, _ = atmosphere_ISA_deviation(altitude, delta_ISA)
 
     mach_initial = 0.10
     step = 0.001

@@ -44,6 +44,9 @@ def atmosphere_ISA_deviation(h, delta_ISA):
     T0 = 288.15  # Reference altitude at sea level [K]
     p0 = 1.01325e5  # Reference pressure at sea level [Pa]
     rho0 = 1.2250  # Reference density at sea level[kg/m3]
+    mi0 = 18.27E-06
+    Tzero=291.15
+    Ceh= 120 # C = Sutherland's constant for the gaseous material in question
     T1 = T0+L0*h1*1e3  # Temperature at troposphere limit
 
     lambda_rate = 0.0019812  # Temperature lapse rate - decrease of deg C for increasing 1 ft
@@ -72,7 +75,9 @@ def atmosphere_ISA_deviation(h, delta_ISA):
     P_ISA = delta*p0  # Pressure ISA
     rho_ISA = sigma*rho0  # Desnsity ISA
 
-    return theta, delta, sigma, T_ISA, P_ISA, rho_ISA, a
+    viscosity_ISA = mi0*((T_ISA+Ceh)/(Tzero+Ceh))*((T_ISA/Tzero)**1.5)
+
+    return theta, delta, sigma, T_ISA, P_ISA, rho_ISA, viscosity_ISA, a
 # =============================================================================
 # MAIN
 # =============================================================================

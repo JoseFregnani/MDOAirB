@@ -54,7 +54,7 @@ def rate_of_climb_calculation(thrust_to_weight, h, delta_ISA, mach, mass, vehicl
 
     V_tas = mach_to_V_tas(mach, h, delta_ISA)
 
-    _, _, _, _, _, rho_ISA, _ = atmosphere_ISA_deviation(h, delta_ISA)
+    _, _, _, _, _, rho_ISA, _, _ = atmosphere_ISA_deviation(h, delta_ISA)
 
     CL = (2*mass*GRAVITY) / \
         (rho_ISA*((V_tas*knots_to_meters_second)**2)*wing_surface)
@@ -94,7 +94,7 @@ def acceleration_factor_calculation(h, delta_ISA, mach):
     tropopause = (71.5 + delta_ISA)/lambda_rate
 
     T, _, _, _ = atmosphere(h)
-    _, _, _, T_ISA, _, _, _ = atmosphere_ISA_deviation(h, delta_ISA)
+    _, _, _, T_ISA, _, _, _, _ = atmosphere_ISA_deviation(h, delta_ISA)
 
     if h < tropopause:
         # For constant calibrated airspeed below the tropopause:

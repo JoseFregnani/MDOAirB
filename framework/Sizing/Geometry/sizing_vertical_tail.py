@@ -72,7 +72,7 @@ def sizing_vertical_tail(vehicle,
         zh = 0.95*vertical_tail['span']
         kv = 1 + 0.15*((horizontal_tail['area']*zh)/(vertical_tail['area']*vertical_tail['span']))
 
-    theta, delta, sigma, T_ISA, P_ISA, rho_ISA, a = atmosphere_ISA_deviation(
+    theta, delta, sigma, T_ISA, P_ISA, rho_ISA, _, a = atmosphere_ISA_deviation(
         altitude, 0)
 
     V_dive = (mach*a)*kt_to_ms

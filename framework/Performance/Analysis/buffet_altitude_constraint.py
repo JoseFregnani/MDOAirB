@@ -47,14 +47,14 @@ def buffet_altitude(vehicle, mass, altitude, limit_altitude, mach_climb):
 
     # Typical values of wing loading for jet airplanes around 5749 [Pascal]
     wing_loading_constraint = 6000
-    _, _, _, _, P_ISA, _, _ = atmosphere_ISA_deviation(
+    _, _, _, _, P_ISA, _, _, _ = atmosphere_ISA_deviation(
         limit_altitude, delta_ISA)
     CL_constraint = ((2)/(gamma*P_ISA*mach_climb**2))*wing_loading_constraint
 
     CL = 0.1
 
     while CL < CL_constraint:
-        theta, delta, sigma, T_ISA, P_ISA, rho_ISA, a = atmosphere_ISA_deviation(
+        theta, delta, sigma, T_ISA, P_ISA, rho_ISA, _, a = atmosphere_ISA_deviation(
             altitude, delta_ISA)
         CL = ((2*load_factor)/(gamma*P_ISA*mach_climb*mach_climb)) * \
             (mass*GRAVITY/wing_surface)

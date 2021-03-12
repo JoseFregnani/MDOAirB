@@ -40,7 +40,7 @@ def takeoff_noise(vehicle):
     aircraft = vehicle['aircraft']
     wing = vehicle['wing']
 
-    theta, delta, sigma, T_ISA, P_ISA, rho_ISA, a = atmosphere_ISA_deviation(altitude, delta_ISA)
+    theta, delta, sigma, T_ISA, P_ISA, rho_ISA, _, a = atmosphere_ISA_deviation(altitude, delta_ISA)
 
     V_rotation = V_rotation_over_V_stall * np.sqrt((2*aircraft['maximum_takeoff_weight']*GRAVITY)/(rho_ISA*wing['area']*CL_max))  # [m/s]
     V_2 = V_2_over_V_stall * np.sqrt((2*aircraft['maximum_takeoff_weight']*GRAVITY)/(rho_ISA*wing['area']*CL_max))  # [m/s]

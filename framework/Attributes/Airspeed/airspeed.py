@@ -50,7 +50,7 @@ def mach_to_V_cas(mach, h, delta_ISA):
     Outputs:
         - Calibated airspeed [knots]
     """
-    _, delta, _, _, _, _, _ = atmosphere_ISA_deviation(h, delta_ISA)
+    _, delta, _, _, _, _, _, _ = atmosphere_ISA_deviation(h, delta_ISA)
 
     speed_of_sound = 661.4786  # sea level [knots]
     aux1 = ((0.2 * (mach**2) + 1)**3.5) - 1
@@ -69,7 +69,7 @@ def mach_to_V_tas(mach, h, delta_ISA):
     Outputs:
         - True airspeed [knots]
     """
-    theta, _, _, _, _, _, _ = atmosphere_ISA_deviation(h, delta_ISA)
+    theta, _, _, _, _, _, _, _ = atmosphere_ISA_deviation(h, delta_ISA)
     speed_of_sound = 661.4786  # sea level [knots]
     return speed_of_sound * mach * np.sqrt(theta)
 
@@ -86,7 +86,7 @@ def V_cas_to_V_tas(V_cas, h, delta_ISA):
         - True airspeed [knots]
     """
     speed_of_sound = 661.4786  # sea level [knots]
-    theta, delta, _, _, _, _, _ = atmosphere_ISA_deviation(h, delta_ISA)
+    theta, delta, _, _, _, _, _, _ = atmosphere_ISA_deviation(h, delta_ISA)
     aux1 = (1 + 0.2 * (V_cas/speed_of_sound)**2)**3.5
     aux2 = ((1/delta)*(aux1 - 1) + 1)**(1/3.5)
     aux3 = np.sqrt(theta*(aux2 - 1))
@@ -104,7 +104,7 @@ def V_cas_to_mach(V_cas, h, delta_ISA):
     Outputs:
         - Mach number
     """
-    _, delta, _, _, _, _, _ = atmosphere_ISA_deviation(h, delta_ISA)
+    _, delta, _, _, _, _, _, _ = atmosphere_ISA_deviation(h, delta_ISA)
     speed_of_sound = 661.4786  # sea level [knots]
     aux1 = ((1 + 0.2*((V_cas/speed_of_sound)**2))**3.5) - 1
     aux2 = ((1/delta)*aux1 + 1)**((1.4-1)/1.4)

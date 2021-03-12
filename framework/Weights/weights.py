@@ -88,7 +88,7 @@ def wing_mass(vehicle, maximum_takeoff_weight, mach, altitude):
     landing_gear_position = wing['position']
     spoilers = aircraft['spoiler_presence']
     
-    _, _, _, _, _, _, a = atmosphere_ISA_deviation(
+    _, _, _, _, _, _, _, a = atmosphere_ISA_deviation(
         altitude, 0)
 
     V_MO = mach*a*kn_to_m_s  # Maximum operating speed [m/s]
@@ -592,7 +592,7 @@ def aircraft_empty_weight(vehicle, maximum_takeoff_weight, fuel_mass, engine_sta
     systems = vehicle['systems']
 
     # Dive speed
-    _, _, sigma, _, _, _, a = atmosphere_ISA_deviation(
+    _, _, sigma, _, _, _, _, a = atmosphere_ISA_deviation(
         altitude, 0)
 
     V_cruise = mach*a

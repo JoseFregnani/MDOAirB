@@ -59,7 +59,7 @@ def maximum_range_mach(mass, cruise_altitude, delta_ISA, vehicle):
 
     V_tas = mach_to_V_tas(mach, altitude, delta_ISA)
 
-    _, _, _, _, _, rho_ISA, a = atmosphere_ISA_deviation(altitude, delta_ISA)
+    _, _, _, _, _, rho_ISA, _, a = atmosphere_ISA_deviation(altitude, delta_ISA)
 
     CL_required = (2*mass*GRAVITY) / \
         (rho_ISA*((knots_to_meters_second*V_tas)**2)*wing_surface)

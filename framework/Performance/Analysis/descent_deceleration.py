@@ -49,9 +49,9 @@ def decelaration_to_250(rate_of_climb, descent_V_cas, delta_ISA, vehicle):
     rate_of_climb = rate_of_climb*fpm_to_mps
 
     while delta_error > 100:
-        _, _, _, _, _, _, a_1 = atmosphere_ISA_deviation(
+        _, _, _, _, _, _, _, a_1 = atmosphere_ISA_deviation(
             10000, delta_ISA)
-        _, _, _, _, _, _, a_2 = atmosphere_ISA_deviation(
+        _, _, _, _, _, _, _, a_2 = atmosphere_ISA_deviation(
             10000, delta_ISA)
 
         mach_1 = V_cas_to_mach(descent_V_cas, 10000, delta_ISA)
