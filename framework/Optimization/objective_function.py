@@ -49,6 +49,7 @@ from framework.utilities.output import write_optimal_results, write_kml_results
 log = get_logger(__file__.split('.')[0])
 
 def objective_function(x, vehicle):
+    
     log.info('==== Start network profit module ====')
     start_time = datetime.now()
 
@@ -117,7 +118,7 @@ def objective_function(x, vehicle):
                     city_matrix_size = city_matrix_size - 1
                     print('INFO >>>> city pairs remaining to finish DOC matrix fill: ',city_matrix_size)
 
-            np.save('Database/DOC/DOC.npy',DOC_ik)
+            # np.save('Database/DOC/DOC.npy',DOC_ik)
 
             with open('Database/DOC/DOC.csv', 'w') as f:
                 for key in DOC_ik.keys():

@@ -48,7 +48,7 @@ def network_optimization(arrivals, departures, distances, demand, doc0, pax_capa
     final_airport = departures
 
     # doc0 = np.load('Database/DOC/DOC.npy',allow_pickle=True)
-    doc0 = doc0.tolist() 
+    # doc0 = doc0.tolist() 
 
     DOC = {}
     for i in departures:
@@ -57,6 +57,8 @@ def network_optimization(arrivals, departures, distances, demand, doc0, pax_capa
                 DOC[(i, k)] = np.round(doc0[i][k])
             else:
                 DOC[(i, k)] = np.round(doc0[i][k])
+
+    # DOC = doc0
 
 
     results = vehicle['results']
