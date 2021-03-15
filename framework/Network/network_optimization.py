@@ -40,14 +40,14 @@ from framework.utilities.logger import get_logger
 # =============================================================================
 log = get_logger(__file__.split('.')[0])
 
-def network_optimization(arrivals, departures, distances, demand, pax_capacity, vehicle):
+def network_optimization(arrivals, departures, distances, demand, doc0, pax_capacity, vehicle):
     log.info('==== Start network optimization module ====')
     # Definition of cities to be considered as departure_airport, first stop, final airport
     departure_airport = departures
     first_stop_airport = arrivals
     final_airport = departures
 
-    doc0 = np.load('Database/DOC/DOC.npy',allow_pickle=True)
+    # doc0 = np.load('Database/DOC/DOC.npy',allow_pickle=True)
     doc0 = doc0.tolist() 
 
     DOC = {}
@@ -138,7 +138,7 @@ def network_optimization(arrivals, departures, distances, demand, pax_capacity, 
     # Solve linear programming problem (Network optimization)
     # =============================================================================
     log.info('==== Start PuLP optimization ====')
-    prob.solve(GLPK(timeLimit=60*3))
+    prob.solve(GLPK(timeLimit=60*1))
     log.info('Network optimization status: {}'.format(LpStatus[prob.status]))
     try:
         condition = LpStatus[prob.status]

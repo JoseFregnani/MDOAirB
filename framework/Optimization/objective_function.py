@@ -128,7 +128,7 @@ def objective_function(x, vehicle):
             log.info('---- Start Network Optimization ----')
             # Network optimization that maximizes the network profit
             profit, vehicle = network_optimization(
-                arrivals, departures, distances, demand, pax_capacity, vehicle)
+                arrivals, departures, distances, demand, DOC_ik, pax_capacity, vehicle)
 
             log.info('Network profit [$USD]: {}'.format(profit))
             # =============================================================================
