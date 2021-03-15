@@ -20,7 +20,12 @@ TODO's:
 # =============================================================================
 # IMPORTS
 # =============================================================================
+from framework.Attributes.Atmosphere.atmosphere_ISA_deviation import atmosphere_ISA_deviation
+from framework.Performance.Engine.engine_performance import turbofan
+from framework.Noise.Noise_Smith.takeoff_integration import takeoff_integration
 
+
+import numpy as np
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -28,6 +33,10 @@ TODO's:
 # =============================================================================
 # FUNCTIONS
 # =============================================================================
+global GRAVITY
+GRAVITY = 9.81
+kt_to_ms = 0.514444
+
 def thrust_equation_coefficients(V,T):
     A = T[0]
     B = (T[1] - T[0])/(V[1]-V[0])

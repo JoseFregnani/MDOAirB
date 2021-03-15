@@ -20,7 +20,12 @@ TODO's:
 # =============================================================================
 # IMPORTS
 # =============================================================================
+from framework.Attributes.Atmosphere.atmosphere_ISA_deviation import atmosphere_ISA_deviation
+from framework.Performance.Engine.engine_performance import turbofan
 
+from scipy.integrate import ode
+import numpy as np
+import math
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -28,6 +33,9 @@ TODO's:
 # =============================================================================
 # FUNCTIONS
 # =============================================================================
+global GRAVITY
+GRAVITY = 9.81
+kt_to_ms = 0.514444
 def takeoff_integration(
     initial_block_altitude,
     initial_block_distance,
@@ -47,6 +55,8 @@ def takeoff_integration(
     stop_criteria,
     phase
     ):
+
+    aircraft = vehicle['aircraft']
 
     if phase == 'ground':
         t0 = initial_block_time
@@ -304,6 +314,7 @@ def ground(time,state,takeoff_parameters,runaway_parameters,landing_parameters,r
     return dout
 
 def flare(time,state,aircraft_parameters,takeoff_parameters,runaway_parameters,landing_parameters,rho_ISA,vehicle):
+    aircraft = vehicle['aircraft']
     wing = vehicle['wing']
 
     distance = state[0]

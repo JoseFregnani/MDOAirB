@@ -20,15 +20,18 @@ TODO's:
 # =============================================================================
 # IMPORTS
 # =============================================================================
-import numpy as np
-from framework.Database.Aircrafts.baseline_aircraft_parameters import *
-from framework.Attributes.Atmosphere.atmosphere_ISA_deviation import atmosphere_ISA_deviation
-from framework.Performance.Engine.engine_performance import turbofan
-from framework.Attributes.Airspeed.airspeed import V_cas_to_mach, mach_to_V_cas, crossover_altitude
-from framework.Performance.Analysis.climb_to_altitude import rate_of_climb_calculation
 
-import math
-from scipy.integrate import ode
+from framework.Database.Aircrafts.baseline_aircraft_parameters import *
+from framework.Noise.Noise_Smith.takeoff_profile import takeoff_profile
+from framework.Noise.Noise_Smith.takeoff_EPNdB import takeoff_EPNdB
+# from framework.Attributes.Atmosphere.atmosphere_ISA_deviation import atmosphere_ISA_deviation
+# from framework.Performance.Engine.engine_performance import turbofan
+# from framework.Attributes.Airspeed.airspeed import V_cas_to_mach, mach_to_V_cas, crossover_altitude
+# from framework.Performance.Analysis.climb_to_altitude import rate_of_climb_calculation
+
+import numpy as np
+
+
 import matplotlib.pyplot as plt
 # =============================================================================
 # CLASSES
@@ -48,9 +51,14 @@ def aircraft_noise(takeoff_parameters, landing_parameters,aircraft_parameters,ai
 
     # Takeoff flight path:
     time_vec,velocity_vec,distance_vec,velocity_horizontal_vec,altitude_vec,velocity_vertical_vec,trajectory_angle_vec,fan_rotation_vec,compressor_rotation_vec = takeoff_profile(takeoff_parameters,landing_parameters,aircraft_parameters,runaway_parameters,engine_parameters,vehicle)
-
+    
+    # plt.plot(time_vec, velocity_vec)
+    # plt.show()
+    throttle_position = 1
     # Noise calculation - EPNdB
     TO_noise = takeoff_EPNdB(time_vec,velocity_vec,distance_vec,velocity_horizontal_vec,altitude_vec,velocity_vertical_vec,trajectory_angle_vec,fan_rotation_vec,compressor_rotation_vec, throttle_position, takeoff_parameters,noise_parameters,aircraft_geometry,engine_parameters,vehicle)
+
+    
     sideline_noise,_ = sideline_EPNdB(time_history,throttle_position,takeoff_parameters,noise_parameters,aircraft_geometry,engine_parameters,vehicle)
 
     # ---- Aproach and landing noise ----
@@ -117,7 +125,7 @@ def noise_calculation(vehicle):
     aircraft_geometry['slats_position'] = 1
     aircraft_geometry['slots_number'] = 2
     aircraft_geometry['main_landing_gear_position'] = 1 
-    aircraft_geometry['main_landing_gear_position'] = 1
+    aircraft_geometry['nose_landing_gear_position'] = 1
     aircraft_geometry['altitude_retracted'] = 0
     aircraft_geometry['delta_ISA_retracted'] = 0
 
@@ -156,6 +164,14 @@ def noise_calculation(vehicle):
 # =============================================================================
 
 wing['area'] = 72
+wing['span'] = 24
+
+horizontal_tail['area'] = 25.6445
+horizontal_tail['span'] = 4.6734
+
+vertical_tail['area'] = 18.2006
+vertical_tail['span'] = 4.6734
+
 aircraft['maximum_takeoff_weight'] = 25579
 aircraft['CL_maximum_landing'] = 2.8517
 aircraft['CL_maximum_takeoff'] = 2.2517
@@ -166,4 +182,6 @@ engine['bypass'] = 4
 engine['fan_diameter'] = 1
 engine['turbine_inlet_temperature'] = 1410
 
+main_landing_gear['tyre_diameter'] = 0.6181
+nose_landing_gear['tyre_diameter'] = 0.6147
 noise_calculation(vehicle)
