@@ -138,7 +138,7 @@ def network_optimization(arrivals, departures, distances, demand, doc0, pax_capa
     # Solve linear programming problem (Network optimization)
     # =============================================================================
     log.info('==== Start PuLP optimization ====')
-    prob.solve(GLPK(timeLimit=60*1))
+    prob.solve(GLPK(timeLimit=60*3))
     log.info('Network optimization status: {}'.format(LpStatus[prob.status]))
     try:
         condition = LpStatus[prob.status]
