@@ -9,14 +9,15 @@ Aeronautical Institute of Technology - Airbus Brazil
 
 Description:
     - This function performs the network optimization using linear programming
-    algorithm
+    algorithm (1-stop model)
 Inputs:
     - Distance matrix
     - Demand matrix
     - DOC matrix
     - Pax capacity
 Outputs:
-    - Profir [USD]
+    - Network Profit [USD]
+    - Route frequencies 
 TODO's:
     -
 """
