@@ -349,6 +349,7 @@ operations['holding_time'] = 30  # [min]
 operations['alternative_airport_distance'] = 100  # [nm]
 operations['max_ceiling'] = 41000
 operations['passenger_mass'] = 100  # [kg]
+operations['load_factor'] = 0.85
 
 
 

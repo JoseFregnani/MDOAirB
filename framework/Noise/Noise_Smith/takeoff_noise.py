@@ -67,6 +67,13 @@ def takeoff_noise(time_vec,velocity_vec,distance_vec,velocity_horizontal_vec,alt
             aircraft_geometry['main_landing_gear_position'] = 1
 
         f, SPLAC = noise_airframe(noise_parameters, aircraft_geometry, altitude, 0, theta, fi, R, Fphase, vairp, vehicle)
+        ft, OASPLENG = noise_engine(H1,DISA,RH,vairp,teta,fi,R,maneted,N1,N2,ENGPAR)
+
+        f               = f
+        tetaout[i1]     = teta
+        airframe[:,i1]  = SPLAC
+        engine[:,i1]    = OASPLENG
+        SPL[:,i1]       = 10*log10(10**(0.1*airframe[:,i1])+NEng*10**(0.1*engine[:,i1]))
 
     return frequencies, SPL, time
 # =============================================================================
