@@ -44,8 +44,8 @@ def center_of_gravity(vehicle):
     engine = vehicle['engine']
     nacelle = vehicle['nacelle']
 
-    nose_landing_gear = vehicle['nose_langing_gear']
-    main_landing_gear = vehicle['main_langing_gear']
+    nose_landing_gear = vehicle['nose_landing_gear']
+    main_landing_gear = vehicle['main_landing_gear']
 
     performance = vehicle['performance']
     operations = vehicle['operations']

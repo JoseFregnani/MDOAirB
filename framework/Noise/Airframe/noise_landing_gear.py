@@ -42,8 +42,8 @@ kts_2_fts = 1.6878098571
 
 def noise_landing_gear(mach, V_cas, phi, theta, distance, frequency, vehicle):
 
-    nose_landing_gear = vehicle['nose_langing_gear']
-    main_landing_gear = vehicle['main_langing_gear']
+    nose_landing_gear = vehicle['nose_landing_gear']
+    main_landing_gear = vehicle['main_landing_gear']
 
     velocity_fts = V_cas*kts_2_fts
     velocity_kts = V_cas

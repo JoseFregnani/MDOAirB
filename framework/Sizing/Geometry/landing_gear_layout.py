@@ -55,8 +55,8 @@ rad_to_deg = 180/np.pi
 
 def landing_gear_layout(vehicle):
 
-    nose_landing_gear = vehicle['nose_langing_gear']
-    main_landing_gear = vehicle['main_langing_gear']
+    nose_landing_gear = vehicle['nose_landing_gear']
+    main_landing_gear = vehicle['main_landing_gear']
     aircraft = vehicle['aircraft']
     fuselage = vehicle['fuselage']
     wing = vehicle['wing']

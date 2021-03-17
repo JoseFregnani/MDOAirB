@@ -587,8 +587,8 @@ def aircraft_empty_weight(vehicle, maximum_takeoff_weight, fuel_mass, engine_sta
     fuselage = vehicle['fuselage']
     engine = vehicle['engine']
     nacelle = vehicle['nacelle']
-    nose_landing_gear = vehicle['nose_langing_gear']
-    main_landing_gear = vehicle['main_langing_gear']
+    nose_landing_gear = vehicle['nose_landing_gear']
+    main_landing_gear = vehicle['main_landing_gear']
     systems = vehicle['systems']
 
     # Dive speed

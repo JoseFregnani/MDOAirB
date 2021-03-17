@@ -37,8 +37,8 @@ def sizing_landing_gear(vehicle):
     fuselage = vehicle['fuselage']
     wing = vehicle['wing']
     horizontal_tail = vehicle['horizontal_tail']
-    nose_landing_gear = vehicle['nose_langing_gear']
-    main_landing_gear = vehicle['main_langing_gear']
+    nose_landing_gear = vehicle['nose_landing_gear']
+    main_landing_gear = vehicle['main_landing_gear']
     engine = vehicle['engine']
 
     wing['root_chord_yposiion'] = 0.85*(fuselage['width']/2)
