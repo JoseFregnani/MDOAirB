@@ -48,6 +48,7 @@ dependencies:
   - pulp>=2.0
   - bokeh>=2.0.0
   - numpy-stl>=1.1.0
+  - scikit-glpk>=0.4
 
   # Testing
   - flake8
