@@ -66,6 +66,8 @@ def airplane_sizing(x, vehicle):
     log.info('---- Start aircraft sizing module ----')
     log.info('Current individual vairables: {}'.format(x))
 
+    print(x)
+
     # Load nested dictionary vehicle
     aircraft = vehicle['aircraft']
     wing = vehicle['wing']

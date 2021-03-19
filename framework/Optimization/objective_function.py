@@ -90,6 +90,9 @@ def objective_function(x, vehicle):
             arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
                         'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
 
+            # departures = ['CD1', 'CD2', 'CD3', 'CD4']
+            # arrivals = ['CD1', 'CD2', 'CD3', 'CD4']
+
             # =============================================================================
             log.info('---- Start DOC calculation ----')
             # The DOC is estimated for each city pair and stored in the DOC dictionary

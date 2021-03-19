@@ -248,8 +248,9 @@ fuselage['center_of_gravity_xposition'] = 0
 
 
 engine = {}
-engine['fan_diameter'] = 1.36  # [m]
-engine['diameter'] = engine['fan_diameter']/0.98
+engine['diameter'] = 1
+engine['fan_diameter'] = engine['diameter']*0.98
+
 engine['bypass'] = 5.0
 engine['fan_pressure_ratio'] = 1.46
 engine['compressor_pressure_ratio'] = 28.5

@@ -22,7 +22,7 @@ TODO's:
 # =============================================================================
 from framework.Attributes.Atmosphere.atmosphere_ISA_deviation import atmosphere_ISA_deviation
 from framework.Performance.Engine.engine_performance import turbofan
-
+from framework.Noise.Noise_Smith.atmospheric_attenuation import atmospheric_attenuation
 import numpy as np
 from scipy import interpolate
 # =============================================================================
@@ -35,19 +35,21 @@ from scipy import interpolate
 kt_to_ms = 0.514
 m_to_ft= 3.28084
 
-def noise_engine(noise_parameters, aircraft_geometry, altitude, delta_ISA, theta, fi, R, Fphase, vairp, vehicle):
+def noise_engine(noise_parameters,aircraft_geometry,altitude,delta_ISA,theta,fi,R,manete,N1,N2,vairp,vehicle):
     engine = vehicle['engine']
 
 
     f = np.array([50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000])
     
+    
+    vairp = 0.1
     ## CORPO DA FUNÇÃO
     ## Dados da atmosfera ##
-    _, _, _, _, _, _, _, a = atmosphere_ISA_deviation(altitude, 0)   # propriedades da atmosfera
+    _, _, _, _, _, _, _, a = atmosphere_ISA_deviation(altitude, delta_ISA)   # propriedades da atmosfera
     mach               = vairp/(a* kt_to_ms)                                      # Numero de Mach
     
     ## Dados do motor ##
-    thrust_force, fuel_flow_1 , vehicle = turbofan(altitude, mach, 1, vehicle)  # Atenção: N1 e N2
+    thrust_force, fuel_flow_1 , vehicle = turbofan(altitude, mach, manete, vehicle)  # Atenção: N1 e N2
     
     ## Ruído do fan e compressor ##
     ratT                = engine['total_temperatures'][7]/engine['total_temperatures'][2]
@@ -58,7 +60,7 @@ def noise_engine(noise_parameters, aircraft_geometry, altitude, delta_ISA, theta
     nstat               = 80
     RSS                 = 200
     IGV                 = 0
-    _, ruidoFant      = Fan2(HP,DISA,RH,vairp,teta,fi,R,ENGPAR(5),ratT,mponto,nfan,MTRd,nrotor,nstat,RSS,IGV)
+    _, ruidoFant      = fan(altitude,delta_ISA,noise_parameters,vairp,theta,fi,R,engine['diameter'],ratT,mponto,nfan,MTRd,nrotor,nstat,RSS,IGV)
     
     
     ## Ruido da câmara de combustão ##
@@ -67,7 +69,7 @@ def noise_engine(noise_parameters, aircraft_geometry, altitude, delta_ISA, theta
     T4K                 = engine['total_temperatures'][4]
     P3                  = engine['total_pressures'][3]
     RH                  = 70
-    _, ruidocamarat  = combustion_chamber(HP,DISA,RH,vairp,teta,fi,R,mdot,T3K,T4K,P3)
+    _, ruidocamarat  = combustion_chamber(altitude,delta_ISA,noise_parameters,vairp,theta,fi,R,mdot,T3K,T4K,P3)
     
     
     ## Ruido da turbina ##
@@ -76,7 +78,7 @@ def noise_engine(noise_parameters, aircraft_geometry, altitude, delta_ISA, theta
     MTRturb              = 0.50
     nrotor               = 76
     RSSturb              = 50
-    _, ruidoTurbinat  = turbine(HP,DISA,RH,vairp,teta,fi,R,mdot,nturb,Tturbsaida,MTRturb,nrotor,RSSturb)
+    _, ruidoTurbinat  = turbine(altitude,delta_ISA,noise_parameters,vairp,theta,fi,R,mdot,nturb,Tturbsaida,MTRturb,nrotor,RSSturb)
     
     
     ## Ruido de Jato ##
@@ -92,7 +94,7 @@ def noise_engine(noise_parameters, aircraft_geometry, altitude, delta_ISA, theta
     roBJ                = 1.210
     plug                = 1.0
     coaxial             = 1.0
-    _, ruidoJatot     = nozzle(HP,DISA,RH,vairp,teta,fi,R,plug,coaxial,ACJ,ABJ,h,DCJ,VCJ,VBJ,TCJ,TBJ,roCJ,roBJ)
+    _, ruidoJatot     = nozzle(altitude,delta_ISA,noise_parameters,vairp,theta,fi,R,plug,coaxial,ACJ,ABJ,h,DCJ,VCJ,VBJ,TCJ,TBJ,roCJ,roBJ)
     
     
     ## Ruido total ##
@@ -101,13 +103,15 @@ def noise_engine(noise_parameters, aircraft_geometry, altitude, delta_ISA, theta
     
     ## DADOS DE SAIDA ##
     OASPLENG            = ruidoTotal
-    ft                  = f
+    ft                  = f.T
     
     return ft, OASPLENG
 
+def fan(altitude,delta_ISA,noise_parameters,vairp,theta,fi,R,engine_diameter,ratT,mponto,nfan,MTRd,nrotor,nstat,RSS,IGV):
+    
 
-def fan(HP,DISA,RH,vairp,teta,fi,R,ENGPAR(5),ratT,mponto,nfan,MTRd,nrotor,nstat,RSS,IGV):
-
+    RH = noise_parameters['relative_humidity']
+    
     ## Variáveis globais
     #global f
     f = np.array([50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000])
@@ -140,8 +144,8 @@ def fan(HP,DISA,RH,vairp,teta,fi,R,ENGPAR(5),ratT,mponto,nfan,MTRd,nrotor,nstat,
 
 
     ## Cálculos iniciais ##
-    M0                  = v0/a                                              # número de Mach da aeronave
-    MTR                 = np.sqrt(M0**2+(nfan*np.pi/30*dfan/2/a)**2)
+    M0                  = v0/(a*kt_to_ms)                                              # número de Mach da aeronave
+    MTR                 = np.sqrt(M0**2+(nfan*np.pi/30*engine_diameter/2/(a*kt_to_ms))**2)
     delta               = np.abs(MTR/(1-nstat/nrotor))
 
 
@@ -170,9 +174,9 @@ def fan(HP,DISA,RH,vairp,teta,fi,R,ENGPAR(5),ratT,mponto,nfan,MTRd,nrotor,nstat,
     else:
         F2bent          = -5*np.log10(100/300)
 
-    F3bent              =     interpolate.interp1d(tetablent,F3blent,fill_value='extrapolate')(teta)
+    F3bent              =     interpolate.interp1d(tetablent,F3blent,fill_value='extrapolate')(theta)
 
-    F4bent              = 10*np.log10(np.exp(-0.5.*(log(f/(2.5*fb))/log(2.2))**2))  
+    F4bent              = 10*np.log10(np.exp(-0.5*(np.log(f/(2.5*fb))/np.log(2.2))**2))  
     Lcbent              = SPL+F1bent+F2bent+F3bent+3*(IGV==1)
     SPLbent             = Lcbent+F4bent-10
     ## Ruído discreto ##
@@ -194,11 +198,11 @@ def fan(HP,DISA,RH,vairp,teta,fi,R,ENGPAR(5),ratT,mponto,nfan,MTRd,nrotor,nstat,
         F2dent          = -10*np.log10(100/300)
 
     # Correção 03
-    F3dent              = interpolate.interp1d(tetadsent,F3dsent,fill_value='extrapolate')(teta)
+    F3dent              = interpolate.interp1d(tetadsent,F3dsent,fill_value='extrapolate')(theta)
 
     Lcdent              = SPL+F1dent+F2dent+F3dent
     # Correção 04
-    k                   = achatom(fix(f/fb))
+    k                   = achatom(np.fix(f/fb))
     if  IGV==1:
         F4dent          = (-3-3*k)*(delta>1.05 and k>1)-8*(delta<=1.05 and k==1)+(-3-3*k)*(delta<=1.05 and k>1) 
                                                                                 # para k=1 e delta>1.05, não há valor, e a np.expressao retorna 0
@@ -213,7 +217,7 @@ def fan(HP,DISA,RH,vairp,teta,fi,R,ENGPAR(5),ratT,mponto,nfan,MTRd,nrotor,nstat,
         F1c1_2          = (318.49*MTR-288.49)*(MTR<=1.146)+(-14.052*MTR+92.603)*(MTR>1.146)
         F1c1_4          = (147.52*MTR-117.52)*(MTR<=1.322)+(-13.274*MTR+95.049)*(MTR>1.322)
         F1c1_8          = (67.541*MTR-37.541)*(MTR<=1.61)+(-12.051*MTR+90.603)*(MTR>1.61)
-        F2c             = interpolate.interp1d(tetacb,F2cbt,fill_value='extrapolate')(teta)
+        F2c             = interpolate.interp1d(tetacb,F2cbt,fill_value='extrapolate')(theta)
         F3c1_2          = (30*np.log10(2*f/fb))*(f/fb<=0.5)+(-30*np.log10(2*f/fb))*(f/fb>0.5)
         F3c1_4          = (50*np.log10(4*f/fb))*(f/fb<=0.25)+(-50*np.log10(4*f/fb))*(f/fb>0.25)
         F3c1_8          = (50*np.log10(8*f/fb))*(f/fb<=0.125)+(-30*np.log10(8*f/fb))*(f/fb>0.125)
@@ -222,7 +226,7 @@ def fan(HP,DISA,RH,vairp,teta,fi,R,ENGPAR(5),ratT,mponto,nfan,MTRd,nrotor,nstat,
         Lcc1_8          = SPL+F1c1_8+F2c+F3c1_8-5*(IGV==1)
         SPLc            = 10*np.log10(10**(0.1*Lcc1_2)+10**(0.1*Lcc1_4)+10**(0.1*Lcc1_8))-17      # soma dos 3 espectros de frequencia
     else:
-        SPLc(1:24)      = 0
+        SPLc      = np.zeros(24)
 
     ## Ruído da descarga do FAN ##
     ## Ruído banda larga ##
@@ -239,7 +243,7 @@ def fan(HP,DISA,RH,vairp,teta,fi,R,ENGPAR(5),ratT,mponto,nfan,MTRd,nrotor,nstat,
     # Correção 02
     F2bdesc             = F2bent                                               #F2b é o mesmo do ruído da entrada no FAN.
     # Correção 03
-    F3bdesc             = interpolate.interp1d(tetabldesc,F3bldesc,fill_value='extrapolate')(teta)
+    F3bdesc             = interpolate.interp1d(tetabldesc,F3bldesc,fill_value='extrapolate')(theta)
     # Correção 04
     F4bdesc             = F4bent
     # VAlor final
@@ -259,23 +263,27 @@ def fan(HP,DISA,RH,vairp,teta,fi,R,ENGPAR(5),ratT,mponto,nfan,MTRd,nrotor,nstat,
     # Correção 02
     F2ddesc             = F2dent                                               # F2d é o mesmo do ruído da entrada do FAN
     # Correção 03
-    F3ddesc             = interpolate.interp1d(tetadsdesc,F3dsdesc,fill_value='extrapolate')(teta)
+    F3ddesc             = interpolate.interp1d(tetadsdesc,F3dsdesc,fill_value='extrapolate')(theta)
     # Correção 04
     F4ddesc             = F4dent
     # Valor final
     Lcddesc             = SPL+F1ddesc+F2ddesc+F3ddesc+6*(IGV==1)
     # SPLddesc            = Lcddesc+F4ddesc-2
-    for ij in range(1,24)
-        if k[ij]==0:
-            SPLddesc[ij] = 0
-        else
-            SPLddesc[ij] = Lcddesc+10*np.log10(10**(0.1*F4ddesc[ij]))-2
 
+    SPLddesc = []
+    for ij in range(0,24):
+        if k[ij]==0:
+            SPLddesc.append(0)
+        else:
+            aux1 = Lcddesc+10*np.log10(10**(0.1*F4ddesc[ij]))-2
+            SPLddesc.append(float(aux1))
+    
+    SPLddesc = np.asarray(SPLddesc)
     ## amortecimento atmosférico ##
-    ft, alfaamortt, amorttott, amortatm, SPLrt = atmospheric_attenuation(T,RH,radialdistance,f)
+    ft, alfaamortt, amorttott, amortatm, SPLrt = atmospheric_attenuation(T,noise_parameters,radialdistance,f)
 
     ## Efeito doppler ##
-    deltaLdoppler       = -40*np.log10(1-M0*np.cos(teta*np.pi/180))
+    deltaLdoppler       = -40*np.log10(1-M0*np.cos(theta*np.pi/180))
 
     ## soma dos ruídos banda larga de entrada e descarga do FAN ##
     SPLb                = 10*np.log10(10**(0.1*SPLbent)+10**(0.1*SPLbdesc))       # método direto de soma
@@ -291,15 +299,15 @@ def fan(HP,DISA,RH,vairp,teta,fi,R,ENGPAR(5),ratT,mponto,nfan,MTRd,nrotor,nstat,
     ## DADOS DE SAIDA ##
     ruidoFan            = SPLFan-amorttott
     ft                  = f.T
-    ruidoFant           = ruidoFan
+    ruidoFant           = ruidoFan.T
     a1                  = len(ruidoFant)
     for ia1 in range(a1):
-        if ruidoFant[ia1]<1
+        if ruidoFant[ia1]<1:
             ruidoFant[ia1] = 1
     return ft, ruidoFant
 
 def achatom(k):
-    kprocess = np.zeros(1,24)
+    kprocess = np.zeros(24)
 
     for ik in range(2,24):
         if k[ik]==k[ik-1]:
@@ -310,12 +318,15 @@ def achatom(k):
     return kprocess
 
 
-def combustion_chamber():
+def combustion_chamber(altitude,delta_ISA,noise_parameters,vairp,theta,fi,R,mdot,T3K,T4K,P3):
+    RH = noise_parameters['relative_humidity']
+
+
     f = np.array([50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000])
 
     ## Fatores de conversão
-    #global m2ft deg_to_rad
-    m2ft = 3.28084
+    #global m_to_ft deg_to_rad
+
     deg_to_rad = np.pi/180
 
     ## Tabelas para interpolação
@@ -329,22 +340,21 @@ def combustion_chamber():
     radialdistance      = R                                                    # distância para avaliação do ruído [m]
 
     ## Dados da atmosfera ##
-    _, _, _, T, P, _, _, a = atmosphere_ISA_deviation(altitude, 0) # propriedades da atmosfera
+    _, _, _, T, P, _, _, a = atmosphere_ISA_deviation(altitude, delta_ISA) # propriedades da atmosfera
 
     ## Cálculos iniciais ##
     M0                  = v0/(a*kt_to_ms)                                              # número de Mach da aeronave
 
     ## Ruido da câmara de combustão ##
     epsilon             = fi
-    OAPWL               = 56.5+10*np.log10((mdot/0.4536)*((TcombsaidaK-TcombentradaK)*(Pcombentrada/P)*(T/TcombentradaK))) #colocar temperatura total
-    OASPLPWL            = interpolate.interp1d(tetatab,OASPLPWLtab,fill_value='extrapolate')(teta)
-    
+    OAPWL               = 56.5+10*np.log10((mdot/0.4536)*((T4K-T3K)*(P3/P)*(T/T3K))) #colocar temperatura total
+    OASPLPWL            = interpolate.interp1d(tetatab,OASPLPWLtab,fill_value='extrapolate')(theta)
     OASPLtr             = OAPWL+OASPLPWL-20*np.log10(radialdistance)              # SPLr está incluído
-    fp                  = 740*np.sqrt((0.4536/mdot)*(Pcombentrada/101325)*np.sqrt(288.15/TcombsaidaK))
-    if (fp<300) or (fp>1000):
+    fp                  = 740*np.sqrt((0.4536/mdot)*(P3/101325)*np.sqrt(288.15/T4K))
+    # if (fp<300) or (fp>1000):
+    if np.logical_or(fp<300,fp>1000):
         fp=400
-
-    if f<=fp:
+    if np.all(f<=fp):
         SPLf            = 15.02*(np.log10(f/fp))**6+65.92*(np.log10(f/fp))**5+108.33*(np.log10(f/fp))**4+75.37*(np.log10(f/fp))**3+2.96*(np.log10(f/fp))**2+1.48*np.log10(f/fp)-10
     else:
         SPLf            = 0.20*(np.log10(f/fp))**6-1.02*(np.log10(f/fp))**5+1.21*(np.log10(f/fp))**4+2.72*(np.log10(f/fp))**3-11.54*(np.log10(f/fp))**2-1.30*np.log10(f/fp)-10
@@ -353,7 +363,7 @@ def combustion_chamber():
 
 
     ## Amortecimento atmosférico ##
-    ft, alfaamortt, amorttott, amortatm, SPLrt = atmospheric_attenuation(T,RH,radialdistance,f)
+    ft, alfaamortt, amorttott, amortatm, SPLrt = atmospheric_attenuation(T,noise_parameters,radialdistance,f)
 
     ## Efeito doppler ##
     deltaLdoppler       = -40*np.log10(1-M0*np.cos(epsilon*deg_to_rad))
@@ -371,12 +381,14 @@ def combustion_chamber():
     return ft, ruidocamarat
 
 
-def turbine():
+def turbine(altitude,delta_ISA,noise_parameters,vairp,theta,fi,R,mdot,nturb,Tturbsaida,MTRturb,nrotor,RSSturb):
+
+    RH = noise_parameters['relative_humidity']
     f = np.array([50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000])
 
     ## Fatores de conversão
-    #global m2ft deg2rad
-    m2ft    = 3.28084
+    #global m_to_ft deg2rad
+
     deg2rad = np.pi/180
 
     ## Tabelas para interpolação
@@ -393,16 +405,16 @@ def turbine():
 
     ## Dados da atmosfera ##
     _, _, _, T, P, _, _, a = atmosphere_ISA_deviation(altitude, 0) # propriedades da atmosfera                          # propriedades da atmosfera
-    T                   = atm(1)                                               # temperatura ambiente [K]
-    (a*kt_to_ms)                = atm(7)                                               # velocidade do som [m/s]
+    # T                   = atm(1)                                               # temperatura ambiente [K]
+    # (a*kt_to_ms)                = atm(7)                                               # velocidade do som [m/s]
 
 
     ## Cálculos iniciais ##
     M0                  = v0/(a*kt_to_ms)                                              # número de Mach da aeronave
 
     ## Ruido da turbina ##
-    F1                  = interpolate.interp1d(tetatab,F1tab,fill_value='extrapolate')(teta)
-    F3                  = interpolate.interp1d(tetatab,F3tab,fill_value='extrapolate')(teta)
+    F1                  = interpolate.interp1d(tetatab,F1tab,fill_value='extrapolate')(theta)
+    F3                  = interpolate.interp1d(tetatab,F3tab,fill_value='extrapolate')(theta)
 
     ## Ruido banda larga ##
     termo1              = ((MTRturb*(a*kt_to_ms)/0.305)*(340.3/(a*kt_to_ms)))**3
@@ -427,23 +439,37 @@ def turbine():
     #
     f1                  = f/2**(1/6)
     f2                  = f*2**(1/6)
-    k                   = 1:10000/f0
+    # k                   = 1:10000/f0   # REVIEWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+    k  = 1
     SPLdisc             = SPLtone-10*(k-1)
     #
     ## Colocação dos tons ##
     # ftom = zeros(size(f))
+    
+    # for j in range(1,(10000/f0)):
+    #     ftom[:,j]       = f*((j*f0)>f1 and (j*f0)<f2)                           # acha as frequencias em que deve ser colocado o tom, em formato de j colunas
+    ftom = np.zeros(24)
+    for j in range(len(ftom)):
+        # if np.any((j*f0)>f1) and np.all((j*f0)<f2):
 
-    for j in range(1,10000/f0):
-        ftom[:,j]       = f*((j*f0)>f1 and (j*f0)<f2)                           # acha as frequencias em que deve ser colocado o tom, em formato de j colunas
+        if (1*f0)>f1[j] and (1*f0)<f2[j]:
+            ftom[j]       = f[j]*1
+        else:
+            ftom[j]       = 0
 
-    ftons               = np.sum(ftom,2)                                          # acha as frequencias em formato de uma coluna
-    ftons               = ftons.T                                               # transpoe a matriz e obtem um vetor 1x24
-    SPLd                = np.zeros(1,24)
-    i                   = find(ftons)                                          # retorna as posições dos valores de ftons que não são zeros
-    I1                  = max(size(i))                                         # avalia a quantidade de frequências nas quais devem ser colocados os tons
-    I2                  = max(size(SPLdisc))                                   # avalia a quantidade de tons
+        
+
+    
+
+    # ftom[:,j]       = f*((j*f0)>f1 and (j*f0)<f2)  
+    # ftons               = np.sum(ftom, axis = 1)                                        # acha as frequencias em formato de uma coluna
+    ftons               = ftom.T                                               # transpoe a matriz e obtem um vetor 1x24
+    SPLd                = np.zeros(24)
+    i                   = np.nonzero(ftons)                                          # retorna as posições dos valores de ftons que não são zeros
+    I1                  = max(np.shape(i))                                         # avalia a quantidade de frequências nas quais devem ser colocados os tons
+    I2                  = max(np.shape(SPLdisc))                                   # avalia a quantidade de tons
     I3                  = I1/I2                                                # verifica se é um múltiplo inteiro
-    I4                  = math.floor(I1/I2)                                         # verifica se é um múltiplo inteiro
+    I4                  = np.floor(I1/I2)                                         # verifica se é um múltiplo inteiro
     if I1>I2:                                                                    # verifica se há mais frequências que tons
         if (I3-I4)==0:                                                           # verifica se é um múltiplo inteiro
             for ai2 in range(I2):
@@ -459,7 +485,7 @@ def turbine():
     SPLturb             = 10*np.log10(10**(0.1*SPLbl)+10**(0.1*SPLd))
 
     ## Amortecimento atmosférico ##
-    ft, alfaamortt, amorttott, amortatm, SPLrt = atmospheric_attenuation(T,RH,radialdistance,f)
+    ft, alfaamortt, amorttott, amortatm, SPLrt = atmospheric_attenuation(T,noise_parameters,radialdistance,f)
     ## Extrapolando o espectro para um metro ##
     deltaLamort1m       = alfaamortt.T*45.72/100                                 # para transformar em um metro
     amortatm1m          = interpolate.interp1d(f,deltaLamort1m,fill_value='extrapolate')(f)
@@ -467,32 +493,34 @@ def turbine():
 
 
     ## DADOS DE SAIDA ##
-    ruidoTurbina        = ruido1m-amortatm.T-SPLrt'
+    ruidoTurbina        = ruido1m-amortatm.T-SPLrt.T
     ft                  = f.T
     ruidoTurbinat       = ruidoTurbina.T
-    a1                  = np.len(ruidoTurbinat)
+    a1                  = len(ruidoTurbinat)
     for ia1 in range(a1):
         if ruidoTurbinat[ia1]<1:
             ruidoTurbinat[ia1] = 1
-    return
+    return ft, ruidoTurbinat
 
 
-def nozzle():
+def nozzle(altitude,delta_ISA,noise_parameters,vairp,theta,fi,R,plug,coaxial,ACJ,ABJ,h,DCJ,VCJ,VBJ,TCJ,TBJ,roCJ,roBJ):
+
+    RH = noise_parameters['relative_humidity']
     f = np.array([50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000])
 
 
     ## Fatores de conversão
-    #global m2ft deg_to_rad
+    #global m_to_ft deg_to_rad
     deg_to_rad = np.pi/180
-    m2ft = 3.28084
+
 
     ## Tabelas para interpolação
     ARPtab              = np.array([0, .05, .1, .15, .2, .25, .3, .35, .4, .45, .5, .55, .6, .65, .7, .75, .8, .85, .9, .95, 1, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4, 1.45, 1.5, 1.55, 1.6, 1.65, 1.7])
     VRtab               = np.array([0.2, 0.4, 0.6, 0.8, 1])
-    FSPtab              = np.array([ 0.0, 4.0, 7.0, 11.0, 14.0, 16.0, 19.0, 21.0, 24.0, 25.0, 27.0, 28.0, 28.0, 29.0, 29.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0
-    0.0, 5.0, 9.0, 13.0, 17.0, 21.0, 25.0, 28.0, 31.0, 35.0, 38.0, 41.0, 43.0, 46.0, 48.0, 51.0, 53.0, 55.0, 57.0, 59.0, 61.0, 63.0, 65.0, 66.0, 68.0, 69.0, 71.0, 72.0, 73.0, 74.0, 76.0, 77.0, 78.0, 79.0, 80.0
-    0.0, 6.0, 12.0, 18.0, 23.0, 28.0, 33.0, 37.0, 41.0, 45.0, 48.0, 51.0, 53.0, 56.0, 59.0, 61.0, 64.0, 65.0, 67.0, 69.0, 71.0, 73.0, 74.0, 75.0, 77.0, 78.0, 79.0, 81.0, 82.0, 83.0, 84.0, 85.0, 86.0, 87.0, 88.0
-    0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 29.0, 33.0, 37.0, 40.0, 43.0, 46.0, 48.0, 52.0, 54.0, 56.0, 59.0, 61.0, 63.0, 64.0, 65.0, 68.0, 69.0, 70.0, 72.0, 73.0, 74.0, 75.0, 76.0, 77.0, 78.0, 80.0, 81.0, 82.0, 82.5
+    FSPtab              = np.array([ 0.0, 4.0, 7.0, 11.0, 14.0, 16.0, 19.0, 21.0, 24.0, 25.0, 27.0, 28.0, 28.0, 29.0, 29.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0, 30.0,
+    0.0, 5.0, 9.0, 13.0, 17.0, 21.0, 25.0, 28.0, 31.0, 35.0, 38.0, 41.0, 43.0, 46.0, 48.0, 51.0, 53.0, 55.0, 57.0, 59.0, 61.0, 63.0, 65.0, 66.0, 68.0, 69.0, 71.0, 72.0, 73.0, 74.0, 76.0, 77.0, 78.0, 79.0, 80.0,
+    0.0, 6.0, 12.0, 18.0, 23.0, 28.0, 33.0, 37.0, 41.0, 45.0, 48.0, 51.0, 53.0, 56.0, 59.0, 61.0, 64.0, 65.0, 67.0, 69.0, 71.0, 73.0, 74.0, 75.0, 77.0, 78.0, 79.0, 81.0, 82.0, 83.0, 84.0, 85.0, 86.0, 87.0, 88.0,
+    0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 29.0, 33.0, 37.0, 40.0, 43.0, 46.0, 48.0, 52.0, 54.0, 56.0, 59.0, 61.0, 63.0, 64.0, 65.0, 68.0, 69.0, 70.0, 72.0, 73.0, 74.0, 75.0, 76.0, 77.0, 78.0, 80.0, 81.0, 82.0, 82.5,
     0.0, 4.0, 8.0, 12.0, 16.0, 20.0, 23.0, 26.0, 30.0, 32.0, 35.0, 38.0, 41.0, 43.0, 45.0, 48.0, 50.0, 52.0, 54.0, 56.0, 58.0, 60.0, 61.0, 63.0, 65.0, 66.0, 67.0, 69.0, 70.0, 71.0, 73.0, 74.0, 75.0, 76.0, 77.0]).T/100
     logStab             = np.array([-1.7, -1.6, -1.5, -1.4, -1.3, -1.2, -1.1, -1, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9])
     tetatab             = np.array([109.9, 120, 130, 140, 150, 160, 170, 180.1])
@@ -518,13 +546,12 @@ def nozzle():
 
 
     ## Dados da atmosfera ##
-    atm                 = atmosfera(HP*m2ft,DISA)                              # propriedades da atmosfera
-    _, _, _, T, P, rho, _, a = atmosphere_ISA_deviation(HP, 0) 
+    _, _, _, T, P, rho, _, a = atmosphere_ISA_deviation(altitude, 0) 
 
 
     ## Cálculos iniciais ##
     M0                  = v0/(a*kt_to_ms)                                              # número de Mach da aeronave
-    tetalinha           = teta*(VCJ/(a*kt_to_ms))**0.1                                  # ângulo efetivo para cálculo do ruído
+    tetalinha           = theta*(VCJ/(a*kt_to_ms))**0.1                                  # ângulo efetivo para cálculo do ruído
     w                   = 3*(VCJ/(a*kt_to_ms))**3.5/(0.60+(VCJ/(a*kt_to_ms))**3.5)-1             # expoente de correção do ruído devido à densidade do jato de escape
     vrel                = (VCJ/(a*kt_to_ms))*(1-v0/VCJ)**0.75                           # velocidade relativa do escoamento
     Mc                  = 0.62*(VCJ-v0)/(a*kt_to_ms)                                   # razão entre a velocidade relativa do jato ao avião e a velocidade do som
@@ -560,9 +587,9 @@ def nozzle():
     if vratio<minvratio:
         VBJ      = minvratio*VCJ
 
-    FSP                 = interp2(VRtab,ARPtab,FSPtab,VBJ/VCJ,ARP)
+    FSP_f = interpolate.interp2d(VRtab,ARPtab,FSPtab, kind='cubic')
 
-
+    FSP = FSP_f(VBJ/VCJ,ARP)
 
     ## Correção espectral
     S_S1                = 1/(1-FSP*((TBJ)/(TCJ)))
@@ -574,7 +601,7 @@ def nozzle():
     logS                = np.log10(S_f*f)
 
     ## Espectro de frequências ##
-    cdf                 = 30*np.log10(1+Mc*(1+Mc**5)**0.2)*np.cos(teta*deg_to_rad)        # ordenada do gráfico do espectro #
+    cdf                 = 30*np.log10(1+Mc*(1+Mc**5)**0.2)*np.cos(theta*deg_to_rad)        # ordenada do gráfico do espectro #
     if tetalinha<110:
         tetalinha       = 110
 
@@ -593,12 +620,13 @@ def nozzle():
 
 
     # cálculos
-    aux0                = np.numel(logS)
-    aux1                = np.isfinite(logS)
-    aux2                = np.sum(np.isfinite(aux0),1)
-    aux3                = np.sum(aux1,2)
+    aux0                = np.size(logS)
+    aux1                = np.isfinite(logS).astype(int)
+    aux2                = np.sum(np.isfinite(aux0).astype(int))
+    aux3                = np.sum(aux1)
     if aux3==aux0 and aux2==1:
-        SDL             = interp2(tetatab,logStab,SDLtab,tetainterp,logS)
+        SDL_f = interpolate.interp2d(tetatab,logStab,SDLtab, kind='cubic')
+        SDL = SDL_f(tetainterp,logS.T)
     else:
         SDL             = ones(len(logStab))
 
@@ -615,9 +643,8 @@ def nozzle():
             SPLJet      = SPLcoaxial.T
 
 
-
     ## Atenuação do ruído na atmosfera ##
-    ft, alfaamortt, amorttott, amortatm, SPLrt = atmospheric_attenuation(T,RH,radialdistance,f)
+    ft, alfaamortt, amorttott, deltaLamort, SPLrt = atmospheric_attenuation(T,noise_parameters,radialdistance,f)
 
 
     ## DADOS DE SAIDA ##
@@ -629,7 +656,11 @@ def nozzle():
     for ia1 in range(a1):
         if ruidoJatot[ia1]<1:
             ruidoJatot[ia1] = 1
-    return
+
+
+    ruidoJatot = ruidoJatot.reshape(-1)
+            
+    return ft, ruidoJatot
 # =============================================================================
 # MAIN
 # =============================================================================

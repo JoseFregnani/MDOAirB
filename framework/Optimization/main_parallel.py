@@ -26,7 +26,11 @@ import numpy as np
 import os
 import subprocess
 import linecache
-from deap import base, creator, tools, algorithms
+
+from deap import algorithms
+from deap import base
+from deap import creator
+from deap import tools
 
 from bokeh.io import push_notebook, show, output_notebook
 from bokeh.layouts import row
@@ -86,9 +90,9 @@ toolbox.register("individual", tools.initCycle, creator.Individual,
 
 # Genetic algoritgm configuration
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)
-toolbox.register("mate", tools.cxTwoPoint)
-toolbox.register("mutate", tools.mutFlipBit, indpb=0.05)
-toolbox.register("select", tools.selTournament, tournsize=2)
+toolbox.register('mate', tools.cxTwoPoint)
+toolbox.register('mutate', tools.mutGaussian, mu = 0, sigma = 1, indpb = 0.1)
+toolbox.register('select', tools.selTournament, tournsize=3)
 
 # Declaration of the objective function (network profit)
 
@@ -97,7 +101,7 @@ def obj_function(individual):
     # This function takes as inputs the current individual (vector of design variavbles) and
     # a predefined dictionary with pre-stored information of the vehicle (aircraft)
     net_profit = objective_function(individual, vehicle)
-    return [net_profit, ]
+    return net_profit,
 
 # Declarate the limits for feasible individuals
 
@@ -137,57 +141,47 @@ def feaseGeom(x):
 toolbox.register("evaluate", obj_function)
 # toolbox.decorate("evaluate", tools.DeltaPenalty(feaseGeom, [1.0, ]))
 
-# The main function that defines the genetic algorithm run
 
+if __name__ == '__main__':
+    random.seed(64)
 
-def main():
-    pop = toolbox.population(n=10)  # Number of individuals by generation
-    hof = tools.HallOfFame(2)  # Hall of fame of top 4 individuals
+    # Process Pool of 4 workers
+    pool = multiprocessing.Pool(processes=4)
+    toolbox.register("map", pool.map)
+
+    pop = toolbox.population(n=10)
+    hof = tools.HallOfFame(1)
     stats = tools.Statistics(lambda ind: ind.fitness.values)
     stats.register("avg", np.mean)
     stats.register("std", np.std)
     stats.register("min", np.min)
     stats.register("max", np.max)
 
-    jobs = toolbox.map(toolbox.evaluate, pop)
-    fitnesses = jobs.get()
+    pop, log = algorithms.eaSimple(pop, toolbox, cxpb=0.5, mutpb=0.2, ngen=30, 
+                        stats=stats, halloffame=hof)
 
-    pop, log = algorithms.eaSimple(pop, toolbox, cxpb=0.3, mutpb=0.05, ngen=30,
-                                   stats=stats, halloffame=hof, verbose=True)
-    return [pop, log, hof]
-
-
-# Run main function
-# [pop, log, hof] = main()
-
-
-if __name__ == '__main__':
- 
-    pool = multiprocessing.Pool(processes=4)
-    toolbox.register('map', pool.map_async)
- 
-    # tic = timer()
-    [pop, log, hof] = main()
     pool.close()
-    # print timer()-tic
 
-    # Plot the results
-    p.line(log.select("gen"), log.select("avg"))
-    show(p)
+    # Save results to txt files
+    with open("Database/Results/Optimization/optim_statistics.txt", "w") as file:
+        file.write(str(log))
+
+    with open("Database/Results/Optimization/optim_population.txt", "w") as file:
+        file.write(str(pop))
+
+    with open("Database/Results/Optimization/optim_hall_of_fame.txt", "w") as file:
+        file.write(str(hof))
+    
 
     best = hof.items[0]
-    print()
+    
     print("Best Solution = ", best)
     print("Best Score = ", best.fitness.values[0])
-    print(hof[0])
-    print(hof[1])
-    print(hof[2])
-    print(hof[3])
-    print(hof[4])
 
-    print('# =============================================================================######################')
-    print('Score:', best.fitness.values[0])
-    print('# =============================================================================######################')
+
+    # print('# =============================================================================######################')
+    # print('Score:', best.fitness.values[0])
+    # print('# =============================================================================######################')
     # =============================================================================
 # MAIN
 # =============================================================================

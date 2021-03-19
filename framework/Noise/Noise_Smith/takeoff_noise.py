@@ -21,7 +21,7 @@ TODO's:
 # IMPORTS
 # =============================================================================
 from framework.Noise.Noise_Smith.noise_airframe import noise_airframe
-
+from framework.Noise.Noise_Smith.noise_engine import noise_engine
 import numpy as np
 
 # =============================================================================
@@ -34,8 +34,16 @@ import numpy as np
 deg_to_rad = np.pi/180
 def takeoff_noise(time_vec,velocity_vec,distance_vec,velocity_horizontal_vec,altitude_vec,velocity_vertical_vec,trajectory_angle_vec,fan_rotation_vec,compressor_rotation_vec, throttle_position, takeoff_parameters,noise_parameters,aircraft_geometry,engine_parameters,vehicle):
 
+    aircraft = vehicle['aircraft']
+
     XA = noise_parameters['takeoff_longitudinal_distance_mic']
     dlat = noise_parameters['takeoff_lateral_distance_mic'] 
+
+    tetaout = []
+    airframe_noise = []
+    engine_noise = []
+    SPL = []
+
     for i in range(1,len(time_vec)):
         altitude = altitude_vec[i]
         XB = distance_vec[i]
@@ -67,15 +75,20 @@ def takeoff_noise(time_vec,velocity_vec,distance_vec,velocity_horizontal_vec,alt
             aircraft_geometry['main_landing_gear_position'] = 1
 
         f, SPLAC = noise_airframe(noise_parameters, aircraft_geometry, altitude, 0, theta, fi, R, Fphase, vairp, vehicle)
-        ft, OASPLENG = noise_engine(H1,DISA,RH,vairp,teta,fi,R,maneted,N1,N2,ENGPAR)
+        ft, OASPLENG = noise_engine(noise_parameters,aircraft_geometry,altitude,0,theta,fi,R,1.0,N1,N2,vairp,vehicle)
 
         f               = f
-        tetaout[i1]     = teta
-        airframe[:,i1]  = SPLAC
-        engine[:,i1]    = OASPLENG
-        SPL[:,i1]       = 10*log10(10**(0.1*airframe[:,i1])+NEng*10**(0.1*engine[:,i1]))
+        tetaout.append(theta)
+        airframe_noise.append(SPLAC)
+        engine_noise.append(OASPLENG)
 
-    return frequencies, SPL, time
+        # print(airframe[i-1])
+        SPL_aux       = 10*np.log10(10**(0.1*airframe_noise[i-1])+aircraft['number_of_engines']*10**(0.1*engine_noise[i-1]))
+        SPL.append(SPL_aux.T)
+
+    OASPLhistory        = np.asarray(SPL)
+
+    return f, OASPLhistory, tetaout, time_vec, distance_vec, altitude_vec
 # =============================================================================
 # MAIN
 # =============================================================================
