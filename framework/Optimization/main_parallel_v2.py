@@ -54,7 +54,7 @@ creator.create("FitnessMax", base.Fitness, weights=(1.0,))
 # Define the individual list
 creator.create("Individual", list, fitness=creator.FitnessMax)
 
-IND_SIZE = 16  # Define the number of optimization variables
+IND_SIZE = 20  # Define the number of optimization variables
 
 # Definition of all the atributes (design variables), their type and range
 toolbox = base.Toolbox()
@@ -88,13 +88,13 @@ toolbox.register("individual", tools.initCycle, creator.Individual,
                   toolbox.attr_engine_design_point_mach, toolbox.attr_engine_position, toolbox.attr_winglet_presence, toolbox.attr_slat_presense, toolbox.attr_horizontal_tail_position),
                  n=1)
 
-
-
 # Genetic algoritgm configuration
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 toolbox.register('mate', tools.cxTwoPoint)
 toolbox.register('mutate', tools.mutGaussian, mu = 0, sigma = 0.2, indpb = 0.2)
-toolbox.register('select', tools.selTournament, tournsize=2)
+toolbox.register('select', tools.selTournament, tournsize=3)
+
+
 
 # Declaration of the objective function (network profit)
 
@@ -105,19 +105,53 @@ def obj_function(individual):
     net_profit = objective_function(individual, vehicle)
     return net_profit,
 
+# Declarate the limits for feasible individuals
+
+# def feaseGeom(x):
+#     wing_surface = x[0]
+#     aspect_ratio = x[1]
+#     taper_ratio = x[2]
+#     wing_sweep = x[3]
+#     twist_angle = x[4]
+#     kink_position = x[5]
+#     engine_bypass_ratio = x[6]
+#     engine_fan_diameter = x[7]
+#     engine_overall_pressure_ratio = x[8]
+#     engine_inlet_turbine_temperature = x[9]
+#     engine_fan_pressure_ratio = x[10]
+#     pax_number = x[11]
+#     number_of_seat_abreast = x[12]
+#     aircraft_range = x[13]
+#     engine_design_point_pressure = x[14]
+#     engine_design_point_mach = x[15]
+#     engine_position = x[16]
+#     winglet_presence = x[17]
+#     slat_precense = x[18]
+#     horizontal_tail_position = x[19]
+
+#     if ((wing_surface >= 72 and wing_surface <= 130) and (aspect_ratio >= 75 and aspect_ratio <= 100) and (taper_ratio >= 25 and taper_ratio <= 50) and (wing_sweep >= 15 and wing_sweep <= 35) and (twist_angle >= -5 and twist_angle <= -2) and
+#         (kink_position >= 32 and kink_position <= 40) and (engine_bypass_ratio >= 45 and engine_bypass_ratio <= 65) and (engine_fan_diameter >= 10 and engine_fan_diameter <= 20) and (engine_overall_pressure_ratio >= 25 and engine_overall_pressure_ratio <= 30) and
+#         (engine_inlet_turbine_temperature >= 1350 and engine_inlet_turbine_temperature <= 1500) and (engine_fan_pressure_ratio >= 14 and engine_fan_pressure_ratio <= 25) and (pax_number >= 70 and pax_number <= 120) and (number_of_seat_abreast >= 4 and number_of_seat_abreast <= 6) and
+#         (aircraft_range >= 1000 and aircraft_range <= 2500) and (engine_design_point_pressure >= 41000 and engine_design_point_pressure <= 41000) and (engine_design_point_mach >= 78 and engine_design_point_mach <= 78) and (engine_position >= 1 and engine_position <= 1) and (winglet_presence >= 1 and winglet_presence <= 1) and
+#             (slat_precense >= 1 and slat_precense <= 1) and (horizontal_tail_position >= 1 and horizontal_tail_position <= 1)):
+
+#         return True
+#     return False
+
+
 toolbox.register("evaluate", obj_function)
 # toolbox.decorate("evaluate", tools.DeltaPenalty(feaseGeom, [1.0, ]))
 
 
 if __name__ == '__main__':
 
-    random.seed(5)
+    random.seed(64)
     # Process Pool of 4 workers
     pool = multiprocessing.Pool(processes=6)
     toolbox.register("map", pool.map)
 
-    pop = toolbox.population(n=10)
-    hof = tools.HallOfFame(2)
+    pop = toolbox.population(n=100)
+    hof = tools.HallOfFame(3)
     stats = tools.Statistics(lambda ind: ind.fitness.values)
     stats.register("avg", np.mean)
     stats.register("std", np.std)
@@ -126,7 +160,7 @@ if __name__ == '__main__':
 
     logbooks = list()
 
-    pop, log = algorithms.eaSimple(pop, toolbox, cxpb=0.3, mutpb=0.2, ngen=30, 
+    pop, log = algorithms.eaSimple(pop, toolbox, cxpb=0.8, mutpb=0.1, ngen=100, 
                         stats=stats, halloffame=hof)
 
 

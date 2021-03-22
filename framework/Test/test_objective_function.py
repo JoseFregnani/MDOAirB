@@ -162,7 +162,9 @@ def objective_function(x, vehicle):
 # =============================================================================
 from framework.Database.Aircrafts.baseline_aircraft_parameters import *
 
-x = [100, 99, 40, 23, -4, 36, 59, 13, 27, 1385, 17, 90, 5, 2446, 41000, 78, 1, 1, 1, 1]
+x =[0, 77, 35, 19, -3, 33, 63, 17, 29, 1396, 25, 120, 6, 2280, 41000, 78]
+
+
 
 result = objective_function(x, vehicle)
 print(result)

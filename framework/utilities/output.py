@@ -383,6 +383,27 @@ def write_kml_results(arrivals, departures, profit, vehicle):
     log.info('==== End writing klm results ====')
 
     return
+
+
+def write_bad_results(x,error):
+
+
+    start_time = datetime.today().strftime('%Y-%m-%d-%H%M')
+
+
+    with open(r'Database/Results/Aircrafts_unfeasible/acft_' + str(start_time) +'.txt','a') as output:
+    # with open('Database/Results/Aircrafts/acft_' + str(profit) +'.txt','a') as output:
+        output.write(
+            '======== Aircraft and network optimization results ========')
+        output.write('\n\n')
+        # ===============================================================================
+        output.write('\n ----- Aircraft parameters ----- \n')
+
+        output.write(str(x) + "\n")
+        output.write(str(error) + "\n")
+
+
+    return
 # =============================================================================
 # MAIN
 # =============================================================================

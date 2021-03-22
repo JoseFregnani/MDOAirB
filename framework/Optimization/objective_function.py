@@ -32,13 +32,14 @@ from framework.Network.network_optimization import network_optimization
 from framework.Economics.revenue import revenue
 from framework.Sizing.airplane_sizing_check import airplane_sizing
 import pandas as pd
+import sys
 import pickle
 import numpy as np
 import csv
 from datetime import datetime
 
 from framework.utilities.logger import get_logger
-from framework.utilities.output import write_optimal_results, write_kml_results
+from framework.utilities.output import write_optimal_results, write_kml_results, write_bad_results
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -83,15 +84,17 @@ def objective_function(x, vehicle):
             pax_capacity = x[11]  # Passenger capacity
 
             # Airports:
-            # ["FRA", "LHR", "CDG", "AMS",
-            #          "MAD", "BCN", "FCO","DUB","VIE","ZRH"]
+            ["FRA", "LHR", "CDG", "AMS",
+                     "MAD", "BCN", "FCO","DUB","VIE","ZRH"]
             departures = ['CD1', 'CD2', 'CD3', 'CD4',
                             'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
             arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
                         'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
 
-            # departures = ['CD1', 'CD2', 'CD3', 'CD4']
-            # arrivals = ['CD1', 'CD2', 'CD3', 'CD4']
+            # departures = ['CD1', 'CD2', 'CD3', 'CD4',
+            #               'CD5', 'CD6']
+            # arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
+            #             'CD5', 'CD6']
 
             # =============================================================================
             log.info('---- Start DOC calculation ----')
@@ -144,11 +147,17 @@ def objective_function(x, vehicle):
             profit = 0
             log.info(
                 'Aircraft did not pass sizing and checks, profit: {}'.format(profit))
+
+            
     except:
+
+        error = sys.exc_info()[0]
 
         profit = 0
         log.info('Exception ocurred during calculations')
         log.info('Aircraft not passed sizing and checks, profit: {}'.format(profit))
+
+        write_bad_results(x,error)
 
     end_time = datetime.now()
     log.info('Network profit excecution time: {}'.format(end_time - start_time))
@@ -170,8 +179,11 @@ def objective_function(x, vehicle):
 # global NN_induced, NN_wave, NN_cd0, NN_CL
 # from framework.Database.Aircrafts.baseline_aircraft_parameters import *
 
-# x = [130, 8.204561481970153, 0.3229876327660606, 31, -4, 0.3896951781733875, 4.826332970409506, 1.0650795018081771, 27, 1485, 1.6, 101, 4, 2185, 41000, 0.78, 1, 1, 1, 1]
-# # x = [73, 8.210260198894748, 0.34131954092766925, 28, -5, 0.32042307969643524, 5.000456116634125, 1.337333818504011, 27, 1442, 1.6, 106, 6, 1979, 41000, 0.78, 1, 1, 1, 1]
-# # x = [106, 9.208279852593964, 0.4714790814543369, 16, -3, 0.34987438995033143, 6.420120321538892, 1.7349297171205607, 29, 1461, 1.6, 74, 6, 1079, 41000, 0.78, 1, 1, 1, 1]
-# result = objective_function(x, vehicle)
+# # x = [130, 8.204561481970153, 0.3229876327660606, 31, -4, 0.3896951781733875, 4.826332970409506, 1.0650795018081771, 27, 1485, 1.6, 101, 4, 2185, 41000, 0.78, 1, 1, 1, 1]
+# # # x = [73, 8.210260198894748, 0.34131954092766925, 28, -5, 0.32042307969643524, 5.000456116634125, 1.337333818504011, 27, 1442, 1.6, 106, 6, 1979, 41000, 0.78, 1, 1, 1, 1]
+# # # x = [106, 9.208279852593964, 0.4714790814543369, 16, -3, 0.34987438995033143, 6.420120321538892, 1.7349297171205607, 29, 1461, 1.6, 74, 6, 1079, 41000, 0.78, 1, 1, 1, 1]
+
 # print(result)
+# x =[0, 77, 35, 19, -3, 33, 63, 17, 29, 1396, 25, 120, 6, 2280, 41000, 78]
+
+# result = objective_function(x, vehicle)

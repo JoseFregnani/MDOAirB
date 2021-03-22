@@ -24,13 +24,15 @@ TODO's:
 from framework.Database.Aircrafts.baseline_aircraft_parameters import *
 from framework.Noise.Noise_Smith.takeoff_profile import takeoff_profile
 from framework.Noise.Noise_Smith.takeoff_EPNdB import takeoff_EPNdB
+from framework.Noise.Noise_Smith.sideline_EPNdB import sideline_EPNdB
+from framework.Noise.Noise_Smith.approach_profile import approach_profile
+from framework.Noise.Noise_Smith.approach_EPNdB import approach_EPNdB
 # from framework.Attributes.Atmosphere.atmosphere_ISA_deviation import atmosphere_ISA_deviation
 # from framework.Performance.Engine.engine_performance import turbofan
 # from framework.Attributes.Airspeed.airspeed import V_cas_to_mach, mach_to_V_cas, crossover_altitude
 # from framework.Performance.Analysis.climb_to_altitude import rate_of_climb_calculation
 
 import numpy as np
-
 
 import matplotlib.pyplot as plt
 # =============================================================================
@@ -59,15 +61,15 @@ def aircraft_noise(takeoff_parameters, landing_parameters,aircraft_parameters,ai
     TO_noise = takeoff_EPNdB(time_vec,velocity_vec,distance_vec,velocity_horizontal_vec,altitude_vec,velocity_vertical_vec,trajectory_angle_vec,fan_rotation_vec,compressor_rotation_vec, throttle_position, takeoff_parameters,noise_parameters,aircraft_geometry,engine_parameters,vehicle)
 
     
-    sideline_noise,_ = sideline_EPNdB(time_history,throttle_position,takeoff_parameters,noise_parameters,aircraft_geometry,engine_parameters,vehicle)
+    sideline_noise,_ = sideline_EPNdB(time_vec,velocity_vec,distance_vec,velocity_horizontal_vec,altitude_vec,velocity_vertical_vec,trajectory_angle_vec,fan_rotation_vec,compressor_rotation_vec,throttle_position,takeoff_parameters,noise_parameters,aircraft_geometry,engine_parameters,vehicle)
 
     # ---- Aproach and landing noise ----
 
     # Takeoff flight path:
-    _ = approach_profile(takeoff_parameters,landing_parameters,aircraft_parameters,vehicle)
+    t, d, h, FN, CD, CL, VT = approach_profile(takeoff_parameters,landing_parameters,aircraft_parameters,vehicle)
 
     # Noise calculation - EPNdB
-    landing_noise = approach_EPNdB(_,landing_parameters,noise_parameters,aircraft_geometry,vehicle)
+    landing_noise = approach_EPNdB(t,VT,d,h,landing_parameters,noise_parameters,aircraft_geometry,vehicle)
 
     return takeoff_noise, sideline_noise, landing_noise
 
@@ -149,9 +151,6 @@ def noise_calculation(vehicle):
 
     takeoff_noise, sideline_noise, landing_noise = aircraft_noise(takeoff_parameters, landing_parameters,aircraft_parameters,aircraft_geometry,engine_parameters,runaway_parameters,noise_parameters,vehicle)
 
-    takeoff_noise = 0
-    sideline_noise = 0
-    landing_noise = 0
 
     return takeoff_noise, sideline_noise, landing_noise
 
@@ -173,6 +172,7 @@ vertical_tail['area'] = 18.2006
 vertical_tail['span'] = 4.6734
 
 aircraft['maximum_takeoff_weight'] = 25579
+aircraft['maximum_landing_weight'] = 23021
 aircraft['CL_maximum_landing'] = 2.8517
 aircraft['CL_maximum_takeoff'] = 2.2517
 
