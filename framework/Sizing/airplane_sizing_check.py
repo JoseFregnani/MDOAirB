@@ -103,7 +103,7 @@ def airplane_sizing(x, vehicle):
     engine['fan_pressure_ratio'] = x[10]/10
     engine['design_point_pressure'] = x[14]
     engine['design_point_mach'] = x[15]/100
-    engine['position'] = X[16]
+    engine['position'] = x[16]
 
     # Aerodynamics parameters
     Cl_max = 1.9
