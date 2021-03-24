@@ -68,8 +68,8 @@ toolbox.register("attr_engine_bypass_ratio", random.randint, 45, 65)  # [6] - re
 toolbox.register("attr_engine_fan_diameter", random.randint, 10, 20)  # [7] - real range 1 to 2
 toolbox.register("attr_engine_overall_pressure_ratio", random.randint, 27, 30)  # [8]
 toolbox.register("attr_engine_inlet_turbine_temperature",
-                 random.randint, 1350, 1500)  # [9]
-toolbox.register("attr_engine_fan_pressure_ratio", random.randint, 14, 25)  # [10] - real range 1.4 to 2.5
+                 random.randint, 1400, 1500)  # [9] 1350 1500
+toolbox.register("attr_engine_fan_pressure_ratio", random.randint, 16, 16)  # [10] - real range 1.4 to 2.5
 toolbox.register("attr_pax_number", random.randint, 50, 120)  # [11]
 toolbox.register("attr_number_of_seat_abreast", random.randint, 4, 6)  # [12]
 toolbox.register("attr_aircraft_range", random.randint, 1000, 2500)  # [13]
@@ -88,17 +88,17 @@ toolbox.register("individual", tools.initCycle, creator.Individual,
                   toolbox.attr_engine_design_point_mach, toolbox.attr_engine_position, toolbox.attr_winglet_presence, toolbox.attr_slat_presense, toolbox.attr_horizontal_tail_position),
                  n=1)
 
-
+# Definition of lower and upper bounds
+lower_bounds = [72, 75, 25, 15, -5, 32, 45, 10, 27, 1350, 14, 50, 4, 1000, 41000, 78, 1, 1, 1, 1]
+upper_bounds = [130, 100, 50, 35, -2, 40, 65, 20, 30, 1500, 25, 120, 6, 2500, 41000, 78, 1, 1, 1, 1]
 
 # Genetic algoritgm configuration
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 toolbox.register('mate', tools.cxTwoPoint)
-toolbox.register('mutate', tools.mutGaussian, mu = 0, sigma = 0.2, indpb = 0.2)
+toolbox.register("mutate", tools.mutUniformInt,low =lower_bounds,up=upper_bounds,indpb=0.2)
 toolbox.register('select', tools.selTournament, tournsize=2)
 
 # Declaration of the objective function (network profit)
-
-
 def obj_function(individual):
     # This function takes as inputs the current individual (vector of design variavbles) and
     # a predefined dictionary with pre-stored information of the vehicle (aircraft)
@@ -111,9 +111,9 @@ toolbox.register("evaluate", obj_function)
 
 if __name__ == '__main__':
 
-    random.seed(5)
+    random.seed(10)
     # Process Pool of 4 workers
-    pool = multiprocessing.Pool(processes=6)
+    pool = multiprocessing.Pool(processes=8)
     toolbox.register("map", pool.map)
 
     pop = toolbox.population(n=10)
@@ -128,8 +128,6 @@ if __name__ == '__main__':
 
     pop, log = algorithms.eaSimple(pop, toolbox, cxpb=0.3, mutpb=0.2, ngen=30, 
                         stats=stats, halloffame=hof)
-
-
 
     pool.close()
 

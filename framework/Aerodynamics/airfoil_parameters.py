@@ -24,7 +24,7 @@ import numpy as np
 import pandas as pd
 from scipy import interpolate
 from scipy.optimize import minimize
-
+import warnings
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -32,6 +32,7 @@ from scipy.optimize import minimize
 # =============================================================================
 # FUNCTIONS
 # =============================================================================
+warnings.filterwarnings('ignore')  # Be careful with this line
 
 def generate_sobieski_coefficients(rBA, phi, X_tcmax, t_c, theta, epsilon, X_Ycmax, Ycmax, YCtcmax, Hte, EspBF):
     # These are constant parameters
@@ -172,9 +173,7 @@ def airfoil_sobieski_coefficients(fileToRead1):
     yproot = np.array([np.flip(yupp_root), ylow_root])
     yproot = yproot.ravel()
     esspraiz = max(yupp_root)-min(ylow_root)
-    # plt.figure()
-    # plt.plot(xproot,yproot,'bo')
-    # plt.show()
+
     # Now get airfoil parameters that get closest to the required shape
     # We will do this by minimizing the square error between computed and
     # required coordinates.

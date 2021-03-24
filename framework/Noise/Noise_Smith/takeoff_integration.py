@@ -65,9 +65,9 @@ def takeoff_integration(
         solver.set_integrator('vode', nsteps=100)
         solver.set_f_params(takeoff_parameters,runaway_parameters,landing_parameters,rho_ISA,vehicle)
         solver.set_initial_value(z0, t0)
-        t1 = initial_block_time + 50
+        t1 = initial_block_time + 200
         # N = 50
-        t = np.linspace(t0, t1,100)
+        t = np.linspace(t0, t1)
         N = len(t)
         sol = np.empty((N,2))
         sol_var = np.empty((N,6))
@@ -82,9 +82,9 @@ def takeoff_integration(
         solver.set_integrator('vode', nsteps=100)
         solver.set_f_params(aircraft_parameters, takeoff_parameters,runaway_parameters,landing_parameters,rho_ISA,vehicle)
         solver.set_initial_value(z0, t0)
-        t1 = initial_block_time + 50
+        t1 = initial_block_time + 200
         # N = 50
-        t = np.linspace(t0, t1,100)
+        t = np.linspace(t0, t1)
         N = len(t)
         sol = np.empty((N,5))
         sol_var = np.empty((N,3))

@@ -70,6 +70,16 @@ def sizing_landing_gear(vehicle):
         nose_landing_gear['tyre_diameter'] = (
             nose_landing_gear_tyre_diameter_new + nose_landing_gear['tyre_diameter'])/2
 
+        nose_landing_gear['tyre_width'] = wn_max
+        nose_landing_gear['piston_diameter'] = ds_n
+
+        main_landing_gear['tyre_width'] = wm_max
+        main_landing_gear['piston_diameter'] = ds_m
+
+        
+
+        
+
     return vehicle
 # =============================================================================
 # MAIN

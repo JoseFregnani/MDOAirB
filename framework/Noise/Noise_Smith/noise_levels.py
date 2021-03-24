@@ -21,6 +21,7 @@ TODO's:
 # IMPORTS
 # =============================================================================
 import numpy as np
+from numba import jit
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -28,6 +29,7 @@ import numpy as np
 # =============================================================================
 # FUNCTIONS
 # =============================================================================
+
 def calculate_NOY(f, SPL):
 
     ## CORPO DA FUNÇÃO ##
@@ -80,7 +82,7 @@ def calculate_NOY(f, SPL):
 
     return f, NOY
 
-
+@jit(nopython=True)
 def calculate_PNL(f,NOY):
     ## CORPO DA FUNÇÃO ##
     ## Definições dos loops ##
@@ -102,7 +104,7 @@ def calculate_PNL(f,NOY):
 
     return PNL
 
-
+@jit(nopython=True)
 def calculate_PNLT(f,SPL):
     #step 1
     s = np.zeros(24)
@@ -216,7 +218,7 @@ def calculate_PNLT(f,SPL):
 
 
     return Cfin
-
+@jit(nopython=True)
 def calculate_EPNdB(tempo,PNLT):
 
     ## CORPO DA FUNÇÃO ##

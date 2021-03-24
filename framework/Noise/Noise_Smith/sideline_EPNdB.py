@@ -49,8 +49,8 @@ def sideline_EPNdB(time_vec,velocity_vec,distance_vec,velocity_horizontal_vec,al
     S1max      = max(SLnoise)
     I1max = np.argmax(SLnoise)
     # 2ª aproximação (centenas de metros)
-    Dmax2               = DD*(I1max+1)+Dmin1
-    Dmin2               = DD*(I1max-1)+Dmin1
+    Dmax2               = DD*(I1max)+Dmin1
+    Dmin2               = DD*(I1max-2)+Dmin1
     DD                  = 100
     ncount              = int((Dmax2-Dmin2)/DD+1)
     XA                  = np.zeros(ncount)
@@ -64,8 +64,8 @@ def sideline_EPNdB(time_vec,velocity_vec,distance_vec,velocity_horizontal_vec,al
     S1max      = max(SLnoise)
     I1max = np.argmax(SLnoise)
     # 3ª aproximação (dezenas de metros)
-    Dmax3               = DD*(I1max+1)+Dmin2
-    Dmin3               = DD*(I1max-1)+Dmin2
+    Dmax3               = DD*(I1max)+Dmin2
+    Dmin3               = DD*(I1max-2)+Dmin2
     DD                  = 10
     ncount              = int((Dmax3-Dmin3)/DD+1)
     XA                  = np.zeros(ncount)
@@ -78,8 +78,8 @@ def sideline_EPNdB(time_vec,velocity_vec,distance_vec,velocity_horizontal_vec,al
     S1max      = max(SLnoise)
     I1max = np.argmax(SLnoise)
     # 4ª aproximação (metros)
-    Dmax4               = DD*(I1max+1)+Dmin3
-    Dmin4               = DD*(I1max-1)+Dmin3
+    Dmax4               = DD*(I1max)+Dmin3
+    Dmin4               = DD*(I1max-2)+Dmin3
     DD                  = 1
     ncount              = int((Dmax4-Dmin4)/DD+1)
     XA                  = np.zeros(ncount)

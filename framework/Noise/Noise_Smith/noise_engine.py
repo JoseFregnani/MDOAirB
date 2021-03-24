@@ -25,6 +25,7 @@ from framework.Performance.Engine.engine_performance import turbofan
 from framework.Noise.Noise_Smith.atmospheric_attenuation import atmospheric_attenuation
 import numpy as np
 from scipy import interpolate
+
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -34,6 +35,7 @@ from scipy import interpolate
 # =============================================================================
 kt_to_ms = 0.514
 m_to_ft= 3.28084
+
 
 def noise_engine(noise_parameters,aircraft_geometry,altitude,delta_ISA,theta,fi,R,manete,N1,N2,vairp,vehicle):
     engine = vehicle['engine']
@@ -94,6 +96,7 @@ def noise_engine(noise_parameters,aircraft_geometry,altitude,delta_ISA,theta,fi,
     roBJ                = 1.210
     plug                = 1.0
     coaxial             = 1.0
+    # (altitude,delta_ISA,noise_parameters,vairp,theta,fi,R,plug,coaxial,ACJ,ABJ,h,DCJ,VCJ,VBJ,TCJ,TBJ,roCJ,roBJ)
     _, ruidoJatot     = nozzle(altitude,delta_ISA,noise_parameters,vairp,theta,fi,R,plug,coaxial,ACJ,ABJ,h,DCJ,VCJ,VBJ,TCJ,TBJ,roCJ,roBJ)
     
     
@@ -217,7 +220,7 @@ def fan(altitude,delta_ISA,noise_parameters,vairp,theta,fi,R,engine_diameter,rat
         F1c1_2          = (318.49*MTR-288.49)*(MTR<=1.146)+(-14.052*MTR+92.603)*(MTR>1.146)
         F1c1_4          = (147.52*MTR-117.52)*(MTR<=1.322)+(-13.274*MTR+95.049)*(MTR>1.322)
         F1c1_8          = (67.541*MTR-37.541)*(MTR<=1.61)+(-12.051*MTR+90.603)*(MTR>1.61)
-        F2c             = interpolate.interp1d(tetacb,F2cbt,fill_value='extrapolate')(theta)
+        F2c             = interpolate.interp1d(tetacb,F2cb,fill_value='extrapolate')(theta)
         F3c1_2          = (30*np.log10(2*f/fb))*(f/fb<=0.5)+(-30*np.log10(2*f/fb))*(f/fb>0.5)
         F3c1_4          = (50*np.log10(4*f/fb))*(f/fb<=0.25)+(-50*np.log10(4*f/fb))*(f/fb>0.25)
         F3c1_8          = (50*np.log10(8*f/fb))*(f/fb<=0.125)+(-30*np.log10(8*f/fb))*(f/fb>0.125)
@@ -306,6 +309,8 @@ def fan(altitude,delta_ISA,noise_parameters,vairp,theta,fi,R,engine_diameter,rat
             ruidoFant[ia1] = 1
     return ft, ruidoFant
 
+
+
 def achatom(k):
     kprocess = np.zeros(24)
 
@@ -347,7 +352,7 @@ def combustion_chamber(altitude,delta_ISA,noise_parameters,vairp,theta,fi,R,mdot
 
     ## Ruido da câmara de combustão ##
     epsilon             = fi
-    OAPWL               = 56.5+10*np.log10((mdot/0.4536)*((T4K-T3K)*(P3/P)*(T/T3K))) #colocar temperatura total
+    OAPWL               = 56.5+10*np.log10((mdot/0.4536)*((T4K-T3K)*(P3/P)*(T/T3K))) #colocar temperatura total THIS LINE HAVE WRONG UNITS AT MATLABCDE P3[Pa] and P[KPa]
     OASPLPWL            = interpolate.interp1d(tetatab,OASPLPWLtab,fill_value='extrapolate')(theta)
     OASPLtr             = OAPWL+OASPLPWL-20*np.log10(radialdistance)              # SPLr está incluído
     fp                  = 740*np.sqrt((0.4536/mdot)*(P3/101325)*np.sqrt(288.15/T4K))

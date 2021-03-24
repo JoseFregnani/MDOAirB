@@ -29,6 +29,7 @@ from scipy import interpolate
 # =============================================================================
 # FUNCTIONS
 # =============================================================================
+
 def atmospheric_attenuation(T_source,noise_parameters,R,f):
     HR = noise_parameters['relative_humidity']   
     T                   = T_source                                                   # temperatura para avaliação da atenuação [ºC]

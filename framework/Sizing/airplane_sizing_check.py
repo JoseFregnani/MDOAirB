@@ -33,10 +33,14 @@ from framework.Sizing.Geometry.wing_structural_layout_fuel_storage import wing_s
 from framework.Sizing.Geometry.fuselage_sizing import fuselage_cross_section
 from framework.Sizing.Geometry.wetted_area import wetted_area
 from framework.Aerodynamics.aerodynamic_coefficients_ANN import aerodynamic_coefficients_ANN
+from framework.Aerodynamics.drag_coefficient_flap import drag_coefficient_flap
+from framework.Aerodynamics.drag_coefficient_landing_gear import drag_coefficient_landing_gear
+from framework.Aerodynamics.airfoil_parameters import airfoil_parameters
 from framework.Performance.Mission.mission_sizing import mission_sizing
 from framework.Performance.Engine.engine_performance import turbofan
 from framework.Sizing.Geometry.sizing_landing_gear import sizing_landing_gear
 from framework.Sizing.performance_constraints import *
+from framework.Noise.Noise_Smith.noise_calculation import noise_calculation
 from framework.utilities.logger import get_logger
 
 
@@ -93,8 +97,12 @@ def airplane_sizing(x, vehicle):
     fuselage['seat_abreast_number'] = x[12]
     performance['range'] = x[13]
     aircraft['winglet_presence'] = x[17]
+    # aircraft['winglet_presence'] = 1
     aircraft['slat_presence'] = x[18]
+    # aircraft['slat_presence'] = 1
     horizontal_tail['position'] = x[19]
+    # horizontal_tail['position'] = 1
+
 
     engine['bypass'] = x[6]/10
     engine['fan_diameter'] = x[7]/10
@@ -104,6 +112,8 @@ def airplane_sizing(x, vehicle):
     engine['design_point_pressure'] = x[14]
     engine['design_point_mach'] = x[15]/100
     engine['position'] = x[16]
+    # engine['position'] = 1
+
 
     # Aerodynamics parameters
     Cl_max = 1.9
@@ -152,6 +162,9 @@ def airplane_sizing(x, vehicle):
 
     # Fuselage cross section sizing
     vehicle = fuselage_cross_section(vehicle)
+
+    # Airfoil geometry coefficients
+    vehicle = airfoil_parameters(vehicle)
 
     # Wetted area calculation
     wing['mean_thickness'] = np.mean(wing['thickness_ratio'])
@@ -333,7 +346,27 @@ def airplane_sizing(x, vehicle):
     else:
         flag_landing = 0
 
-    flags = [flag_takeoff, flag_landing, flag_fuel]
+    # Noise check
+    delta_CD_flap = drag_coefficient_flap(vehicle)
+    CD_ubrige = friction_coefficient * (aircraft['wetted_area'] - wing['wetted_area'])/wing['area']
+    CD_main, CD_nose = drag_coefficient_landing_gear(vehicle)
+    delta_CD_landing_gear = CD_main+CD_nose
+    CD0_landing = wing_CD0 + CD_ubrige + delta_CD_flap + delta_CD_landing_gear
+
+    aircraft['CD0_landing'] = CD0_landing
+
+    takeoff_noise, sideline_noise, landing_noise = noise_calculation(vehicle)
+
+    total_noise = takeoff_noise + sideline_noise + landing_noise
+
+    if total_noise > 270:
+        flag_noise = 1
+    else:
+        flag_noise = 0
+
+    flags = [flag_takeoff, flag_landing, flag_fuel, flag_noise]
+    log.info('Aircraft status (pass = 0, no pass =1): {}'.format(status))
+    # flags = [flag_takeoff, flag_landing, flag_fuel]
 
     # If any of the flags = 1 then the status = 1 and aircraft will not be feasible
     # to continue with the optimization loop
@@ -341,7 +374,8 @@ def airplane_sizing(x, vehicle):
         status = 1
     else:
         status = 0
-
+        
+    log.info('Aircraft flags: {}'.format(flags))
     log.info('Aircraft status (pass = 0, no pass =1): {}'.format(status))
     log.info('---- End aircraft sizing module ----')
 

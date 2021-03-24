@@ -88,10 +88,13 @@ toolbox.register("individual", tools.initCycle, creator.Individual,
                   toolbox.attr_engine_design_point_mach, toolbox.attr_engine_position, toolbox.attr_winglet_presence, toolbox.attr_slat_presense, toolbox.attr_horizontal_tail_position),
                  n=1)
 
+
+
 # Genetic algoritgm configuration
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 toolbox.register('mate', tools.cxTwoPoint)
-toolbox.register('mutate', tools.mutGaussian, mu = 0, sigma = 0.2, indpb = 0.2)
+# toolbox.register('mutate', tools.mutGaussian, mu = 0, sigma = 0.2, indpb = 0.2)
+toolbox.register("mutate", tools.mutUniformInt,indpb=0.2)
 toolbox.register('select', tools.selTournament, tournsize=3)
 
 

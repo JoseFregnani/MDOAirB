@@ -49,16 +49,17 @@ import matplotlib.pyplot as plt
 
 # plt.show()
 import pandas as pd
-df = pd.read_csv('Database/Results/Optimization/optim_statistics.txt', sep=",",header=None)
+df = pd.read_csv('Database/Results/Optimization/optim_statistics02.txt', sep=",",header=None)
 df.columns = ['gen','nevals','average','standard','minimum','maximum']
 
+print(df.nevals)
 
 import numpy as np
 import matplotlib.pyplot as plt
 
 # Create some mock data
 t = df.gen
-data1 = df.standard
+data1 = df.maximum
 data2 = df.average
 
 fig, ax1 = plt.subplots()
@@ -68,15 +69,17 @@ ax1.set_xlabel('generations')
 ax1.set_ylabel('maximum', color=color)
 ax1.plot(t, data1, color=color)
 ax1.tick_params(axis='y', labelcolor=color)
+ax1.grid(True)
 
-# ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
+ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
 
-# color = 'tab:blue'
-# ax2.set_ylabel('average', color=color)  # we already handled the x-label with ax1
-# ax2.plot(t, data2, color=color)
-# ax2.tick_params(axis='y', labelcolor=color)
+color = 'tab:blue'
+ax2.set_ylabel('average', color=color)  # we already handled the x-label with ax1
+ax2.plot(t, data2, color=color)
+ax2.tick_params(axis='y', labelcolor=color)
+ax1.grid(True)
 
-# fig.tight_layout()  # otherwise the right y-label is slightly clipped
+fig.tight_layout()  # otherwise the right y-label is slightly clipped
 plt.show()
 
 
