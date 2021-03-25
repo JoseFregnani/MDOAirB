@@ -24,7 +24,7 @@ import numpy as np
 import pandas as pd
 from scipy import interpolate
 from scipy.optimize import minimize
-import warnings
+# import warnings
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -32,7 +32,7 @@ import warnings
 # =============================================================================
 # FUNCTIONS
 # =============================================================================
-warnings.filterwarnings('ignore')  # Be careful with this line
+# warnings.filterwarnings('ignore')  # Be careful with this line
 
 def generate_sobieski_coefficients(rBA, phi, X_tcmax, t_c, theta, epsilon, X_Ycmax, Ycmax, YCtcmax, Hte, EspBF):
     # These are constant parameters
@@ -179,8 +179,10 @@ def airfoil_sobieski_coefficients(fileToRead1):
     # required coordinates.
 
     # Define bounds for variables
-    LB=np.array([0.015, 0.08,  -0.24, 0.20, -0.2, -0.300, -0.050, -0.050, 0.50, 0.0025, 0])
-    UB=np.array([0.20, 0.16,   0.10, 0.46,  0.1, -0.005, 0.030, 0.025, 0.80, 0.0025, 0])
+    LB=np.array([0.015, 0.08,  -0.24, 0.20, -0.2, -0.300, -0.050, -0.050, 0.50])
+    UB=np.array([0.20 , 0.16,   0.10, 0.46,  0.1, -0.005, 0.030, 0.025, 0.80])
+
+    bnds = ((0.015,0.2),(0.08,0.16),(-0.24,0.1),(0.2,0.46),(-0.2,0.1),(-0.3,-0.005),(-0.05,0.03),(-0.05,0.25),(0.5,0.8))
     
     airfoil_params0 = 0.50*(UB+LB)
 
@@ -188,7 +190,7 @@ def airfoil_sobieski_coefficients(fileToRead1):
     Hte = 0.0 #x(10)
     EspBF = 0.0025 #x(11)
 
-    res = minimize(solve_coefficients, airfoil_params0,args = (xp,yupp_root,ylow_root,Hte,EspBF),method='SLSQP',
+    res = minimize(solve_coefficients, airfoil_params0, bounds = bnds, args = (xp,yupp_root,ylow_root,Hte,EspBF),method='SLSQP',
                options={'disp': False})
 
     # Split parameters

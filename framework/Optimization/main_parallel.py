@@ -89,8 +89,8 @@ toolbox.register("individual", tools.initCycle, creator.Individual,
                  n=1)
 
 # Definition of lower and upper bounds
-lower_bounds = [72, 75, 25, 15, -5, 32, 45, 10, 27, 1350, 14, 50, 4, 1000, 41000, 78, 1, 1, 1, 1]
-upper_bounds = [130, 100, 50, 35, -2, 40, 65, 20, 30, 1500, 25, 120, 6, 2500, 41000, 78, 1, 1, 1, 1]
+lower_bounds = [72,   75, 25, 15, -5, 32, 45, 10, 27, 1350, 14, 50, 4, 1000, 41000, 78, 1, 1, 1, 1]
+upper_bounds = [130, 100, 50, 35, -2, 40, 65, 20, 30, 1500, 20, 120, 6, 2500, 41000, 78, 1, 1, 1, 1]
 
 # Genetic algoritgm configuration
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)

@@ -365,7 +365,7 @@ def airplane_sizing(x, vehicle):
         flag_noise = 0
 
     flags = [flag_takeoff, flag_landing, flag_fuel, flag_noise]
-    log.info('Aircraft status (pass = 0, no pass =1): {}'.format(status))
+
     # flags = [flag_takeoff, flag_landing, flag_fuel]
 
     # If any of the flags = 1 then the status = 1 and aircraft will not be feasible

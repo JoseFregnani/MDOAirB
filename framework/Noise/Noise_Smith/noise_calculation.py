@@ -34,6 +34,7 @@ from framework.Noise.Noise_Smith.approach_EPNdB import approach_EPNdB
 from datetime import datetime
 from framework.utilities.logger import get_logger
 
+import numpy as np
 # =============================================================================
 # CLASSES
 # =============================================================================
