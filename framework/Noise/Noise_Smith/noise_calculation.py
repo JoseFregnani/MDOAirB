@@ -65,6 +65,7 @@ def aircraft_noise(takeoff_parameters, landing_parameters,aircraft_parameters,ai
 
     # Noise calculation - EPNdB
     # start = time.time()
+    noise_parameters
     TO_noise = takeoff_EPNdB(time_vec,velocity_vec,distance_vec,velocity_horizontal_vec,altitude_vec,velocity_vertical_vec,trajectory_angle_vec,fan_rotation_vec,compressor_rotation_vec, throttle_position, takeoff_parameters,noise_parameters,aircraft_geometry,engine_parameters,vehicle)
     # end = time.time()
     # print("takeoff noise = %s" % (end - start))
@@ -91,7 +92,7 @@ def aircraft_noise(takeoff_parameters, landing_parameters,aircraft_parameters,ai
 
 def noise_calculation(vehicle):
     start_time = datetime.now()
-    GRAVITY = 9.81
+    GRAVITY = 9.8065
 
     aircraft = vehicle['aircraft']
     airport_departure = vehicle['airport_departure']
@@ -204,15 +205,15 @@ def noise_calculation(vehicle):
 
 # engine['fan_pressure_ratio'] = 1.6
 # engine['compressor_pressure_ratio'] = 27
-# engine['bypass'] = 6
-# engine['fan_diameter'] = 1
+# engine['bypass'] = 4
+# engine['engine_diameter'] = 1
 # engine['turbine_inlet_temperature'] = 1410
 
 # main_landing_gear['tyre_diameter'] = 0.6181
 # nose_landing_gear['tyre_diameter'] = 0.6147
 
 # start = time.time()
-# noise_calculation(vehicle)
+# print(noise_calculation(vehicle))
 
 # end = time.time()
 # print("Elapsed (after compilation) = %s" % (end - start))

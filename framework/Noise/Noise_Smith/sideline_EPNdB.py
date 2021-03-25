@@ -41,10 +41,14 @@ def sideline_EPNdB(time_vec,velocity_vec,distance_vec,velocity_horizontal_vec,al
     ncount              = int((Dmax1-Dmin1)/DD+1)
     XA                  = np.zeros(ncount)
     SLnoise             = np.zeros(ncount)
+
+
+    noise_parameters['takeoff_lateral_distance_mic'] = noise_parameters['sideline_lateral_distance_mic']
     for i in range(ncount):
         XA[i] = DD*(i)+Dmin1
         noise_parameters['takeoff_longitudinal_distance_mic']           = XA[i]
         SLnoise[i]      = takeoff_EPNdB(time_vec,velocity_vec,distance_vec,velocity_horizontal_vec,altitude_vec,velocity_vertical_vec,trajectory_angle_vec,fan_rotation_vec,compressor_rotation_vec, throttle_position, takeoff_parameters,noise_parameters,aircraft_geometry,engine_parameters,vehicle)
+
 
     S1max      = max(SLnoise)
     I1max = np.argmax(SLnoise)

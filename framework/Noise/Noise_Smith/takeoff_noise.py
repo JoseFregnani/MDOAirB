@@ -44,7 +44,7 @@ def takeoff_noise(time_vec,velocity_vec,distance_vec,velocity_horizontal_vec,alt
     engine_noise = []
     SPL = []
 
-    for i in range(1,len(time_vec)):
+    for i in range(len(time_vec)):
         altitude = altitude_vec[i]
         XB = distance_vec[i]
         gamma = trajectory_angle_vec[i]

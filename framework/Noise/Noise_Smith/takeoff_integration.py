@@ -62,7 +62,7 @@ def takeoff_integration(
         t0 = initial_block_time
         z0 = [initial_block_distance, initial_block_velocity]
         solver = ode(ground)
-        solver.set_integrator('vode', nsteps=100)
+        solver.set_integrator('vode', nsteps=1000)
         solver.set_f_params(takeoff_parameters,runaway_parameters,landing_parameters,rho_ISA,vehicle)
         solver.set_initial_value(z0, t0)
         t1 = initial_block_time + 200
@@ -79,7 +79,7 @@ def takeoff_integration(
         t0 = initial_block_time
         z0 = [initial_block_distance, initial_block_velocity, initial_block_altitude, initial_block_vertical_velocity, initial_block_trajectory_angle]
         solver = ode(flare)
-        solver.set_integrator('vode', nsteps=100)
+        solver.set_integrator('vode', nsteps=1000)
         solver.set_f_params(aircraft_parameters, takeoff_parameters,runaway_parameters,landing_parameters,rho_ISA,vehicle)
         solver.set_initial_value(z0, t0)
         t1 = initial_block_time + 200
