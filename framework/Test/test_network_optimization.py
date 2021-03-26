@@ -40,7 +40,7 @@ from framework.Database.Aircrafts.baseline_aircraft_parameters import *
 # aircraft_data = 
 
 # Available cities:
-# ['CD1', 'CD2', 'CD3', 'CD4', 'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+['CD1', 'CD2', 'CD3', 'CD4', 'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
 departures = ['CD1', 'CD2', 'CD3', 'CD4',
               'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
 arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
@@ -73,7 +73,7 @@ print('demand:', np.sum(np.sum(df2)))
 df2 = np.round(df2)
 demand = df2.to_dict()
 
-df3 = pd.read_csv('Database/DOC/DOC.csv')
+df3 = pd.read_csv('Database/DOC/DOC_test.csv')
 df3 = (df3.T)
 print('=============================================================================')
 print('DOC matrix:')
@@ -186,13 +186,37 @@ prob.solve(GLPK(msg=0, timeLimit=60*5))
 print('Status:', LpStatus[prob.status])
 
 # Print solution to CONTINUOUS
-pax = []
+list_airplanes = []
+list_of_pax = []
 for v in prob.variables():
-    print(v.name, "=", v.varValue)
-    pax.append(v.varValue)
+    variable_name = v.name
+    if variable_name.find('nika') != -1:
+        list_airplanes.append(v.varValue)
+        # print(v.name, "=", v.varValue)
+    if variable_name.find('numPac') != -1:
+        # print(v.name, "=", v.varValue)
+        list_of_pax.append(v.varValue)
 
-print(sum(pax))
-df4 = pd.DataFrame(pax)
-df4.to_csv('PAX.csv')
+results['aircrafts_used']= sum(list_airplanes)
+results['covered_demand'] = sum(list_of_pax)
+
+
+
+
+# df4 = pd.DataFrame(pax)
+# df4.to_csv('PAX.csv:')
 # Print optimal
 print('Total profit [$US]:', value(prob.objective))
+
+
+import pandas as pd
+opt_df = pd.DataFrame.from_dict(xijk, orient="index", 
+                                columns = ["variable_object"])
+opt_df.index =  pd.MultiIndex.from_tuples(opt_df.index, 
+                               names=["column_i", "column_j", "column_k"])
+opt_df.reset_index(inplace=True)
+
+opt_df["solution_value"] =  opt_df["variable_object"].apply(lambda item: item.varValue)
+
+opt_df.drop(columns=["variable_object"], inplace=True)
+opt_df.to_csv("optimization_solution2.csv")

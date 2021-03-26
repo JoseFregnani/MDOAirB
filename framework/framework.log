@@ -1,3 +1,10 @@
-2021-03-25 10:50:18,940 - c:\Users\aarc8\Documents\github\MDOAirB\framework\Noise\Noise_Smith\noise_calculation     - INFO - ---- Start aircraft noise module ----
-2021-03-25 10:51:34,878 - c:\Users\aarc8\Documents\github\MDOAirB\framework\Noise\Noise_Smith\noise_calculation     - INFO - Noise check execution time: 0:01:15.937808
-2021-03-25 10:51:34,878 - c:\Users\aarc8\Documents\github\MDOAirB\framework\Noise\Noise_Smith\noise_calculation     - INFO - ---- End aircraft noise module ----
+2021-03-26 02:11:51,925 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission_sizing     - INFO - ---- Start mission sizing function -2021-03-26 02:13:17,810 - c:\users\aarc8\documents\github\mdoairb\framework\Optimization\objective_function     - INFO - Exception ocurred during calculations
+2021-03-26 02:13:17,811 - c:\users\aarc8\documents\github\mdoairb\framework\Optimization\objective_function     - INFO - Aircraft not passed sizing and checks, profit: 0
+2021-03-26 02:13:17,812 - c:\users\aarc8\documents\github\mdoairb\framework\Optimization\objective_function     - INFO - Network profit excecution time: 0:01:36.910924
+2021-03-26 02:13:17,814 - c:\users\aarc8\documents\github\mdoairb\framework\Optimization\objective_function     - INFO - ==== End network profit module ====
+on ----
+2021-03-26 02:13:11,685 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission_sizing     - INFO - Mission sizing execution time: 0:00:39.211878
+2021-03-26 02:13:11,686 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission_sizing     - INFO - ---- Start mission sizing function ----
+ c:\users\aarc8\documents\github\mdoairb\framework\Optimization\objective_function     - INFO - Aircraft not passed sizing and checks, profit: 0
+2021-03-26 02:13:00,197 - c:\users\aarc8\documents\github\mdoairb\framework\Optimization\objective_function     - INFO - Network profit excecution time: 0:00:49.752978
+2021-03-26 02:13:00,198 - c:\users\aarc8\documents\github\mdoairb\framework\Optimization\objective_function     - INFO - ==== End network profit module ====

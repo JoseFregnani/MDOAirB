@@ -420,7 +420,8 @@ def mission(mission_range,vehicle):
     end_time = datetime.now()
     log.info('DOC mission execution time: {}'.format(end_time - start_time))
 
-    return(DOC)
+    return fuel_mass, total_mission_flight_time,DOC,mach,passenger_capacity
+
 
 # =============================================================================
 # MAIN

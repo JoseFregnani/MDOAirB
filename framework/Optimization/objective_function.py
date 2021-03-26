@@ -91,16 +91,22 @@ def objective_function(x, vehicle):
             arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
                         'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
 
-            # departures = ['CD1', 'CD2', 'CD3', 'CD4',
-            #               'CD5', 'CD6']
-            # arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
-            #             'CD5', 'CD6']
+            departures = ['CD1', 'CD2', 'CD3', 'CD4',
+                          'CD5', 'CD6']
+            arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
+                        'CD5', 'CD6']
 
             # =============================================================================
             log.info('---- Start DOC calculation ----')
             # The DOC is estimated for each city pair and stored in the DOC dictionary
             city_matrix_size = len(departures)*len(arrivals)
             DOC_ik = {}
+
+            fuel_mass = np.zeros((len(departures),len(arrivals)))
+            total_mission_flight_time = np.zeros((len(departures),len(arrivals)))
+            mach = np.zeros((len(departures),len(arrivals)))
+            passenger_capacity = np.zeros((len(departures),len(arrivals)))
+
             for i in departures:
                 DOC_ik[i] = {}
                 for k in arrivals:
@@ -114,12 +120,16 @@ def objective_function(x, vehicle):
                         airport_destination['takeoff_field_length'] = data_airports.loc[data_airports['APT2']
                                                                                         == k, 'TORA'].iloc[0]
                         mission_range = distances[i][k]
-                        DOC_ik[i][k]= int(
-                            mission(mission_range,vehicle))*distances[i][k]
-                        
+                        fuel_mass[i][k], total_mission_flight_time[i][k],DOC,mach[i][k],passenger_capacity[i][k] = mission(mission_range,vehicle)
+
+                        DOC_ik[i][k] = int(DOC*distances[i][k])                       
                         # print(DOC_ik[(i, k)])
                     else:
                         DOC_ik[i][k] = 0
+                        fuel_mass[i][k] = 0
+                        total_mission_flight_tim[i][k] = 0
+                        mach[i][k] = 0
+                        passenger_capacity[i][k] = 0
 
                     city_matrix_size = city_matrix_size - 1
                     print('INFO >>>> city pairs remaining to finish DOC matrix fill: ',city_matrix_size)
