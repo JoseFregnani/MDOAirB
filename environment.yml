@@ -49,7 +49,7 @@ dependencies:
   - bokeh>=2.0.0
   - numpy-stl>=1.1.0
   - scikit-glpk>=0.4
-
+  - numba>=1.0
   # Testing
   - flake8
   - pytest>=5.0.1
