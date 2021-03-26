@@ -151,12 +151,12 @@ def objective_function(x, vehicle):
             log.info('Network profit [$USD]: {}'.format(profit))
             # =============================================================================
 
-            average_cruise_mach = np.mean(mach)
-            total_passenger_capacity = np.sum(passenger_capacity)
-            total_distance_capacity = np.sum(total_distance_capacity)
-            total_fuel = np.sum(fuel_mass)
-            total_C02 = total_fuel*3.15
-            CO2_coeff = 3.15*total_fuel/(total_passenger_capacity*total_distance_capacity*1.852)
+            # average_cruise_mach = np.mean(mach)
+            # total_passenger_capacity = np.sum(passenger_capacity)
+            # total_distance_capacity = np.sum(total_distance_capacity)
+            # total_fuel = np.sum(fuel_mass)
+            # total_C02 = total_fuel*3.15
+            # CO2_coeff = 3.15*total_fuel/(total_passenger_capacity*total_distance_capacity*1.852)
 
 
             write_optimal_results(profit, DOC_ik, vehicle)

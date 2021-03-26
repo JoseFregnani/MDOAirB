@@ -40,17 +40,17 @@ from framework.Database.Aircrafts.baseline_aircraft_parameters import *
 # aircraft_data = 
 
 # Available cities:
-['CD1', 'CD2', 'CD3', 'CD4', 'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
-departures = ['CD1', 'CD2', 'CD3', 'CD4',
-              'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
-arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
-            'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
-arrivals_2 = ['CD1', 'CD2', 'CD3', 'CD4',
-              'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+# ['CD1', 'CD2', 'CD3', 'CD4', 'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+# departures = ['CD1', 'CD2', 'CD3', 'CD4',
+#               'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+# arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
+#             'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+# arrivals_2 = ['CD1', 'CD2', 'CD3', 'CD4',
+#               'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
 
-# departures =  ['CD1', 'CD2', 'CD3', 'CD4']
-# arrivals =  ['CD1', 'CD2', 'CD3', 'CD4']
-# arrivals_2 =  ['CD1', 'CD2', 'CD3', 'CD4']
+departures =  ['CD1', 'CD2', 'CD3', 'CD4']
+arrivals =  ['CD1', 'CD2', 'CD3', 'CD4']
+arrivals_2 =  ['CD1', 'CD2', 'CD3', 'CD4']
 
 # Define minimization problem
 prob = LpProblem("Network", LpMaximize)
