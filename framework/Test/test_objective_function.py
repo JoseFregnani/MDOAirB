@@ -100,10 +100,7 @@ def objective_function(x, vehicle):
 
         for i in range(len(departures)):
             DOC_ik[departures[i]] = {}
-            # fuel_mass[i] = {}
-            # total_mission_flight_time[i] = {}
-            # mach[i] = {}
-            # passenger_capacity[i] = {}
+
             for k in range(len(arrivals)):
                 if (i != k) and (distances[departures[i]][arrivals[k]] <= x[13]):
                     airport_departure['elevation'] = data_airports.loc[data_airports['APT2']

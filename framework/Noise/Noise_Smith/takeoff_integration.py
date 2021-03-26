@@ -96,7 +96,7 @@ def takeoff_integration(
 
     if phase == 'ground':
         while solver.successful() and solver.y[1] <= stop_criteria:
-            solver.integrate(t[k],step='True')
+            solver.integrate(t[k])
             sol[k] = solver.y
             times[k] = solver.t
             
@@ -139,7 +139,7 @@ def takeoff_integration(
     
     elif phase == 'flare':
         while solver.successful() and solver.y[2] <= stop_criteria:
-            solver.integrate(t[k],step='True')
+            solver.integrate(t[k])
             sol[k] = solver.y
             times[k] = solver.t
 

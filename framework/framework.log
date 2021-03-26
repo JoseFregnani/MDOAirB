@@ -1,10 +1,157 @@
-2021-03-26 02:11:51,925 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission_sizing     - INFO - ---- Start mission sizing function -2021-03-26 02:13:17,810 - c:\users\aarc8\documents\github\mdoairb\framework\Optimization\objective_function     - INFO - Exception ocurred during calculations
-2021-03-26 02:13:17,811 - c:\users\aarc8\documents\github\mdoairb\framework\Optimization\objective_function     - INFO - Aircraft not passed sizing and checks, profit: 0
-2021-03-26 02:13:17,812 - c:\users\aarc8\documents\github\mdoairb\framework\Optimization\objective_function     - INFO - Network profit excecution time: 0:01:36.910924
-2021-03-26 02:13:17,814 - c:\users\aarc8\documents\github\mdoairb\framework\Optimization\objective_function     - INFO - ==== End network profit module ====
-on ----
-2021-03-26 02:13:11,685 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission_sizing     - INFO - Mission sizing execution time: 0:00:39.211878
-2021-03-26 02:13:11,686 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission_sizing     - INFO - ---- Start mission sizing function ----
- c:\users\aarc8\documents\github\mdoairb\framework\Optimization\objective_function     - INFO - Aircraft not passed sizing and checks, profit: 0
-2021-03-26 02:13:00,197 - c:\users\aarc8\documents\github\mdoairb\framework\Optimization\objective_function     - INFO - Network profit excecution time: 0:00:49.752978
-2021-03-26 02:13:00,198 - c:\users\aarc8\documents\github\mdoairb\framework\Optimization\objective_function     - INFO - ==== End network profit module ====
+2021-03-26 02:44:17,758 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:44:46,662 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:44:46,663 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:28.904974
+2021-03-26 2021-03-26 03:07:10,698 - c:\users\aarc8\documents\github\mdoairb\framework\Optimization\objective_function     - INFO - Exception ocurred during calculations
+2021-03-26 03:07:10,699 - c:\users\aarc8\documents\github\mdoairb\framework\Optimization\objective_function     - INFO - Aircraft not passed sizing and checks, profit: 0
+2021-03-26 03:07:10,701 - c:\users\aarc8\documents\github\mdoairb\framework\Optimization\objective_function     - INFO - Network profit excecution time: 0:32:19.866614
+2021-03-26 03:07:10,702 - c:\users\aarc8\documents\github\mdoairb\framework\Optimization\objective_function     - INFO - ==== End network profit module ====
+ments\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:46:02,589 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:36.368566
+2021-03-26 02:46:02,593 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:46:30,712 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:46:30,715 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:28.121118
+2021-03-26 02:46:30,719 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:46:59,534 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:46:59,535 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:28.817367
+2021-03-26 02:46:59,538 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:47:27,167 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:47:27,168 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:27.629103
+2021-03-26 02:47:27,172 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:48:04,313 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:48:04,314 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:46.891412
+2021-03-26 02:48:04,318 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:48:51,700 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:48:51,701 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:47.382875
+2021-03-26 02:48:51,704 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:49:15,575 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:49:15,576 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:23.871458
+2021-03-26 02:49:15,579 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:50:03,250 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:50:03,250 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:47.671731
+2021-03-26 02:50:03,254 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:50:28,768 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:50:28,769 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:25.514171
+2021-03-26 02:50:28,773 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:50:52,912 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:50:52,913 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:24.140833
+2021-03-26 02:50:52,916 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:51:39,411 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:51:39,412 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:46.495139
+2021-03-26 02:51:39,416 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:52:27,195 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:52:27,195 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:47.779288
+2021-03-26 02:52:27,200 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:53:14,253 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:53:14,255 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:47.055569
+2021-03-26 02:53:14,262 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:53:40,994 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:53:40,995 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:26.732833
+2021-03-26 02:53:40,998 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:54:29,150 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:54:29,151 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:48.153276
+2021-03-26 02:54:29,154 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:55:16,930 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:55:16,931 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:47.776891
+2021-03-26 02:55:16,935 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:55:44,021 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:55:44,022 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:27.086635
+2021-03-26 02:55:44,026 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:56:09,329 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:56:09,330 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:25.303514
+2021-03-26 02:56:09,335 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:56:35,661 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:56:35,662 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:26.327943
+2021-03-26 02:56:35,666 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:57:23,465 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:57:23,465 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:47.798947
+2021-03-26 02:57:23,468 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:58:11,286 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:58:11,287 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:47.818117
+2021-03-26 02:58:11,291 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:58:58,062 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:58:58,062 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:46.771980
+2021-03-26 02:58:58,066 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 02:59:45,884 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 02:59:45,884 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:47.817899
+2021-03-26 02:59:45,888 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:00:34,910 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:00:34,910 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:49.021922
+2021-03-26 03:00:34,916 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:01:09,488 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:01:09,488 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:34.572862
+2021-03-26 03:01:09,492 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:01:30,006 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:01:30,006 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:20.514066
+2021-03-26 03:01:30,022 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:01:50,682 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:01:50,682 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:20.660222
+2021-03-26 03:01:50,697 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:02:13,287 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:02:13,287 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:22.590826
+2021-03-26 03:02:13,292 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:02:53,690 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:02:53,690 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:40.398168
+2021-03-26 03:02:53,702 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:03:32,478 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:03:32,478 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:38.775922
+2021-03-26 03:03:32,485 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:04:12,238 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:04:12,238 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:39.752475
+2021-03-26 03:04:12,256 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:04:50,950 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:04:50,950 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:38.693479
+2021-03-26 03:04:50,959 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:05:40,798 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:05:40,798 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:49.838790
+2021-03-26 03:05:40,810 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:06:26,023 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:06:26,023 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:45.213140
+2021-03-26 03:06:26,032 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:06:07,683 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:06:07,683 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:43.813788
+2021-03-26 03:06:07,687 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:06:50,765 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:06:50,765 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:43.078114
+2021-03-26 03:06:50,777 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:03:07,463 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:03:07,463 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:26.412015
+2021-03-26 03:03:07,474 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:03:33,988 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:03:33,988 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:26.513872
+2021-03-26 03:03:34,005 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:03:57,525 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:03:57,525 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:23.520653
+2021-03-26 03:03:57,534 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:04:23,668 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:04:23,668 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:26.134389
+2021-03-26 03:04:23,684 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:04:50,721 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:04:50,721 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:27.037079
+2021-03-26 03:04:50,725 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:05:26,998 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:05:26,999 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:36.273166
+2021-03-26 03:05:27,002 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:05:56,765 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:05:56,765 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:29.763580
+2021-03-26 03:05:56,769 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:06:27,874 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:06:27,874 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:31.105392
+2021-03-26 03:06:27,881 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:06:56,477 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:06:56,478 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:28.596345
+2021-03-26 03:06:56,482 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:06:14,627 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:06:14,627 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:26.409778
+2021-03-26 03:06:14,631 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:06:40,493 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:06:40,509 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:25.877129
+2021-03-26 03:06:40,513 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:07:08,736 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:07:08,736 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:28.223437
+2021-03-26 03:07:08,741 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:06:24,800 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:06:24,800 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:26.030709
+2021-03-26 03:06:24,805 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-26 03:06:50,737 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-26 03:06:50,737 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:25.932779
+2021-03-26 03:06:50,744 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----

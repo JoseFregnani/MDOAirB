@@ -191,7 +191,7 @@ def climb_integrator(initial_block_distance, initial_block_altitude, initial_blo
     k = 1
 
     while solver.successful() and solver.y[1] >= final_block_altitude:
-        solver.integrate(t[k],step='True')
+        solver.integrate(t[k])
         sol[k] = solver.y
         times[k] = solver.t
         k += 1

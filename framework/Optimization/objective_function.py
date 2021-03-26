@@ -84,50 +84,50 @@ def objective_function(x, vehicle):
             pax_capacity = x[11]  # Passenger capacity
 
             # Airports:
-            ["FRA", "LHR", "CDG", "AMS",
-                     "MAD", "BCN", "FCO","DUB","VIE","ZRH"]
+            # ["FRA", "LHR", "CDG", "AMS",
+            #          "MAD", "BCN", "FCO","DUB","VIE","ZRH"]
             departures = ['CD1', 'CD2', 'CD3', 'CD4',
                             'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
             arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
                         'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
 
-            departures = ['CD1', 'CD2', 'CD3', 'CD4',
-                          'CD5', 'CD6']
-            arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
-                        'CD5', 'CD6']
+            # departures = ['CD1', 'CD2', 'CD3', 'CD4',
+            #               'CD5', 'CD6']
+            # arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
+            #             'CD5', 'CD6']
 
             # =============================================================================
             log.info('---- Start DOC calculation ----')
             # The DOC is estimated for each city pair and stored in the DOC dictionary
             city_matrix_size = len(departures)*len(arrivals)
             DOC_ik = {}
-
             fuel_mass = np.zeros((len(departures),len(arrivals)))
             total_mission_flight_time = np.zeros((len(departures),len(arrivals)))
             mach = np.zeros((len(departures),len(arrivals)))
             passenger_capacity = np.zeros((len(departures),len(arrivals)))
 
-            for i in departures:
-                DOC_ik[i] = {}
-                for k in arrivals:
-                    if (i != k) and (distances[i][k] <= x[13]):
+            for i in range(len(departures)):
+                DOC_ik[departures[i]] = {}
+
+                for k in range(len(arrivals)):
+                    if (i != k) and (distances[departures[i]][arrivals[k]] <= x[13]):
                         airport_departure['elevation'] = data_airports.loc[data_airports['APT2']
-                                                                        == i, 'ELEV'].iloc[0]
+                                                                        == departures[i], 'ELEV'].iloc[0]
                         airport_destination['elevation'] = data_airports.loc[data_airports['APT2']
-                                                                            == k, 'ELEV'].iloc[0]
+                                                                            == arrivals[k], 'ELEV'].iloc[0]
                         airport_departure['takeoff_field_length'] = data_airports.loc[data_airports['APT2']
-                                                                                    == i, 'TORA'].iloc[0]
+                                                                                    == departures[i], 'TORA'].iloc[0]
                         airport_destination['takeoff_field_length'] = data_airports.loc[data_airports['APT2']
-                                                                                        == k, 'TORA'].iloc[0]
-                        mission_range = distances[i][k]
+                                                                                        == arrivals[k], 'TORA'].iloc[0]
+                        mission_range = distances[departures[i]][arrivals[k]]
                         fuel_mass[i][k], total_mission_flight_time[i][k],DOC,mach[i][k],passenger_capacity[i][k] = mission(mission_range,vehicle)
 
-                        DOC_ik[i][k] = int(DOC*distances[i][k])                       
+                        DOC_ik[departures[i]][arrivals[k]] = int(DOC*distances[departures[i]][arrivals[k]])                       
                         # print(DOC_ik[(i, k)])
                     else:
-                        DOC_ik[i][k] = 0
+                        DOC_ik[departures[i]][arrivals[k]] = 0
                         fuel_mass[i][k] = 0
-                        total_mission_flight_tim[i][k] = 0
+                        total_mission_flight_time[i][k] = 0
                         mach[i][k] = 0
                         passenger_capacity[i][k] = 0
 
@@ -139,6 +139,7 @@ def objective_function(x, vehicle):
             with open('Database/DOC/DOC.csv', 'w') as f:
                 for key in DOC_ik.keys():
                     f.write("%s,%s\n"%(key,DOC_ik[key]))
+                    
 
             log.info('Aircraft DOC matrix: {}'.format(DOC_ik))
             # =============================================================================
@@ -149,6 +150,14 @@ def objective_function(x, vehicle):
 
             log.info('Network profit [$USD]: {}'.format(profit))
             # =============================================================================
+
+            average_cruise_mach = np.mean(mach)
+            total_passenger_capacity = np.sum(passenger_capacity)
+            total_distance_capacity = np.sum(total_distance_capacity)
+            total_fuel = np.sum(fuel_mass)
+            total_C02 = total_fuel*3.15
+            CO2_coeff = 3.15*total_fuel/(total_passenger_capacity*total_distance_capacity*1.852)
+
 
             write_optimal_results(profit, DOC_ik, vehicle)
             write_kml_results(arrivals, departures, profit, vehicle)
