@@ -191,6 +191,7 @@ def network_optimization(arrivals, departures, distances, demand, doc0, pax_capa
     
     results['profit'] = profit
 
+
     log.info('==== End network optimization module ====')
     return profit, vehicle
 
