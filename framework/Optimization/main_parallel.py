@@ -113,7 +113,7 @@ if __name__ == '__main__':
 
     random.seed(62)
     # Process Pool of 4 workers
-    pool = multiprocessing.Pool(processes=8)
+    pool = multiprocessing.Pool(processes=6)
     toolbox.register("map", pool.map)
 
     pop = toolbox.population(n=10)

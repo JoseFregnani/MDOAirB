@@ -59,7 +59,7 @@ def write_optimal_results(profit, DOC_ik, vehicle):
     airport_destination = vehicle['airport_destination']
 
     # write string one by one adding newline
-    with open(r'Database/Results/Aircrafts/acft_' + str(profit) + '_' + str(start_time) +'.txt','a') as output:
+    with open(r'Database/Results/Aircrafts/acft_' + str(profit) + '_' + str(start_time) +'.txt','w') as output:
     # with open('Database/Results/Aircrafts/acft_' + str(profit) +'.txt','a') as output:
         output.write(
             '======== Aircraft and network optimization results ========')
@@ -391,15 +391,16 @@ def write_bad_results(x,error):
     start_time = datetime.today().strftime('%Y-%m-%d-%H%M')
 
 
-    with open(r'Database/Results/Aircrafts_unfeasible/acft_' + str(start_time) +'.txt','a') as output:
+    with open(r'Database/Results/Aircrafts_unfeasible/acft_' + str(start_time) +'.txt','w') as output:
     # with open('Database/Results/Aircrafts/acft_' + str(profit) +'.txt','a') as output:
         output.write(
             '======== Aircraft and network optimization results ========')
         output.write('\n\n')
         # ===============================================================================
         output.write('\n ----- Aircraft parameters ----- \n')
-
         output.write(str(x) + "\n")
+
+        output.write('\n ----- Error message ----- \n')
         output.write(str(error) + "\n")
 
 
