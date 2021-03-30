@@ -1,22 +1,22 @@
-2021-03-30 12:56:03,704 - /home/alejandro/Documents/Github/MDOAirB/framework/utilities/output     - INFO - ==== Start writing aircraft results ====
-2021-03-30 12:56:03,767 - /home/alejandro/Documents/Github/MDOAirB/framework/utilities/output     - INFO - ==== End writing aircraft results ====
-2021-03-30 12:56:03,767 - /home/alejandro/Documents/Github/MDOAirB/framework/utilities/output     - INFO - ==== Start writing klm results ====
-2021-03-30 12:56:03,789 - /home/alejandro/Documents/Github/MDOAirB/framework/utilities/output     - INFO - ==== End writing klm results ====
-    - INFO - ==== End network optimization module ====
-2': 6530, 'CD3': 5119}, 'CD2': {'CD1': 6530, 'CD2': 0, 'CD3': 4354}, 'CD3': {'CD1': 5119, 'CD2': 4354, 'CD3': 0}}
-2021-03-30 12:56:03,526 - /home/alejandro/Documents/Github/MDOAirB/framework/Test/test_objective_function     - INFO - ---- Start Network Optimization ----
-2021-03-30 12:56:03,703 - /home/alejandro/Documents/Github/MDOAirB/framework/Test/test_objective_function     - INFO - Network profit [$USD]: 111116
-2021-03-30 12:56:03,789 - /home/alejandro/Documents/Github/MDOAirB/framework/Test/test_objective_function     - INFO - Network profit excecution time: 0:07:25.549572
-2021-03-30 12:56:03,789 - /home/alejandro/Documents/Github/MDOAirB/framework/Test/test_objective_function     - INFO - ==== End network profit module ====
-on execution time: 0:00:35.631776
-2021-03-30 12:54:06,894 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
-2021-03-30 12:54:43,485 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
-2021-03-30 12:54:43,489 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:36.594916
-2021-03-30 12:54:43,507 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
-2021-03-30 12:55:23,946 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
-2021-03-30 12:55:23,949 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:40.441972
-2021-03-30 12:55:23,953 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- Start DOC mission function ----
-2021-03-30 12:56:03,515 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - ---- End DOC mission function ----
-2021-03-30 12:56:03,517 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission     - INFO - DOC mission execution time: 0:00:39.564449
-ion ----
-2021-03-30 12:50:58,865 - /home/alejandro/Documents/Github/MDOAirB/framework/Performance/Mission/mission_sizing     - INFO - Mission sizing execution time: 0:00:11.684432
+2021-03-30 16:14:25,547 - c:\users\aarc8\documents\github\mdoairb\framework\utilities\output     - INFO - ==== Start writing aircraft results ====
+2021-03-30 16:14:25,573 - c:\users\aarc8\documents\github\mdoairb\framework\utilities\output     - INFO - ==== End writing aircraft results ====
+2021-03-30 16:14:25,573 - c:\users\aarc8\documents\github\mdoairb\framework\utilities\output     - INFO - ==== Start writing klm results ====
+2021-03-30 16:14:25,597 - c:\users\aarc8\documents\github\mdoairb\framework\utilities\output     - INFO - ==== End writing klm results ====
+   - INFO - ==== End network optimization module ====
+': 6530, 'CD3': 5119}, 'CD2': {'CD1': 6530, 'CD2': 0, 'CD3': 4354}, 'CD3': {'CD1': 5119, 'CD2': 4354, 'CD3': 0}}
+2021-03-30 16:14:25,297 - c:\Users\aarc8\Documents\github\MDOAirB\framework\Test\test_objective_function     - INFO - ---- Start Network Optimization ----
+2021-03-30 16:14:25,547 - c:\Users\aarc8\Documents\github\MDOAirB\framework\Test\test_objective_function     - INFO - Network profit [$USD]: 111116
+2021-03-30 16:14:25,598 - c:\Users\aarc8\Documents\github\MDOAirB\framework\Test\test_objective_function     - INFO - Network profit excecution time: 0:04:02.370668
+2021-03-30 16:14:25,599 - c:\Users\aarc8\Documents\github\MDOAirB\framework\Test\test_objective_function     - INFO - ==== End network profit module ====
+n execution time: 0:00:15.602784
+2021-03-30 16:13:35,419 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-30 16:13:50,756 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-30 16:13:50,756 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:15.336791
+2021-03-30 16:13:50,758 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-30 16:14:07,956 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-30 16:14:07,956 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:17.198163
+2021-03-30 16:14:07,959 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- Start DOC mission function ----
+2021-03-30 16:14:25,295 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - ---- End DOC mission function ----
+2021-03-30 16:14:25,295 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission     - INFO - DOC mission execution time: 0:00:17.336188
+on ----
+2021-03-30 16:11:24,469 - c:\users\aarc8\documents\github\mdoairb\framework\Performance\Mission\mission_sizing     - INFO - Mission sizing execution time: 0:00:05.142986
