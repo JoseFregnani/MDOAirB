@@ -345,7 +345,7 @@ def write_kml_results(arrivals, departures, profit, vehicle):
 
     data_airports = pd.read_csv("Database/Airports/airports.csv")
     frequencies_db = np.load('Database/Network/frequencies.npy',allow_pickle='TRUE').item()
-    with open('Database/Results/Kml/acft_' + str(profit) + '_' + str(start_time) +'.kml','w') as output:
+    with open(r'Database/Results/Kml/acft_' + str(profit) + '_' + str(start_time) +'.kml','w') as output:
     # with open(r'Database/Results/Klm/acft_' + str(profit) + '.kml','w') as output:
 
         output.write('<?xml version="1.0" encoding="UTF-8"?>\n')
@@ -386,10 +386,7 @@ def write_kml_results(arrivals, departures, profit, vehicle):
 
 
 def write_bad_results(x,error):
-
-
     start_time = datetime.today().strftime('%Y-%m-%d-%H%M')
-
 
     with open(r'Database/Results/Aircrafts_unfeasible/acft_' + str(start_time) +'.txt','w') as output:
     # with open('Database/Results/Aircrafts/acft_' + str(profit) +'.txt','a') as output:

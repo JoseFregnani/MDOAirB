@@ -39,6 +39,8 @@ from datetime import datetime
 
 from framework.utilities.logger import get_logger
 from framework.utilities.output import write_optimal_results, write_kml_results
+
+
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -143,12 +145,12 @@ def objective_function(x, vehicle):
         log.info('Network profit [$USD]: {}'.format(profit))
         # =============================================================================
 
-        average_cruise_mach = np.mean(mach)
-        total_passenger_capacity = np.sum(passenger_capacity)
-        total_distance_capacity = np.sum(total_distance_capacity)
-        total_fuel = np.sum(fuel_mass)
-        total_C02 = total_fuel*3.15
-        CO2_coeff = 3.15*total_fuel/(total_passenger_capacity*total_distance_capacity*1.852)
+        # average_cruise_mach = np.mean(mach)
+        # total_passenger_capacity = np.sum(passenger_capacity)
+        # total_distance_capacity = np.sum(total_distance_capacity)
+        # total_fuel = np.sum(fuel_mass)
+        # total_C02 = total_fuel*3.15
+        # CO2_coeff = 3.15*total_fuel/(total_passenger_capacity*total_distance_capacity*1.852)
 
         write_optimal_results(profit, DOC_ik, vehicle)
         write_kml_results(arrivals, departures, profit, vehicle)
@@ -183,6 +185,10 @@ from framework.Database.Aircrafts.baseline_aircraft_parameters import *
 #   0   1   2   3    4   5   6   7   8    9   10   11  12   13   14  
 # x[72, 77, 35, 19, -3, 33, 40, 10, 27, 1410, 16, 120, 6, 2280, 41000, 78, 1, 1, 1, 1]
 x =[108, 77, 35, 19, -3, 33, 40, 10, 27, 1410, 16, 120, 6, 2280, 41000, 78, 1, 1, 1, 1]
+start_time = datetime.now()
 
 result = objective_function(x, vehicle)
+
+end_time = datetime.now()
 print(result)
+print('objective function time: {}'.format(end_time - start_time))

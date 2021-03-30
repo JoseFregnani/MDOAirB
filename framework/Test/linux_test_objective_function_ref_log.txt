@@ -1,0 +1,76 @@
+INFO     - ==== Start network profit module ====
+INFO     - ---- Start aircraft sizing module ----
+INFO     - Current individual vairables: [108, 77, 35, 19, -3, 33, 40, 10, 27, 1410, 16, 120, 6, 2280, 41000, 78, 1, 1, 1, 1]
+INFO     - ---- Start wetted area module ----
+INFO     - Individual wetted area [m2]: 627.9852800118996
+INFO     - ---- End wetted area module ----
+INFO     - ---- Start sizing loop for tail sizing ----
+INFO     - ---- Start mission sizing function ----
+INFO     - ---- End mission sizing function ----
+INFO     - Mission sizing execution time: 0:00:21.607813
+INFO     - ---- Start mission sizing function ----
+INFO     - ---- End mission sizing function ----
+INFO     - Mission sizing execution time: 0:00:22.960857
+INFO     - ---- Start mission sizing function ----
+INFO     - ---- End mission sizing function ----
+INFO     - Mission sizing execution time: 0:00:23.944766
+INFO     - ---- Start mission sizing function ----
+INFO     - ---- End mission sizing function ----
+INFO     - Mission sizing execution time: 0:00:22.539862
+INFO     - ---- Start mission sizing function ----
+INFO     - ---- End mission sizing function ----
+INFO     - Mission sizing execution time: 0:00:23.732482
+INFO     - ---- Start mission sizing function ----
+INFO     - ---- End mission sizing function ----
+INFO     - Mission sizing execution time: 0:00:23.869940
+INFO     - ---- End sizing loop for tail sizing ----
+INFO     - ---- Start aircraft noise module ----
+INFO     - Noise check execution time: 0:01:19.176519
+INFO     - ---- End aircraft noise module ----
+INFO     - Aircraft flags: [0, 0, 0, 0]
+INFO     - Aircraft status (pass = 0, no pass =1): 0
+INFO     - ---- End aircraft sizing module ----
+INFO     - Aircraft passed sizing and checks status: 0
+INFO     - ---- Start DOC calculation ----
+INFO >>>> city pairs remaining to finish DOC matrix fill:  8
+INFO     - ---- Start DOC mission function ----
+INFO     - ---- End DOC mission function ----
+INFO     - DOC mission execution time: 0:00:36.886000
+INFO >>>> city pairs remaining to finish DOC matrix fill:  7
+INFO     - ---- Start DOC mission function ----
+INFO     - ---- End DOC mission function ----
+INFO     - DOC mission execution time: 0:00:39.536457
+INFO >>>> city pairs remaining to finish DOC matrix fill:  6
+INFO     - ---- Start DOC mission function ----
+INFO     - ---- End DOC mission function ----
+INFO     - DOC mission execution time: 0:00:37.194724
+INFO >>>> city pairs remaining to finish DOC matrix fill:  5
+INFO >>>> city pairs remaining to finish DOC matrix fill:  4
+INFO     - ---- Start DOC mission function ----
+INFO     - ---- End DOC mission function ----
+INFO     - DOC mission execution time: 0:00:36.905674
+INFO >>>> city pairs remaining to finish DOC matrix fill:  3
+INFO     - ---- Start DOC mission function ----
+INFO     - ---- End DOC mission function ----
+INFO     - DOC mission execution time: 0:00:42.210374
+INFO >>>> city pairs remaining to finish DOC matrix fill:  2
+INFO     - ---- Start DOC mission function ----
+INFO     - ---- End DOC mission function ----
+INFO     - DOC mission execution time: 0:00:39.730475
+INFO >>>> city pairs remaining to finish DOC matrix fill:  1
+INFO >>>> city pairs remaining to finish DOC matrix fill:  0
+INFO     - Aircraft DOC matrix: {'CD1': {'CD1': 0, 'CD2': 6530, 'CD3': 5119}, 'CD2': {'CD1': 6530, 'CD2': 0, 'CD3': 4354}, 'CD3': {'CD1': 5119, 'CD2': 4354, 'CD3': 0}}
+INFO     - ---- Start Network Optimization ----
+INFO     - ==== Start network optimization module ====
+INFO     - ==== Start PuLP optimization ====
+INFO     - Network optimization status: Optimal
+INFO     - ==== End network optimization module ====
+INFO     - Network profit [$USD]: 111116
+INFO     - ==== Start writing aircraft results ====
+INFO     - ==== End writing aircraft results ====
+INFO     - ==== Start writing klm results ====
+INFO     - ==== End writing klm results ====
+INFO     - Network profit excecution time: 0:07:34.382441
+INFO     - ==== End network profit module ====
+111116.0
+objective function time: 0:07:34.382828
