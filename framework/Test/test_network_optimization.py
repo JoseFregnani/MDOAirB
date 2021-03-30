@@ -41,16 +41,16 @@ from framework.Database.Aircrafts.baseline_aircraft_parameters import *
 
 # Available cities:
 # ['CD1', 'CD2', 'CD3', 'CD4', 'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
-# departures = ['CD1', 'CD2', 'CD3', 'CD4',
-#               'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
-# arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
-#             'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
-# arrivals_2 = ['CD1', 'CD2', 'CD3', 'CD4',
-#               'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+departures = ['CD1', 'CD2', 'CD3', 'CD4',
+              'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
+            'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+arrivals_2 = ['CD1', 'CD2', 'CD3', 'CD4',
+              'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
 
-departures =  ['CD1', 'CD2', 'CD3', 'CD4']
-arrivals =  ['CD1', 'CD2', 'CD3', 'CD4']
-arrivals_2 =  ['CD1', 'CD2', 'CD3', 'CD4']
+# departures =  ['CD1', 'CD2', 'CD3', 'CD4']
+# arrivals =  ['CD1', 'CD2', 'CD3', 'CD4']
+# arrivals_2 =  ['CD1', 'CD2', 'CD3', 'CD4']
 
 # Define minimization problem
 prob = LpProblem("Network", LpMaximize)
@@ -176,7 +176,7 @@ for i in departures:
 # Solve problem
 # =============================================================================
 
-prob.solve(GLPK(msg=0, timeLimit=60*5))
+prob.solve(GLPK(msg=0, timeLimit=60*1))
 # prob.solve(solver = GLPK_CMD(timeLimit=60*5))
 
 # prob.solve()
@@ -209,7 +209,7 @@ results['covered_demand'] = sum(list_of_pax)
 print('Total profit [$US]:', value(prob.objective))
 
 
-import pandas as pd
+
 opt_df = pd.DataFrame.from_dict(xijk, orient="index", 
                                 columns = ["variable_object"])
 opt_df.index =  pd.MultiIndex.from_tuples(opt_df.index, 
@@ -220,3 +220,41 @@ opt_df["solution_value"] =  opt_df["variable_object"].apply(lambda item: item.va
 
 opt_df.drop(columns=["variable_object"], inplace=True)
 opt_df.to_csv("optimization_solution2.csv")
+
+############################################################################################
+opt_df2 = pd.DataFrame.from_dict(nika, orient="index", 
+                                columns = ["variable_object"])
+opt_df2.index =  pd.MultiIndex.from_tuples(opt_df2.index, 
+                               names=["origin", "destination"])
+opt_df2.reset_index(inplace=True)
+
+opt_df2["solution_value"] =  opt_df2["variable_object"].apply(lambda item: item.varValue)
+
+opt_df2.drop(columns=["variable_object"], inplace=True)
+
+def flatten_dict(dd, separator ='_', prefix =''):
+    return { prefix + separator + k if prefix else k : v
+             for kk, vv in dd.items()
+             for k, v in flatten_dict(vv, separator, kk).items()
+             } if isinstance(dd, dict) else { prefix : dd }
+
+
+distances_flatt = flatten_dict(distances)
+doc_flatt = flatten_dict(doc)
+demand_flatt = flatten_dict(demand)
+revenue_flatt = flatten_dict(revenue_ik)
+
+distance_df =  pd.DataFrame.from_dict(distances_flatt,orient="index",columns=['distances'])
+doc_df =  pd.DataFrame.from_dict(doc_flatt,orient="index",columns=['doc'])
+demand_df =  pd.DataFrame.from_dict(demand_flatt,orient="index",columns=['demand'])
+revenue_df =  pd.DataFrame.from_dict(revenue_flatt,orient="index",columns=['revenue'])
+
+opt_df2['distances'] = distance_df['distances'].values
+opt_df2['doc'] = doc_df['doc'].values
+opt_df2['demand'] = demand_df['demand'].values
+opt_df2['revenue'] = revenue_df ['revenue'].values
+
+
+
+
+opt_df2.to_csv("optimization_solution2.csv")
