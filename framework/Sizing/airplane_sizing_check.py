@@ -43,7 +43,7 @@ from framework.Sizing.performance_constraints import *
 from framework.Noise.Noise_Smith.noise_calculation import noise_calculation
 from framework.utilities.logger import get_logger
 
-
+from datetime import datetime
 # =============================================================================
 # CLASSES
 # =============================================================================
@@ -160,15 +160,24 @@ def airplane_sizing(x, vehicle):
     elif classification == 3:
         fuselage['container_type'] = 'LD3-45'
 
+    start_time = datetime.now()
     # Fuselage cross section sizing
     vehicle = fuselage_cross_section(vehicle)
-
+    end_time = datetime.now()
+    print('Fuselage sizing time: {}'.format(end_time - start_time))
+    
+    start_time = datetime.now()
     # Airfoil geometry coefficients
     vehicle = airfoil_parameters(vehicle)
+    end_time = datetime.now()
+    print('airfoil coefficients time: {}'.format(end_time - start_time))
+
 
     # Wetted area calculation
     wing['mean_thickness'] = np.mean(wing['thickness_ratio'])
+    
 
+    start_time = datetime.now()
     (vehicle,
         xutip,
         yutip,
@@ -183,6 +192,12 @@ def airplane_sizing(x, vehicle):
         xlroot,
         ylroot) = wetted_area(vehicle)
 
+    end_time = datetime.now()
+    print('wetted area time: {}'.format(end_time - start_time))
+
+
+
+    start_time = datetime.now()
     # Wing structural layout sizing
     (vehicle) = wing_structural_layout(
         vehicle,
@@ -197,6 +212,9 @@ def airplane_sizing(x, vehicle):
         xlroot,
         yuroot,
         ylroot)
+
+    end_time = datetime.now()
+    print('wing structural time: {}'.format(end_time - start_time))
 
     # Estimation of MTOW [kg] by Class I methodology
     # Wetted area in [ft]
@@ -223,8 +241,12 @@ def airplane_sizing(x, vehicle):
     alpha_deg = 0
     altitude = 100
     mach = 0.15
+
+    start_time = datetime.now()
     CD_1, _ = aerodynamic_coefficients_ANN(
         vehicle, altitude, mach, CL_1, alpha_deg, switch_neural_network)
+    end_time = datetime.now()
+    print('neural net call time: {}'.format(end_time - start_time))
 
     CL_2 = 0.5
     CD_2, _ = aerodynamic_coefficients_ANN(
@@ -287,10 +309,14 @@ def airplane_sizing(x, vehicle):
     log.info('---- Start sizing loop for tail sizing ----')
 
     while (delta_MTOW > 100) and (MTOW_count < max_MTOW_count):
-
+        start_time = datetime.now()
         # Mission evaluation and tail sizing
         vehicle, MTOW_calculated, fuel_mass, landing_weight = mission_sizing(
             vehicle)
+        end_time = datetime.now()
+        print('mission evaluation tail sizing call time: {}'.format(end_time - start_time))
+        
+        
 
         delta_MTOW = np.abs(
             MTOW_calculated - aircraft['maximum_takeoff_weight'])
