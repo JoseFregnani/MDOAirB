@@ -1,8 +1,0 @@
-======== Aircraft and network optimization results ========
-
-
- ----- Aircraft parameters ----- 
-[127, 87, 47, 22, -4, 34, 62, 10, 29, 1443, 16, 67, 5, 1281, 41000, 78, 1, 1, 1, 1]
-
- ----- Error message ----- 
-<class 'TypeError'>
