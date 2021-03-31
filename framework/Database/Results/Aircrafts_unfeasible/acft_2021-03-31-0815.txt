@@ -1,0 +1,8 @@
+======== Aircraft and network optimization results ========
+
+
+ ----- Aircraft parameters ----- 
+[97, 80, 47, 29, -4, 34, 49, 10, 28, 1443, 16, 104, 6, 2458, 41000, 78, 1, 1, 1, 1]
+
+ ----- Error message ----- 
+<class 'UnboundLocalError'>

@@ -1,0 +1,177 @@
+======== Aircraft and network optimization results ========
+
+
+ ----- Aircraft parameters ----- 
+
+ Performance: 
+RANGE: 1582.00 [nm] 
+MMO: 0.82
+VMO: 340.00 [kts] 
+Ceiling: 41000.00 [ft] 
+
+ Fuselage: 
+Pax: 85.00
+Crew: 5.00
+Aisles number: 1.00
+Seats number: 3.00
+Seat width: 0.46 [m] 
+Seat pitch: 0.81 [m] 
+Cabine height: 2.00 [m] 
+Fuselage length: 27.07 [m] 
+Cockpit length: 3.70 [m] 
+Tail length: 7.21 [m] 
+Width: 4.01 [m] 
+Diameter: 4.19 [m] 
+Height: 4.38 [m] 
+Dz floor: 0.54 [m] 
+Wetted area: 295.60 [m2] 
+Weight: [4557.93028947] [kg] 
+
+ Aerodynamics: 
+CLmax: 1.65
+CLmax TO: 2.19
+CLmax LD: 2.79
+
+ Wing: 
+Area: 97.00 [m2] 
+Span: 29.05 [m] 
+Aspect Ratio: 8.43
+Taper Ratio: 0.45
+Sweep c/4: 22.00 [deg] 
+Sweep LE: 24.01 [deg] 
+Twist: -4.00 [deg] 
+Wetted area: 167.63 [m2] 
+Kink position: 0.34 [%] 
+Root incidence: 2.00 [deg] 
+Kink incidence: 0.00 [deg] 
+Tip incidence: -2.00 [deg] 
+Root t/c: 0.13
+Kink t/c: 0.11
+Tip t/c: 0.10
+Center chord: 5.92 [m] 
+Root chord: 4.99 [m] 
+Kink chord: 3.72 [m] 
+Tip chord: 2.14 [m] 
+MAC: 3.61 [m] 
+Leading edge xposition: [10.02823055] [m] 
+Slat presence: 1.00
+Flap span: 0.75 [%] 
+Flap area: 4.87 [m2] 
+Flap def. TO: 35.00 [deg] 
+Flap def. LD: 45.00 [deg] 
+Aileron position: 0.00 [%] 
+Rear spar position: 0.75 [%] 
+
+ Vertical tail: 
+Area: [24.32387454] [m2] 
+Aspect Ratio: 1.20
+Taper Ratio: 0.50
+Sweep c/4: 41.00 [deg] 
+
+ Horizontal tail: 
+Area: [28.87662331] [m2] 
+Aspect Ratio: 4.35
+Taper Ratio: 0.40
+Sweep c/4: 26.00 [deg] 
+
+ Winglet: 
+Aspect Ratio: 2.75
+Taper Ratio: 0.25
+Sweep leading edge: 35.00 [deg] 
+
+ Engine: 
+Maximum thrust: [120465.86281124] [kg] 
+Bypass ratio: 5.10
+Fan diameter: 1.00 [m] 
+Fan pressure ratio: 1.90
+Compressor pressure ratio: 30.00
+Turbine inlet temperature: 1443.00 [deg C] 
+Engine length: 2.25 [m] 
+
+ Pylon: 
+Wetted area: 2.19 [m2] 
+
+ Aircraft: 
+Wing position: 1.00
+Horizontal tail position: 1.00
+Engine position: 1.00
+Wetted area: [589.63894784] [m2] 
+
+ ----- Network parameters ----- 
+
+Referemce values: 
+Mach: 0.00 
+Range: 0.00 [nm] 
+DOC: 0.00 [$/nm] 
+Passengers: 0.00 
+Net present value: 0.00 [$] 
+Price: 0.00 [$] 
+Average fare: 0.00 [$] 
+Average load factor: 0.00 
+Average market share: 0.00 [%] 
+Airports array: ['FRA', 'LHR', 'CDG', 'AMS', 'MAD', 'BCN', 'FCO', 'DUB', 'VIE', 'ZRH']
+
+Daily demand: 
+0 451 294 252 313 298 192 221 324 188
+451 0 342 469 398 215 254 505 227 322
+294 342 0 334 300 374 354 204 255 192
+252 469 334 0 307 374 291 327 255 256
+313 398 300 307 0 697 340 150 150 183
+298 215 374 374 697 0 384 164 175 171
+192 254 354 291 340 384 0 55 144 99
+221 505 204 327 150 164 55 0 63 78
+324 227 255 255 150 175 144 63 0 260
+188 322 192 256 183 171 99 78 260 0
+
+Distances: 
+0 355 243 198 768 591 517 589 336 154
+355 0 188 200 672 620 781 243 690 427
+243 188 0 215 574 463 595 425 561 258
+198 200 215 0 788 670 700 406 519 326
+768 672 574 788 0 261 720 784 977 670
+591 620 463 670 261 0 459 802 741 463
+517 781 595 700 720 459 0 1020 421 375
+589 243 425 406 784 802 1020 0 922 670
+336 690 561 519 977 741 421 922 0 327
+154 427 258 326 670 463 375 670 327 0
+
+Headings: 
+
+DOC: 
+CD1,{'CD1': 0, 'CD2': 5740, 'CD3': 4245, 'CD4': 3348, 'CD5': 11681, 'CD6': 9004, 'CD7': 7997, 'CD8': 8976, 'CD9': 5462, 'CD10': 2572}
+
+CD2,{'CD1': 5740, 'CD2': 0, 'CD3': 3230, 'CD4': 3376, 'CD5': 10205, 'CD6': 9416, 'CD7': 11871, 'CD8': 4245, 'CD9': 10490, 'CD10': 6743}
+
+CD3,{'CD1': 4245, 'CD2': 3230, 'CD3': 0, 'CD4': 3979, 'CD5': 8764, 'CD6': 7242, 'CD7': 9061, 'CD8': 6716, 'CD9': 8580, 'CD10': 4430}
+
+CD4,{'CD1': 3348, 'CD2': 3376, 'CD3': 3979, 'CD4': 0, 'CD5': 11974, 'CD6': 10177, 'CD7': 10640, 'CD8': 6454, 'CD9': 8025, 'CD10': 5328}
+
+CD5,{'CD1': 11681, 'CD2': 10205, 'CD3': 8764, 'CD4': 11974, 'CD5': 0, 'CD6': 4420, 'CD7': 10927, 'CD8': 11915, 'CD9': 14975, 'CD10': 10177}
+
+CD6,{'CD1': 9004, 'CD2': 9416, 'CD3': 7242, 'CD4': 10177, 'CD5': 4470, 'CD6': 0, 'CD7': 7187, 'CD8': 12187, 'CD9': 11230, 'CD10': 7242}
+
+CD7,{'CD1': 7997, 'CD2': 11871, 'CD3': 9061, 'CD4': 10640, 'CD5': 10927, 'CD6': 7187, 'CD7': 0, 'CD8': 15470, 'CD9': 6660, 'CD10': 6014}
+
+CD8,{'CD1': 8976, 'CD2': 4245, 'CD3': 6716, 'CD4': 6454, 'CD5': 11915, 'CD6': 12187, 'CD7': 15470, 'CD8': 0, 'CD9': 14057, 'CD10': 10177}
+
+CD9,{'CD1': 5462, 'CD2': 10490, 'CD3': 8580, 'CD4': 8025, 'CD5': 14975, 'CD6': 11230, 'CD7': 6660, 'CD8': 14057, 'CD9': 0, 'CD10': 5341}
+
+CD10,{'CD1': 2552, 'CD2': 6743, 'CD3': 4430, 'CD4': 5328, 'CD5': 10177, 'CD6': 7242, 'CD7': 6014, 'CD8': 10177, 'CD9': 5341, 'CD10': 0}
+
+
+
+Frequencies: 
+{('CD1', 'CD1'): 0, ('CD1', 'CD2'): 3, ('CD1', 'CD3'): 7, ('CD1', 'CD4'): 0, ('CD1', 'CD5'): 0, ('CD1', 'CD6'): 0, ('CD1', 'CD7'): 0, ('CD1', 'CD8'): 0, ('CD1', 'CD9'): 0, ('CD1', 'CD10'): 0, ('CD2', 'CD1'): 0, ('CD2', 'CD2'): 0, ('CD2', 'CD3'): 4, ('CD2', 'CD4'): 0, ('CD2', 'CD5'): 4, ('CD2', 'CD6'): 2, ('CD2', 'CD7'): 3, ('CD2', 'CD8'): 1, ('CD2', 'CD9'): 1, ('CD2', 'CD10'): 4, ('CD3', 'CD1'): 0, ('CD3', 'CD2'): 0, ('CD3', 'CD3'): 0, ('CD3', 'CD4'): 1, ('CD3', 'CD5'): 0, ('CD3', 'CD6'): 0, ('CD3', 'CD7'): 0, ('CD3', 'CD8'): 0, ('CD3', 'CD9'): 1, ('CD3', 'CD10'): 0, ('CD4', 'CD1'): 4, ('CD4', 'CD2'): 4, ('CD4', 'CD3'): 5, ('CD4', 'CD4'): 0, ('CD4', 'CD5'): 0, ('CD4', 'CD6'): 0, ('CD4', 'CD7'): 0, ('CD4', 'CD8'): 0, ('CD4', 'CD9'): 0, ('CD4', 'CD10'): 0, ('CD5', 'CD1'): 5, ('CD5', 'CD2'): 0, ('CD5', 'CD3'): 7, ('CD5', 'CD4'): 5, ('CD5', 'CD5'): 0, ('CD5', 'CD6'): 0, ('CD5', 'CD7'): 0, ('CD5', 'CD8'): 0, ('CD5', 'CD9'): 0, ('CD5', 'CD10'): 0, ('CD6', 'CD1'): 4, ('CD6', 'CD2'): 1, ('CD6', 'CD3'): 6, ('CD6', 'CD4'): 4, ('CD6', 'CD5'): 5, ('CD6', 'CD6'): 0, ('CD6', 'CD7'): 1, ('CD6', 'CD8'): 0, ('CD6', 'CD9'): 0, ('CD6', 'CD10'): 1, ('CD7', 'CD1'): 4, ('CD7', 'CD2'): 0, ('CD7', 'CD3'): 3, ('CD7', 'CD4'): 6, ('CD7', 'CD5'): 5, ('CD7', 'CD6'): 10, ('CD7', 'CD7'): 0, ('CD7', 'CD8'): 0, ('CD7', 'CD9'): 0, ('CD7', 'CD10'): 1, ('CD8', 'CD1'): 3, ('CD8', 'CD2'): 1, ('CD8', 'CD3'): 3, ('CD8', 'CD4'): 6, ('CD8', 'CD5'): 3, ('CD8', 'CD6'): 5, ('CD8', 'CD7'): 5, ('CD8', 'CD8'): 0, ('CD8', 'CD9'): 0, ('CD8', 'CD10'): 0, ('CD9', 'CD1'): 3, ('CD9', 'CD2'): 0, ('CD9', 'CD3'): 7, ('CD9', 'CD4'): 3, ('CD9', 'CD5'): 5, ('CD9', 'CD6'): 3, ('CD9', 'CD7'): 2, ('CD9', 'CD8'): 1, ('CD9', 'CD9'): 0, ('CD9', 'CD10'): 0, ('CD10', 'CD1'): 5, ('CD10', 'CD2'): 3, ('CD10', 'CD3'): 3, ('CD10', 'CD4'): 3, ('CD10', 'CD5'): 4, ('CD10', 'CD6'): 0, ('CD10', 'CD7'): 1, ('CD10', 'CD8'): 2, ('CD10', 'CD9'): 0, ('CD10', 'CD10'): 0}
+
+Results: 
+Number of nodes: 10.00 
+Number of arcs: 0.00 
+Average degree of nodes: 0.00 
+Average path length: 0.00 
+Network density: 0.00 
+Average clustering: 0.00
+Total cost: 0.00 [$] 
+Total revenue: 0.00 [$] 
+Total profit: 32806.00 [$] 
+Number of frequencies: 0.00 
+Number of used aircraft: 183.00 
