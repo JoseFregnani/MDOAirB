@@ -66,8 +66,15 @@ def second_segment_climb(vehicle, weight_takeoff):
     # Input for neural network: 0 for CL | 1 for alpha
     switch_neural_network = 0
     alpha_deg = 1
-    CD_takeoff, _ = aerodynamic_coefficients_ANN(
+    CD_wing, _ = aerodynamic_coefficients_ANN(
         vehicle, airfield_elevation, mach, CL_maximum_takeoff,alpha_deg,switch_neural_network)
+
+    friction_coefficient = 0.003
+    CD_ubrige = friction_coefficient * \
+        (aircraft['wetted_area'] - wing['wetted_area']) / \
+        wing['area']
+
+    CD_takeoff = CD_wing + CD_ubrige
 
     L_to_D = CL_maximum_takeoff/CD_takeoff
     if aircraft['number_of_engines']  == 2:

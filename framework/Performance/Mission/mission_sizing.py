@@ -131,7 +131,7 @@ def mission_sizing(vehicle):
 
     initial_altitude = airport_departure['elevation']
 
-    start_time = datetime.now()
+    # start_time = datetime.now()
     # Maximum altitude calculation
     max_altitude, rate_of_climb = maximum_altitude(
         vehicle,
@@ -142,10 +142,10 @@ def mission_sizing(vehicle):
         mach_climb,
         delta_ISA
     )
-    end_time = datetime.now()
-    print('max alt calculation time: {}'.format(end_time - start_time))
+    # end_time = datetime.now()
+    # print('max alt calculation time: {}'.format(end_time - start_time))
     
-    start_time = datetime.now()
+    # start_time = datetime.now()
     # Optimal altitude calculation
     optim_altitude, rate_of_climb, _ = optimum_altitude(
         vehicle,
@@ -156,8 +156,8 @@ def mission_sizing(vehicle):
         mach_climb,
         delta_ISA
     )
-    end_time = datetime.now()
-    print('opt alt calculation time: {}'.format(end_time - start_time))
+    # end_time = datetime.now()
+    # print('opt alt calculation time: {}'.format(end_time - start_time))
 
     g_climb = 4/1000
     g_descent = 3/1000
@@ -211,7 +211,7 @@ def mission_sizing(vehicle):
         )
         final_altitude = flight_level*100
     
-    start_time = datetime.now()
+    # start_time = datetime.now()
     # Initial climb fuel estimation
     initial_altitude = initial_altitude + 1500
     _, _, total_burned_fuel0, _ = climb_integration(
@@ -223,11 +223,11 @@ def mission_sizing(vehicle):
         initial_altitude,
         vehicle
     )
-    end_time = datetime.now()
-    print('climb integration calculation time: {}'.format(end_time - start_time))
+    # end_time = datetime.now()
+    # print('climb integration calculation time: {}'.format(end_time - start_time))
     
 
-    start_time = datetime.now()
+    # start_time = datetime.now()
     # Calculate best cruise mach
     mass_at_top_of_climb = max_takeoff_mass - total_burned_fuel0
     operations['mach_cruise'] = maximum_range_mach(
@@ -236,13 +236,13 @@ def mission_sizing(vehicle):
         delta_ISA,
         vehicle
     )
-    end_time = datetime.now()
-    print('best cruise mach calc time: {}'.format(end_time - start_time))
+    # end_time = datetime.now()
+    # print('best cruise mach calc time: {}'.format(end_time - start_time))
 
     mach_climb = operations['mach_cruise']
     mach_descent = operations['mach_cruise']
     
-    start_time = datetime.now()
+    # start_time = datetime.now()
     # Recalculate climb with new mach
     final_distance, total_climb_time, total_burned_fuel, final_altitude = climb_integration(
         max_takeoff_mass,
@@ -253,8 +253,8 @@ def mission_sizing(vehicle):
         initial_altitude,
         vehicle
     )
-    end_time = datetime.now()
-    print('climb integration re calculation time: {}'.format(end_time - start_time))
+    # end_time = datetime.now()
+    # print('climb integration re calculation time: {}'.format(end_time - start_time))
 
 
     mass_at_top_of_climb = max_takeoff_mass - total_burned_fuel
@@ -271,14 +271,14 @@ def mission_sizing(vehicle):
 
     while flag == 1:
 
-        start_time = datetime.now()
+        # start_time = datetime.now()
         transition_altitude = crossover_altitude(
             operations['mach_cruise'],
             cruise_V_cas,
             delta_ISA
         )
-        end_time = datetime.now()
-        print('cross over altitude calculation time: {}'.format(end_time - start_time))
+        # end_time = datetime.now()
+        # print('cross over altitude calculation time: {}'.format(end_time - start_time))
         _, _, _, _, _, rho_ISA, _, _ = atmosphere_ISA_deviation(
             initial_cruise_altitude,
             delta_ISA
@@ -293,7 +293,7 @@ def mission_sizing(vehicle):
         if altitude > transition_altitude:
             mach = operations['mach_cruise']
         
-        start_time = datetime.now()
+        # start_time = datetime.now()
         # Breguet calculation type for cruise performance
         total_cruise_time, final_cruise_mass = cruise_performance(
             altitude,
@@ -303,12 +303,12 @@ def mission_sizing(vehicle):
             distance_cruise,
             vehicle
         )
-        end_time = datetime.now()
-        print('cruise performance calculation time: {}'.format(end_time - start_time))
+        # end_time = datetime.now()
+        # print('cruise performance calculation time: {}'.format(end_time - start_time))
 
         final_cruise_altitude = altitude
         
-        start_time = datetime.now()
+        # start_time = datetime.now()
         final_distance, total_descent_time, total_burned_fuel, final_altitude = descent_integration(
             final_cruise_mass,
             mach_descent,
@@ -318,8 +318,8 @@ def mission_sizing(vehicle):
             final_cruise_altitude,
             vehicle
         )
-        end_time = datetime.now()
-        print('descent integration calculation time: {}'.format(end_time - start_time))
+        # end_time = datetime.now()
+        # print('descent integration calculation time: {}'.format(end_time - start_time))
         
         distance_descent = final_distance*feet_to_nautical_miles
         distance_mission = distance_climb + distance_cruise + distance_descent

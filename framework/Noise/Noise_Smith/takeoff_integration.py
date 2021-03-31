@@ -67,7 +67,7 @@ def takeoff_integration(
         solver.set_initial_value(z0, t0)
         t1 = initial_block_time + 200
         # N = 50
-        t = np.linspace(t0, t1)
+        t = np.linspace(t0, t1,100)
         N = len(t)
         sol = np.empty((N,2))
         sol_var = np.empty((N,6))
@@ -84,7 +84,7 @@ def takeoff_integration(
         solver.set_initial_value(z0, t0)
         t1 = initial_block_time + 200
         # N = 50
-        t = np.linspace(t0, t1)
+        t = np.linspace(t0, t1,100)
         N = len(t)
         sol = np.empty((N,5))
         sol_var = np.empty((N,3))

@@ -60,6 +60,8 @@ def rate_of_descent_calculation(thrust_to_weight, h, delta_ISA, mach, mass, vehi
         (rho_ISA*((V_tas*knots_to_meters_second)**2)*wing_surface)
     CL = float(CL)
 
+    # print('CL',CL)
+
     # CD = zero_fidelity_drag_coefficient(aircraft_data, CL, phase)
     # Input for neural network: 0 for CL | 1 for alpha
     switch_neural_network = 0
@@ -70,10 +72,14 @@ def rate_of_descent_calculation(thrust_to_weight, h, delta_ISA, mach, mass, vehi
     CD_ubrige = friction_coefficient * \
         (aircraft['wetted_area'] - wing['wetted_area']) / \
         wing['area']
-
+    
+    
     CD = CD_wing + CD_ubrige
+    if h < 10000:
+        CD = CD*1.05
 
     L_to_D = CL/CD
+    # print(CD)
 
 
     if mach > 0:

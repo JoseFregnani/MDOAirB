@@ -47,6 +47,7 @@ def maximum_range_mach(mass, cruise_altitude, delta_ISA, vehicle):
     knots_to_meters_second = 0.514444
     wing  = vehicle['wing']
     wing_surface = wing['area']
+    aircraft = vehicle['aircraft']
 
     VMO = 340
     altitude = cruise_altitude
@@ -71,9 +72,18 @@ def maximum_range_mach(mass, cruise_altitude, delta_ISA, vehicle):
         # Input for neural network: 0 for CL | 1 for alpha
         switch_neural_network = 0
         alpha_deg = 1
-        CD_aux, _ = aerodynamic_coefficients_ANN(
+        CD_wing, _ = aerodynamic_coefficients_ANN(
             vehicle, altitude, mach[i], float(CL_required[i]),alpha_deg,switch_neural_network)
+
+        friction_coefficient = 0.003
+        CD_ubrige = friction_coefficient * \
+            (aircraft['wetted_area'] - wing['wetted_area']) / \
+            wing['area']
+
+        CD_aux = CD_wing + CD_ubrige
         CD.append(CD_aux)
+
+    CD = np.reshape(CD, (100,)) 
 
     MLD = mach*(CL_required/CD)
 

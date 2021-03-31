@@ -215,6 +215,9 @@ def climb(time, state, climb_V_cas, mach_climb, delta_ISA, final_block_altitude,
     altitude = state[1]
     mass = state[2]
 
+    # print('t',time)
+    # print('alt',altitude)
+
     # print('current:',altitude)
     # print('limit altitude:',final_block_altitude )
     if altitude < final_block_altitude:
@@ -242,8 +245,17 @@ def climb(time, state, climb_V_cas, mach_climb, delta_ISA, final_block_altitude,
         total_fuel_flow = aircraft['number_of_engines'] * fuel_flow
         throttle_position = throttle_position+step_throttle
 
+    
+
+    
+    
     thrust_to_weight = aircraft['number_of_engines'] * \
         thrust_force/(mass*GRAVITY)
+    
+    if thrust_to_weight < 0.001:
+        return
+
+    # print('T to W:',thrust_to_weight)
     rate_of_climb, V_tas, climb_path_angle = rate_of_descent_calculation(
         thrust_to_weight, altitude, delta_ISA, mach, mass, vehicle)
 

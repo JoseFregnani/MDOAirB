@@ -62,8 +62,15 @@ def missed_approach_climb_OEI(vehicle, maximum_takeoff_weight, weight_landing):
     switch_neural_network = 0
     alpha_deg = 1
 
-    CD_landing, _ = aerodynamic_coefficients_ANN(
+    CD_wing, _ = aerodynamic_coefficients_ANN(
         vehicle, airfield_elevation, mach, CL_maximum_landing,alpha_deg,switch_neural_network)
+
+    friction_coefficient = 0.003
+    CD_ubrige = friction_coefficient * \
+        (aircraft['wetted_area'] - wing['wetted_area']) / \
+        wing['area']
+
+    CD_landing = CD_wing + CD_ubrige
     # CD_landing = zero_fidelity_drag_coefficient(aircraft_data, CL_maximum_landing, phase)
 
     L_to_D = CL_maximum_landing/CD_landing
@@ -106,9 +113,14 @@ def missed_approach_climb_AEO(vehicle, maximum_takeoff_weight, weight_landing):
     # Input for neural network: 0 for CL | 1 for alpha
     switch_neural_network = 0
     alpha_deg = 1
-    CD_landing, _ = aerodynamic_coefficients_ANN(
+    CD_wing, _ = aerodynamic_coefficients_ANN(
         vehicle, airfield_elevation, mach, CL_maximum_landing,alpha_deg,switch_neural_network)
-    # CD_landing = zero_fidelity_drag_coefficient(aircraft_data, CL_maximum_landing, phase)
+    friction_coefficient = 0.003
+    CD_ubrige = friction_coefficient * \
+        (aircraft['wetted_area'] - wing['wetted_area']) / \
+        wing['area']
+
+    CD_landing = CD_wing + CD_ubrige
 
     L_to_D = CL_maximum_landing/CD_landing
 

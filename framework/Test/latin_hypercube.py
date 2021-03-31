@@ -7,10 +7,10 @@ xlimits = np.array([[70, 130], [75, 100],[25, 50],[15,35],[-5,-2],[32,40],[45,65
 sampling = LHS(xlimits=xlimits)
 
 num = 10
-x = sampling(num)
+x = int(sampling(num)
 
 
-print(np.round(x))
+print(int(x))
 # print(x.shape)
 # fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
 # plt.plot(x[:, 0], x[:, 1], "o")
