@@ -88,15 +88,10 @@ toolbox.register("individual", tools.initCycle, creator.Individual,
                   toolbox.attr_engine_design_point_mach, toolbox.attr_engine_position, toolbox.attr_winglet_presence, toolbox.attr_slat_presense, toolbox.attr_horizontal_tail_position),
                  n=1)
 
+
 # Definition of lower and upper bounds
 lower_bounds = [72,   75, 25, 15, -5, 32, 45, 10, 27, 1350, 14, 50, 4, 1000, 41000, 78, 1, 1, 1, 1]
 upper_bounds = [130, 100, 50, 35, -2, 40, 65, 20, 30, 1500, 20, 120, 6, 2500, 41000, 78, 1, 1, 1, 1]
-
-# Genetic algoritgm configuration
-toolbox.register("population", tools.initRepeat, list, toolbox.individual)
-toolbox.register('mate', tools.cxTwoPoint)
-toolbox.register("mutate", tools.mutUniformInt,low =lower_bounds,up=upper_bounds,indpb=0.2)
-toolbox.register('select', tools.selTournament, tournsize=2)
 
 # Declaration of the objective function (network profit)
 def obj_function(individual):
@@ -105,9 +100,34 @@ def obj_function(individual):
     net_profit = objective_function(individual, vehicle)
     return net_profit,
 
-toolbox.register("evaluate", obj_function)
-# toolbox.decorate("evaluate", tools.DeltaPenalty(feaseGeom, [1.0, ]))
 
+def initPopulation(pcls, ind_init, file):    
+    return pcls(ind_init(c) for c in file)
+
+
+# population_Functions used in guess
+Initial_population = [[9.700e+01,9.900e+01,4.400e+01,1.800e+01,-2.000e+00,3.200e+01, 4.800e+01,1.400e+01,3.000e+01,1.462e+03,1.700e+01,6.000e+01, 6.000e+00,1.525e+03,41000, 78, 1, 1, 1, 1],
+        [7.300e+01,8.600e+01,2.900e+01,1.600e+01,-5.000e+00,3.400e+01, 4.600e+01,2.000e+01,2.700e+01,1.372e+03,1.800e+01,1.160e+02, 4.000e+00,2.425e+03,41000, 78, 1, 1, 1, 1],
+        [1.210e+02,9.600e+01,4.100e+01,2.600e+01,-3.000e+00,3.600e+01, 6.200e+01,1.800e+01,2.900e+01,1.478e+03,1.800e+01,6.800e+01, 5.000e+00,1.975e+03,41000, 78, 1, 1, 1, 1],
+        [7.900e+01,9.400e+01,3.100e+01,2.000e+01,-4.000e+00,3.700e+01, 5.600e+01,1.000e+01,2.900e+01,1.448e+03,1.600e+01,8.200e+01, 5.000e+00,1.825e+03,41000, 78, 1, 1, 1, 1],
+        [1.270e+02,7.600e+01,3.600e+01,2.800e+01,-4.000e+00,3.800e+01, 6.000e+01,1.800e+01,3.000e+01,1.432e+03,1.700e+01,8.800e+01, 5.000e+00,1.225e+03,41000, 78, 1, 1, 1, 1],
+        [1.150e+02,8.400e+01,4.900e+01,3.200e+01,-2.000e+00,3.600e+01, 5.000e+01,1.400e+01,2.800e+01,1.492e+03,1.900e+01,1.100e+02, 4.000e+00,1.375e+03,41000, 78, 1, 1, 1, 1],
+        [1.090e+02,8.100e+01,2.600e+01,2.400e+01,-5.000e+00,4.000e+01, 5.200e+01,1.600e+01,2.700e+01,1.402e+03,1.400e+01,7.400e+01, 4.000e+00,2.125e+03,41000, 78, 1, 1, 1, 1],
+        [9.100e+01,8.900e+01,3.400e+01,3.000e+01,-3.000e+00,3.900e+01, 6.400e+01,1.200e+01,2.800e+01,1.358e+03,2.000e+01,9.600e+01, 5.000e+00,1.675e+03,41000, 78, 1, 1, 1, 1],
+        [8.500e+01,9.100e+01,3.900e+01,3.400e+01,-3.000e+00,3.300e+01, 5.800e+01,1.200e+01,2.800e+01,1.418e+03,1.600e+01,1.020e+02, 6.000e+00,2.275e+03,41000, 78, 1, 1, 1, 1],
+        [1.030e+02,7.900e+01,4.600e+01,2.200e+01,-4.000e+00,3.500e+01, 5.400e+01,1.600e+01,2.900e+01,1.388e+03,1.500e+01,5.400e+01, 6.000e+00,1.075e+03,41000, 78, 1, 1, 1, 1]]
+
+
+
+# Genetic algoritgm configuration
+# toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+toolbox.register("evaluate", obj_function)
+toolbox.register('mate', tools.cxTwoPoint)
+toolbox.register("mutate", tools.mutUniformInt,low =lower_bounds,up=upper_bounds,indpb=0.05)
+toolbox.register("select", tools.selNSGA2)
+toolbox.register("population_guess", initPopulation, list, creator.Individual, Initial_population)
+
+# toolbox.decorate("evaluate", tools.DeltaPenalty(feaseGeom, [1.0, ]))
 
 if __name__ == '__main__':
 
@@ -116,7 +136,10 @@ if __name__ == '__main__':
     pool = multiprocessing.Pool(processes=8)
     toolbox.register("map", pool.map)
 
-    pop = toolbox.population(n=10)
+    
+
+    # pop = toolbox.population(n=10)
+    pop = toolbox.population_guess()
     hof = tools.HallOfFame(2)
     stats = tools.Statistics(lambda ind: ind.fitness.values)
     stats.register("avg", np.mean)
