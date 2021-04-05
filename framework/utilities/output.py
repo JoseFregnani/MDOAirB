@@ -385,6 +385,15 @@ def write_kml_results(arrivals, departures, profit, vehicle):
     return
 
 
+def write_newtork_results(profit,dataframe01,dataframe02):
+
+    start_time = datetime.today().strftime('%Y-%m-%d-%H%M')
+
+    dataframe01.to_csv(r'Database/Results/Network/acft_' + str(profit) + '_' + str(start_time) +'01.csv')
+    dataframe02.to_csv(r'Database/Results/Network/acft_' + str(profit) + '_' + str(start_time) +'02.csv')
+
+    return
+
 def write_bad_results(x,error):
     start_time = datetime.today().strftime('%Y-%m-%d-%H%M')
 
@@ -399,8 +408,6 @@ def write_bad_results(x,error):
 
         output.write('\n ----- Error message ----- \n')
         output.write(str(error) + "\n")
-
-
     return
 # =============================================================================
 # MAIN

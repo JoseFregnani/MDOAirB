@@ -117,7 +117,10 @@ def mission_sizing(vehicle):
 
     delta_ISA = 0
 
-    max_takeoff_mass = aircraft['maximum_takeoff_weight']
+    takeoff_fuel = aircraft['maximum_takeoff_weight']*0.005
+
+
+    max_takeoff_mass = aircraft['maximum_takeoff_weight'] - takeoff_fuel
 
     takeoff_allowance_mass = 200*max_takeoff_mass/22000
     approach_allowance_mass = 100*max_takeoff_mass/22000

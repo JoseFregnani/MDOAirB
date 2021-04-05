@@ -31,12 +31,14 @@ TODO's:
 
 from framework.Economics.revenue import revenue
 from framework.Economics.direct_operational_cost import direct_operational_cost
+from framework.Database.Aircrafts.baseline_aircraft_parameters import *
+
 from collections import defaultdict
 import numpy as np
 from pulp import *
 import pandas as pd
 import pprint
-from framework.Database.Aircrafts.baseline_aircraft_parameters import *
+
 # aircraft_data = 
 
 # Available cities:
@@ -176,7 +178,7 @@ for i in departures:
 # Solve problem
 # =============================================================================
 
-prob.solve(GLPK(msg=0, timeLimit=60*1))
+prob.solve(GLPK(msg=0, timeLimit=60*3))
 # prob.solve(solver = GLPK_CMD(timeLimit=60*5))
 
 # prob.solve()
@@ -216,10 +218,10 @@ opt_df.index =  pd.MultiIndex.from_tuples(opt_df.index,
                                names=["column_i", "column_j", "column_k"])
 opt_df.reset_index(inplace=True)
 
-opt_df["solution_value"] =  opt_df["variable_object"].apply(lambda item: item.varValue)
+opt_df["pax_number"] =  opt_df["variable_object"].apply(lambda item: item.varValue)
 
 opt_df.drop(columns=["variable_object"], inplace=True)
-opt_df.to_csv("optimization_solution2.csv")
+opt_df.to_csv("Test/optimization_solution01.csv")
 
 ############################################################################################
 opt_df2 = pd.DataFrame.from_dict(nika, orient="index", 
@@ -228,7 +230,7 @@ opt_df2.index =  pd.MultiIndex.from_tuples(opt_df2.index,
                                names=["origin", "destination"])
 opt_df2.reset_index(inplace=True)
 
-opt_df2["solution_value"] =  opt_df2["variable_object"].apply(lambda item: item.varValue)
+opt_df2["aircraft_number"] =  opt_df2["variable_object"].apply(lambda item: item.varValue)
 
 opt_df2.drop(columns=["variable_object"], inplace=True)
 
@@ -254,7 +256,4 @@ opt_df2['doc'] = doc_df['doc'].values
 opt_df2['demand'] = demand_df['demand'].values
 opt_df2['revenue'] = revenue_df ['revenue'].values
 
-
-
-
-opt_df2.to_csv("optimization_solution2.csv")
+opt_df2.to_csv("Test/optimization_solution02.csv")

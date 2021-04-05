@@ -38,7 +38,7 @@ import csv
 from datetime import datetime
 
 from framework.utilities.logger import get_logger
-from framework.utilities.output import write_optimal_results, write_kml_results
+from framework.utilities.output import write_optimal_results, write_kml_results, write_newtork_results
 
 
 # =============================================================================
@@ -73,12 +73,12 @@ def objective_function(x, vehicle):
         market_share = 0.1
 
         # Load origin-destination distance matrix [nm]
-        distances_db = pd.read_csv('Database/Distance/distance.csv')
+        distances_db = pd.read_csv('Database/Distance/distance_test.csv')
         distances_db = (distances_db.T)
         distances = distances_db.to_dict()  # Convert to dictionaty
 
         # Load daily demand matrix and multiply by market share (10%)
-        demand_db = pd.read_csv('Database//Demand/demand.csv')
+        demand_db = pd.read_csv('Database//Demand/demand_test.csv')
         demand_db = round(market_share*(demand_db.T))
         demand = demand_db.to_dict()
 
@@ -87,21 +87,30 @@ def objective_function(x, vehicle):
         # Airports:
         # ["FRA", "LHR", "CDG", "AMS",
         #          "MAD", "BCN", "FCO","DUB","VIE","ZRH"]
-        departures = ['CD1', 'CD2', 'CD3']
-        arrivals = ['CD1', 'CD2', 'CD3']
+        departures = ['CD1', 'CD2', 'CD3', 'CD4',
+              'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+        arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
+              'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+
+        departures = ['CD1', 'CD2', 'CD3', 'CD4']
+        arrivals = ['CD1', 'CD2', 'CD3', 'CD4']
 
         # =============================================================================
         log.info('---- Start DOC calculation ----')
         # The DOC is estimated for each city pair and stored in the DOC dictionary
         city_matrix_size = len(departures)*len(arrivals)
         DOC_ik = {}
-        fuel_mass = np.zeros((len(departures),len(arrivals)))
-        total_mission_flight_time = np.zeros((len(departures),len(arrivals)))
-        mach = np.zeros((len(departures),len(arrivals)))
-        passenger_capacity = np.zeros((len(departures),len(arrivals)))
+        fuel_mass = {}
+        total_mission_flight_time = {}
+        mach = {}
+        passenger_capacity = {}
 
         for i in range(len(departures)):
             DOC_ik[departures[i]] = {}
+            fuel_mass[departures[i]] = {}
+            total_mission_flight_time[departures[i]] = {}
+            mach[departures[i]] = {}
+            passenger_capacity[departures[i]] = {}
 
             for k in range(len(arrivals)):
                 if (i != k) and (distances[departures[i]][arrivals[k]] <= x[13]):
@@ -114,16 +123,16 @@ def objective_function(x, vehicle):
                     airport_destination['takeoff_field_length'] = data_airports.loc[data_airports['APT2']
                                                                                     == arrivals[k], 'TORA'].iloc[0]
                     mission_range = distances[departures[i]][arrivals[k]]
-                    fuel_mass[i][k], total_mission_flight_time[i][k],DOC,mach[i][k],passenger_capacity[i][k] = mission(mission_range,vehicle)
+                    fuel_mass[departures[i]][arrivals[k]], total_mission_flight_time[departures[i]][arrivals[k]], DOC,mach[departures[i]][arrivals[k]],passenger_capacity[departures[i]][arrivals[k]]  = mission(mission_range,vehicle)
 
                     DOC_ik[departures[i]][arrivals[k]] = int(DOC*distances[departures[i]][arrivals[k]])                       
                     # print(DOC_ik[(i, k)])
                 else:
                     DOC_ik[departures[i]][arrivals[k]] = 0
-                    fuel_mass[i][k] = 0
-                    total_mission_flight_time[i][k] = 0
-                    mach[i][k] = 0
-                    passenger_capacity[i][k] = 0
+                    fuel_mass[departures[i]][arrivals[k]]  = 0
+                    total_mission_flight_time[departures[i]][arrivals[k]]  = 0
+                    mach[departures[i]][arrivals[k]]  = 0
+                    passenger_capacity[departures[i]][arrivals[k]]  = 0
 
                 city_matrix_size = city_matrix_size - 1
                 print('INFO >>>> city pairs remaining to finish DOC matrix fill: ',city_matrix_size)
@@ -139,19 +148,40 @@ def objective_function(x, vehicle):
         # =============================================================================
         log.info('---- Start Network Optimization ----')
         # Network optimization that maximizes the network profit
-        profit, vehicle = network_optimization(
+        profit, vehicle, kpi_df1, kpi_df2 = network_optimization(
             arrivals, departures, distances, demand, DOC_ik, pax_capacity, vehicle)
-
+        
+        print(kpi_df1.head())
         log.info('Network profit [$USD]: {}'.format(profit))
         # =============================================================================
 
-        # average_cruise_mach = np.mean(mach)
-        # total_passenger_capacity = np.sum(passenger_capacity)
-        # total_distance_capacity = np.sum(total_distance_capacity)
-        # total_fuel = np.sum(fuel_mass)
-        # total_C02 = total_fuel*3.15
-        # CO2_coeff = 3.15*total_fuel/(total_passenger_capacity*total_distance_capacity*1.852)
+        def flatten_dict(dd, separator ='_', prefix =''):
+            return { prefix + separator + k if prefix else k : v
+                     for kk, vv in dd.items()
+                     for k, v in flatten_dict(vv, separator, kk).items()
+                     } if isinstance(dd, dict) else { prefix : dd }
 
+        
+
+        
+        mach_flatt = flatten_dict(mach)
+        mach_df =  pd.DataFrame.from_dict(mach_flatt,orient="index",columns=['mach'])
+        passenger_capacity_flatt = flatten_dict(passenger_capacity)
+        passenger_capacity_df =  pd.DataFrame.from_dict(passenger_capacity_flatt,orient="index",columns=['pax_num'])
+        fuel_used_flatt = flatten_dict(fuel_mass)
+        fuel_used_df =  pd.DataFrame.from_dict(fuel_used_flatt,orient="index",columns=['fuel'])
+        mission_time_flatt = flatten_dict(total_mission_flight_time)
+        mission_time_df =  pd.DataFrame.from_dict(mission_time_flatt,orient="index",columns=['time'])
+
+        kpi_df2['mach'] = mach_df['mach'].values
+        kpi_df2['pax_num'] = passenger_capacity_df['pax_num'].values
+        kpi_df2['fuel'] = fuel_used_df['fuel'].values
+        kpi_df2['time'] = mission_time_df['time'].values
+
+        
+
+
+        write_newtork_results(profit,kpi_df1,kpi_df2)
         write_optimal_results(profit, DOC_ik, vehicle)
         write_kml_results(arrivals, departures, profit, vehicle)
 
@@ -193,7 +223,7 @@ from framework.Database.Aircrafts.baseline_aircraft_parameters import *
 # x = [1.090e+02,8.100e+01,2.600e+01,2.400e+01,-5.000e+00,4.000e+01, 5.200e+01,1.600e+01,2.700e+01,1.402e+03,1.400e+01,7.400e+01, 4.000e+00,2.125e+03,41000, 78, 1, 1, 1, 1] # No profit flag fuel
 # x = [9.100e+01,8.900e+01,3.400e+01,3.000e+01,-3.000e+00,3.900e+01, 6.400e+01,1.200e+01,2.800e+01,1.358e+03,2.000e+01,9.600e+01, 5.000e+00,1.675e+03,41000, 78, 1, 1, 1, 1]  # No profit flag fuel | errors in noise the problem is related to the engine model - Exit gas speed is calculated wrong for certain inputs
 # x = [8.500e+01,9.100e+01,3.900e+01,3.400e+01,-3.000e+00,3.300e+01, 5.800e+01,1.200e+01,2.800e+01,1.418e+03,1.600e+01,1.020e+02, 6.000e+00,2.275e+03,41000, 78, 1, 1, 1, 1]  # No profit flag fuel
-x = [1.030e+02,7.900e+01,4.600e+01,2.200e+01,-4.000e+00,3.500e+01, 5.400e+01,1.600e+01,2.900e+01,1.388e+03,1.500e+01,5.400e+01, 6.000e+00,1.075e+03,41000, 78, 1, 1, 1, 1] # Prifit ok
+# x = [1.030e+02,7.900e+01,4.600e+01,2.200e+01,-4.000e+00,3.500e+01, 5.400e+01,1.600e+01,2.900e+01,1.388e+03,1.500e+01,5.400e+01, 6.000e+00,1.075e+03,41000, 78, 1, 1, 1, 1] # Prifit ok
 
 x = [int(x) for x in x]
 print(x)

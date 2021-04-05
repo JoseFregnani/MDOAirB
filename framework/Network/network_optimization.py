@@ -191,9 +191,57 @@ def network_optimization(arrivals, departures, distances, demand, doc0, pax_capa
     
     results['profit'] = profit
 
+    kpi_df1 = pd.DataFrame.from_dict(xijk, orient="index", 
+                                columns = ["variable_object"])
+    kpi_df1.index =  pd.MultiIndex.from_tuples(kpi_df1.index, 
+                                names=["column_i", "column_j", "column_k"])
+    kpi_df1.reset_index(inplace=True)
+
+    kpi_df1["pax_number"] =  kpi_df1["variable_object"].apply(lambda item: item.varValue)
+
+    kpi_df1.drop(columns=["variable_object"], inplace=True)
+    kpi_df1.to_csv("Test/optimization_solution01.csv")
+
+    ############################################################################################
+    kpi_df2 = pd.DataFrame.from_dict(nika, orient="index", 
+                                    columns = ["variable_object"])
+    kpi_df2.index =  pd.MultiIndex.from_tuples(kpi_df2.index, 
+                                names=["origin", "destination"])
+    kpi_df2.reset_index(inplace=True)
+
+    kpi_df2["aircraft_number"] =  kpi_df2["variable_object"].apply(lambda item: item.varValue)
+
+    kpi_df2.drop(columns=["variable_object"], inplace=True)
+
+    def flatten_dict(dd, separator ='_', prefix =''):
+        return { prefix + separator + k if prefix else k : v
+                for kk, vv in dd.items()
+                for k, v in flatten_dict(vv, separator, kk).items()
+                } if isinstance(dd, dict) else { prefix : dd }
+
+    
+    # print(distances)
+
+    distances_flatt = flatten_dict(distances)
+    doc_flatt = flatten_dict(DOC)
+    demand_flatt = flatten_dict(demand)
+    revenue_flatt = flatten_dict(revenue_ik)
+
+    distance_df =  pd.DataFrame.from_dict(distances_flatt,orient="index",columns=['distances'])
+    doc_df =  pd.DataFrame.from_dict(doc_flatt,orient="index",columns=['doc'])
+    demand_df =  pd.DataFrame.from_dict(demand_flatt,orient="index",columns=['demand'])
+    revenue_df =  pd.DataFrame.from_dict(revenue_flatt,orient="index",columns=['revenue'])
+
+    kpi_df2['distances'] = distance_df['distances'].values
+    kpi_df2['doc'] = doc_df['doc'].values
+    kpi_df2['demand'] = demand_df['demand'].values
+    kpi_df2['revenue'] = revenue_df ['revenue'].values
+
+    
+
 
     log.info('==== End network optimization module ====')
-    return profit, vehicle
+    return profit, vehicle, kpi_df1, kpi_df2
 
 
 # =============================================================================
