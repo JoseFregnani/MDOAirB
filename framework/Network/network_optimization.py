@@ -206,7 +206,7 @@ def network_optimization(arrivals, departures, distances, demand, doc0, pax_capa
     kpi_df2 = pd.DataFrame.from_dict(nika, orient="index", 
                                     columns = ["variable_object"])
     kpi_df2.index =  pd.MultiIndex.from_tuples(kpi_df2.index, 
-                                names=["origin", "destination"])
+                                names=["index","origin", "destination"])
     kpi_df2.reset_index(inplace=True)
 
     kpi_df2["aircraft_number"] =  kpi_df2["variable_object"].apply(lambda item: item.varValue)

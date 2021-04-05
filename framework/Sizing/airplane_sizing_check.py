@@ -419,9 +419,9 @@ def airplane_sizing(x, vehicle):
 
 # x = [85, 8.3, 0.32, 21.9, -3.1, 0.35, 5.5, 1.35, 26.2,
 #      1444, 1.46, 100, 6, 1600, 41000, 0.78, 1, 1, 1, 1]
-from framework.Database.Aircrafts.baseline_aircraft_parameters import *
-x = [70, 80, 50, 20, -1.1232, 25, 45, 13, 28,
-     1400, 13, 44, 4, 1500, 41000, 0.78, 1, 1, 1, 1]
+# from framework.Database.Aircrafts.baseline_aircraft_parameters import *
+# x = [70, 80, 50, 20, -1.1232, 25, 45, 13, 28,
+#      1400, 13, 44, 4, 1500, 41000, 0.78, 1, 1, 1, 1]
 
 
-status = airplane_sizing(x, vehicle)
+# status = airplane_sizing(x, vehicle)

@@ -34,7 +34,7 @@ from framework.utilities.logger import get_logger
 # =============================================================================
 log = get_logger(__file__.split('.')[0])
 
-def write_optimal_results(profit, DOC_ik, vehicle):
+def write_optimal_results(profit, DOC_ik, vehicle, kpi_df2):
 
     log.info('==== Start writing aircraft results ====')
 
@@ -57,6 +57,23 @@ def write_optimal_results(profit, DOC_ik, vehicle):
 
     airport_departure = vehicle['airport_departure']
     airport_destination = vehicle['airport_destination']
+
+    # Creating data for output
+    active_arcs = kpi_df2['active_arcs'].sum()
+    number_aircraft = kpi_df2['aircraft_number'].sum()
+    average_cruise_mach = kpi_df2['mach_tot_aircraft'].sum()/number_aircraft
+    total_fuel = kpi_df2['total_fuel'].sum()
+    total_CO2 = total_fuel*3.15
+    total_distance = kpi_df2['total_distance'].sum()
+    total_pax = kpi_df2['total_pax'].sum()
+    CO2_efficiency = 3.15*total_fuel/(total_pax*total_distance*1.852)
+    total_cost = kpi_df2['total_cost'].sum()
+    total_revenue = kpi_df2['revenue'].sum()
+    total_profit = total_revenue-total_cost
+    margin_percent = 100*(total_profit/total_cost)
+    average_DOC = total_cost/number_aircraft
+    average_distance = kpi_df2['total_distance'].sum()/number_aircraft
+
 
     # write string one by one adding newline
     with open(r'Database/Results/Aircrafts/acft_' + str(profit) + '_' + str(start_time) +'.txt','w') as output:
@@ -304,16 +321,39 @@ def write_optimal_results(profit, DOC_ik, vehicle):
 
         output.write(str(frequencies) + "\n")
 
-        output.write('\nResults: \n')
+        output.write('\nNetwork Results: \n')
 
+        output.write(
+            'Average Cruise Mach: ' + str("{:.2f}".format(average_cruise_mach)) + ' \n')
+        output.write(
+            'Total fuel [kg]: ' + str("{:.2f}".format(total_fuel)) + ' \n')
+        output.write(
+            'Total CO2 [kg]: ' + str("{:.2f}".format(total_CO2)) + ' \n')
+        output.write(
+            'CO2 efficiency [kg/PAX]: ' + str("{:.2f}".format(CO2_efficiency)) + ' \n')
+        output.write(
+            'Total distance [nm]: ' + str("{:.2f}".format(total_distance)) + ' \n')
+        output.write(
+            'Total pax: ' + str("{:.2f}".format(total_pax)) + ' \n')
+        output.write(
+            'Total cost [$]: ' + str("{:.2f}".format(total_cost)) + ' \n')
+        output.write(
+            'Total revenue [$]: ' + str("{:.2f}".format(total_revenue)) + ' \n')
+        output.write(
+            'Total profit [$]: ' + str("{:.2f}".format(total_profit)) + ' \n')
+        output.write(
+            'Margin percent [%]: ' + str("{:.2f}".format(margin_percent)) + ' \n')
+        output.write(
+            'Average DOC [$]: ' + str("{:.2f}".format(average_DOC)) + ' \n')
+        
         output.write(
             'Number of nodes: ' + str("{:.2f}".format(results['nodes_number'])) + ' \n')
         output.write(
-            'Number of arcs: ' + str("{:.2f}".format(0)) + ' \n')
+            'Number of arcs: ' + str("{:.2f}".format(active_arcs)) + ' \n')
         output.write(
             'Average degree of nodes: ' + str("{:.2f}".format(0)) + ' \n')
         output.write(
-            'Average path length: ' + str("{:.2f}".format(0)) + ' \n')
+            'Average path length: ' + str("{:.2f}".format(average_distance)) + ' \n')
         output.write(
             'Network density: ' + str("{:.2f}".format(0)) + ' \n')
         output.write(
@@ -321,15 +361,9 @@ def write_optimal_results(profit, DOC_ik, vehicle):
 
 
         output.write(
-            'Total cost: ' + str("{:.2f}".format(0)) + ' [$] \n')
-        output.write(
-            'Total revenue: ' + str("{:.2f}".format(0)) + ' [$] \n')
-        output.write(
-            'Total profit: ' + str("{:.2f}".format(results['profit'])) + ' [$] \n')
-        output.write(
             'Number of frequencies: ' + str("{:.2f}".format(0)) + ' \n')
         output.write(
-            'Number of used aircraft: ' + str("{:.2f}".format(results['aircrafts_used'])) + ' \n')
+            'Number of used aircraft: ' + str("{:.2f}".format(number_aircraft)) + ' \n')
     
     log.info('==== End writing aircraft results ====')
 

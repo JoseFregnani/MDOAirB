@@ -145,6 +145,4 @@ def crossover_altitude(mach, V_cas, delta_ISA):
 # TEST
 # =============================================================================
 # print(V_cas_to_V_tas(200, 10000, 0))
-
-
 # print(crossover_altitude(0.75, 340, 0))

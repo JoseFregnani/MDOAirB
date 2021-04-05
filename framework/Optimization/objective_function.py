@@ -160,8 +160,6 @@ def objective_function(x, vehicle):
                         } if isinstance(dd, dict) else { prefix : dd }
 
             
-
-            
             mach_flatt = flatten_dict(mach)
             mach_df =  pd.DataFrame.from_dict(mach_flatt,orient="index",columns=['mach'])
             passenger_capacity_flatt = flatten_dict(passenger_capacity)
@@ -176,12 +174,31 @@ def objective_function(x, vehicle):
             kpi_df2['fuel'] = fuel_used_df['fuel'].values
             kpi_df2['time'] = mission_time_df['time'].values
 
+            # Number of active nodes
+            kpi_df2['active_arcs'] = np.where(kpi_df2["aircraft_number"] > 0, 1, 0)
+
+            # Number of aircraft
+            kpi_df2['aircraft_number'] = kpi_df2['aircraft_number'].fillna(0)
             
+            # Average cruise mach
+            kpi_df2['mach_tot_aircraft'] = kpi_df2['aircraft_number']*kpi_df2['mach']
+
+            # Total fuel
+            kpi_df2['total_fuel'] = kpi_df2['aircraft_number']*kpi_df2['fuel']
+
+            # Total distance
+            kpi_df2['total_distance'] = kpi_df2['aircraft_number']*kpi_df2['distances']
+
+            # Total pax
+            kpi_df2['total_pax'] = kpi_df2['aircraft_number']*kpi_df2['pax_num']
+
+            # Total cost
+            kpi_df2['total_cost'] = 2*kpi_df2['aircraft_number']*kpi_df2['doc']
 
 
-            write_newtork_results(profit,kpi_df1,kpi_df2)
-            write_optimal_results(profit, DOC_ik, vehicle)
+            write_optimal_results(profit, DOC_ik, vehicle, kpi_df2)
             write_kml_results(arrivals, departures, profit, vehicle)
+            write_newtork_results(profit,kpi_df1,kpi_df2)
 
         else:
             profit = 0
