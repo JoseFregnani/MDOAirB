@@ -73,6 +73,16 @@ def write_optimal_results(profit, DOC_ik, vehicle, kpi_df2):
     margin_percent = 100*(total_profit/total_cost)
     average_DOC = total_cost/number_aircraft
     average_distance = kpi_df2['total_distance'].sum()/number_aircraft
+    number_aircraft2 = np.round(((kpi_df2['total_time'].sum())+4)/(13*60))
+    
+    REV = 1.1*total_pax*120
+    COST = 1.2*total_cost
+    RASK = REV/(total_pax*total_distance)
+    CASK = COST/(total_pax*total_distance)
+    NP = RASK-CASK
+
+
+
 
 
     # write string one by one adding newline
@@ -84,6 +94,17 @@ def write_optimal_results(profit, DOC_ik, vehicle, kpi_df2):
 
         # ===============================================================================
         output.write('\n ----- Aircraft parameters ----- \n')
+
+        output.write(
+            'Operational Empty Weight: ' + str("{:.2f}".format(float(aircraft['operational_empty_weight']))) + ' [kg] \n')
+        output.write(
+            'Maximum Takeoff Weight: ' + str("{:.2f}".format(float(aircraft['maximum_takeoff_weight']))) + ' [kg] \n')
+        output.write(
+            'Maximum Landing Weight: ' + str("{:.2f}".format(float(aircraft['maximum_landing_weight']))) + ' [kg] \n')
+        output.write(
+            'Maximum Zero Fuel Weight: ' + str("{:.2f}".format(float(aircraft['maximum_zero_fuel_weight']))) + ' [kg] \n')
+        output.write(
+            'Maximum Fuel Weight: ' + str("{:.2f}".format(float(wing['fuel_capacity']))) + ' [kg] \n')
 
         output.write('\n Performance: \n')
 
@@ -265,26 +286,40 @@ def write_optimal_results(profit, DOC_ik, vehicle, kpi_df2):
 
         output.write('\n ----- Network parameters ----- \n')
 
+        output.write(
+            'Number of nodes: ' + str("{:.2f}".format(len(airport_departure['array']))) + ' \n')
+        output.write(
+            'Number of arcs: ' + str("{:.2f}".format(float(active_arcs))) + ' \n')
+        output.write(
+            'Average degree of nodes: ' + str("{:.2f}".format(float(results['avg_degree_nodes']))) + ' \n')
+        output.write(
+            'Average path length: ' + str("{:.2f}".format(float(average_distance))) + ' \n')
+        output.write(
+            'Network density: ' + str("{:.2f}".format(float(results['network_density']))) + ' \n')
+        output.write(
+            'Average clustering: ' + str("{:.2f}".format(float(results['average_clustering']))) + '\n')
+
+
         output.write('\nReferemce values: \n')
 
-        output.write(
-            'Mach: ' + str("{:.2f}".format(0)) + ' \n')
-        output.write(
-            'Range: ' + str("{:.2f}".format(0)) + ' [nm] \n')
-        output.write(
-            'DOC: ' + str("{:.2f}".format(0)) + ' [$/nm] \n')
-        output.write(
-            'Passengers: ' + str("{:.2f}".format(0)) + ' \n')
-        output.write(
-            'Net present value: ' + str("{:.2f}".format(0)) + ' [$] \n')
-        output.write(
-            'Price: ' + str("{:.2f}".format(0)) + ' [$] \n')
-        output.write(
-            'Average fare: ' + str("{:.2f}".format(0)) + ' [$] \n')
-        output.write(
-            'Average load factor: ' + str("{:.2f}".format(0)) + ' \n')
-        output.write(
-            'Average market share: ' + str("{:.2f}".format(0)) + ' [%] \n')
+        # output.write(
+        #     'Mach: ' + str("{:.2f}".format(0)) + ' \n')
+        # output.write(
+        #     'Range: ' + str("{:.2f}".format(0)) + ' [nm] \n')
+        # output.write(
+        #     'DOC: ' + str("{:.2f}".format(0)) + ' [$/nm] \n')
+        # output.write(
+        #     'Passengers: ' + str("{:.2f}".format(0)) + ' \n')
+        # output.write(
+        #     'Net present value: ' + str("{:.2f}".format(0)) + ' [$] \n')
+        # output.write(
+        #     'Price: ' + str("{:.2f}".format(0)) + ' [$] \n')
+        # output.write(
+        #     'Average fare: ' + str("{:.2f}".format(0)) + ' [$] \n')
+        # output.write(
+        #     'Average load factor: ' + str("{:.2f}".format(0)) + ' \n')
+        # output.write(
+        #     'Average market share: ' + str("{:.2f}".format(0)) + ' [%] \n')
 
         output.write('Airports array: ' + str(airport_departure['array']) + "\n")
 
@@ -345,26 +380,22 @@ def write_optimal_results(profit, DOC_ik, vehicle, kpi_df2):
             'Margin percent [%]: ' + str("{:.2f}".format(margin_percent)) + ' \n')
         output.write(
             'Average DOC [$]: ' + str("{:.2f}".format(average_DOC)) + ' \n')
+        output.write(
+            'NRASK [$/pax.nm]x1E-4: ' + str("{:.2f}".format(RASK)) + ' \n')
+        output.write(
+            'NCASK [$/pax.nm]x1E-4: ' + str("{:.2f}".format(CASK)) + ' \n')
+        output.write(
+            'NP [$/pax.nm]x1E-4: ' + str("{:.2f}".format(NP)) + ' \n')
         
         output.write(
-            'Number of nodes: ' + str("{:.2f}".format(results['nodes_number'])) + ' \n')
-        output.write(
-            'Number of arcs: ' + str("{:.2f}".format(active_arcs)) + ' \n')
-        output.write(
-            'Average degree of nodes: ' + str("{:.2f}".format(0)) + ' \n')
-        output.write(
-            'Average path length: ' + str("{:.2f}".format(average_distance)) + ' \n')
-        output.write(
-            'Network density: ' + str("{:.2f}".format(0)) + ' \n')
-        output.write(
-            'Average clustering: ' + str("{:.2f}".format(0)) + '\n')
-
-
-        output.write(
-            'Number of frequencies: ' + str("{:.2f}".format(0)) + ' \n')
+            'Number of frequencies: ' + str("{:.2f}".format(results['number_of_frequencies'])) + ' \n')
         output.write(
             'Number of used aircraft: ' + str("{:.2f}".format(number_aircraft)) + ' \n')
-    
+        output.write(
+            'Number of used aircraft 2: ' + str("{:.2f}".format(number_aircraft2)) + ' \n')
+        output.write(
+            'Sectors per aircraft: ' + str("{:.2f}".format(results['number_of_frequencies']/number_aircraft2)) + ' \n')    
+
     log.info('==== End writing aircraft results ====')
 
     return

@@ -383,9 +383,13 @@ aircraft['average_thrust'] = 0.75*aircraft['maximum_engine_thrust'] * \
 results = {}
 results['profit'] = 0
 results['nodes_number'] = 10
+results['arcs_number'] = 0
+results['avg_degree_nodes'] = 0
+results['network_density'] = 0
+results['average_clustering'] = 0
 results['covered_demand'] = 0
 results['aircrafts_used'] = 0
-
+results['number_of_frequencies'] = 0
 
 vehicle = {}
 vehicle['aircraft'] = aircraft

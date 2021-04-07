@@ -91,6 +91,10 @@ def objective_function(x, vehicle):
             arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
                         'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
 
+            airport_departure['array'] = arrivals
+
+            results['nodes_number'] = len(departures)
+
             # departures = ['CD1', 'CD2', 'CD3', 'CD4']
             # arrivals = ['CD1', 'CD2', 'CD3', 'CD4']
 
@@ -176,6 +180,7 @@ def objective_function(x, vehicle):
 
             # Number of active nodes
             kpi_df2['active_arcs'] = np.where(kpi_df2["aircraft_number"] > 0, 1, 0)
+            results['arcs_number'] = kpi_df2['active_arcs'].sum()
 
             # Number of aircraft
             kpi_df2['aircraft_number'] = kpi_df2['aircraft_number'].fillna(0)
@@ -187,13 +192,17 @@ def objective_function(x, vehicle):
             kpi_df2['total_fuel'] = kpi_df2['aircraft_number']*kpi_df2['fuel']
 
             # Total distance
-            kpi_df2['total_distance'] = kpi_df2['aircraft_number']*kpi_df2['distances']
+            kpi_df2['total_distance'] = kpi_df2['active_arcs']*kpi_df2['distances']
 
             # Total pax
             kpi_df2['total_pax'] = kpi_df2['aircraft_number']*kpi_df2['pax_num']
 
             # Total cost
             kpi_df2['total_cost'] = 2*kpi_df2['aircraft_number']*kpi_df2['doc']
+
+            results['network_density'] = results['arcs_number']/(results['nodes_number']*results['nodes_number']-results['nodes_number'])
+
+            kpi_df2['total_time'] = kpi_df2['aircraft_number']*kpi_df2['time']
 
 
             write_optimal_results(profit, DOC_ik, vehicle, kpi_df2)

@@ -178,7 +178,7 @@ for i in departures:
 # Solve problem
 # =============================================================================
 
-prob.solve(GLPK(msg=0, timeLimit=60*3))
+prob.solve(GLPK(msg=0, timeLimit=60*1))
 # prob.solve(solver = GLPK_CMD(timeLimit=60*5))
 
 # prob.solve()
@@ -221,7 +221,7 @@ opt_df.reset_index(inplace=True)
 opt_df["pax_number"] =  opt_df["variable_object"].apply(lambda item: item.varValue)
 
 opt_df.drop(columns=["variable_object"], inplace=True)
-opt_df.to_csv("Test/optimization_solution01.csv")
+# opt_df.to_csv("Test/optimization_solution01.csv")
 
 ############################################################################################
 opt_df2 = pd.DataFrame.from_dict(nika, orient="index", 
@@ -256,4 +256,48 @@ opt_df2['doc'] = doc_df['doc'].values
 opt_df2['demand'] = demand_df['demand'].values
 opt_df2['revenue'] = revenue_df ['revenue'].values
 
-opt_df2.to_csv("Test/optimization_solution02.csv")
+# opt_df2.to_csv("Test/optimization_solution02.csv")
+
+n = len(arrivals)
+X = opt_df2["aircraft_number"].to_numpy()
+D = opt_df2['distances'].to_numpy()
+X = np.reshape(X, (n,n))
+D = np.reshape(D, (n,n))
+
+N = 0
+for i,j in np.ndindex(X.shape):
+    if X[i,j] == 1:
+        N = N+1
+
+print(N)
+
+DON = np.zeros(n)
+print(DON)
+for i in range(n):
+    DON[i] = 0
+    # if i != n:
+    for j in range(n):
+        if X[i,j] == 1:
+            DON[i] = DON[i]+1
+
+print(DON)
+
+R = 500
+C = np.zeros(n)
+for i in range(n):
+    CON =0
+    MAXCON = 0
+    for j in range(n):
+        if i != j:
+            if D[i,j] <= R:
+                MAXCON = MAXCON + 1
+                if X[i,j] == 1:
+                    CON = CON+1
+    if MAXCON>0:
+        C[i] = CON/MAXCON
+    else:
+        C[i] = 0
+
+AVG_C = np.mean(C)
+
+print(AVG_C)

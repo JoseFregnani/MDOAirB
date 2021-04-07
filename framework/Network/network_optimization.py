@@ -206,7 +206,7 @@ def network_optimization(arrivals, departures, distances, demand, doc0, pax_capa
     kpi_df2 = pd.DataFrame.from_dict(nika, orient="index", 
                                     columns = ["variable_object"])
     kpi_df2.index =  pd.MultiIndex.from_tuples(kpi_df2.index, 
-                                names=["index","origin", "destination"])
+                                names=["origin", "destination"])
     kpi_df2.reset_index(inplace=True)
 
     kpi_df2["aircraft_number"] =  kpi_df2["variable_object"].apply(lambda item: item.varValue)
@@ -236,6 +236,69 @@ def network_optimization(arrivals, departures, distances, demand, doc0, pax_capa
     kpi_df2['doc'] = doc_df['doc'].values
     kpi_df2['demand'] = demand_df['demand'].values
     kpi_df2['revenue'] = revenue_df ['revenue'].values
+
+    n = len(arrivals)
+    X = kpi_df2["aircraft_number"].to_numpy()
+    X = np.reshape(X, (n,n))
+
+    Distances = kpi_df2['distances'].to_numpy()
+    Distances = np.reshape(Distances, (n,n))
+
+    Demand = kpi_df2['demand'].to_numpy()
+    Demand = np.reshape(Demand, (n,n))
+
+
+    N = 0
+    for i,j in np.ndindex(X.shape):
+        if X[i,j] == 1:
+            N = N+1
+
+    DON = np.zeros(n)
+    for i in range(n):
+        DON[i] = 0
+        for j in range(n):
+            if i != n:
+                if X[i,j] == 1:
+                    DON[i] = DON[i]+1
+    
+    results['avg_degree_nodes'] = np.mean(DON)
+
+    R = 500
+    C = np.zeros(n)
+    for i in range(n):
+        CON =0
+        MAXCON = 0
+        for j in range(n):
+            if i != j:
+                if Distances[i,j] <= R:
+                    MAXCON = MAXCON + 1
+                    if X[i,j] == 1:
+                        CON = CON+1
+        if MAXCON>0:
+            C[i] = CON/MAXCON
+        else:
+            C[i] = 0
+
+    results['average_clustering'] = np.mean(C)
+
+
+    LF = np.ones((n,n))
+    FREQ = X
+
+    NPAX = np.zeros((n,n))
+    for i in range(n):
+        for j in range(n):
+            if (i==j or X[i,j]==0):
+                f = 0
+                NPAX[i,j] = 0
+                FREQ[i,j] = 0
+            else:
+                NPAX[i,j] = np.round(pax_number)
+                f = round(Demand[i,j]/NPAX[i,j])
+                FREQ[i,j] = f
+
+    results['number_of_frequencies'] = np.sum(FREQ)
+
 
     
 

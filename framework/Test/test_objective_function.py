@@ -73,12 +73,12 @@ def objective_function(x, vehicle):
         market_share = 0.1
 
         # Load origin-destination distance matrix [nm]
-        distances_db = pd.read_csv('Database/Distance/distance_test.csv')
+        distances_db = pd.read_csv('Database/Distance/distance.csv')
         distances_db = (distances_db.T)
         distances = distances_db.to_dict()  # Convert to dictionaty
 
         # Load daily demand matrix and multiply by market share (10%)
-        demand_db = pd.read_csv('Database//Demand/demand_test.csv')
+        demand_db = pd.read_csv('Database//Demand/demand.csv')
         demand_db = round(market_share*(demand_db.T))
         demand = demand_db.to_dict()
 
@@ -92,8 +92,8 @@ def objective_function(x, vehicle):
         arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
               'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
 
-        departures = ['CD1', 'CD2', 'CD3', 'CD4']
-        arrivals = ['CD1', 'CD2', 'CD3', 'CD4']
+        # departures = ['CD1', 'CD2', 'CD3', 'CD4']
+        # arrivals = ['CD1', 'CD2', 'CD3', 'CD4']
 
         # =============================================================================
         log.info('---- Start DOC calculation ----')
@@ -178,12 +178,38 @@ def objective_function(x, vehicle):
         kpi_df2['fuel'] = fuel_used_df['fuel'].values
         kpi_df2['time'] = mission_time_df['time'].values
 
+        # Number of active nodes
+        kpi_df2['active_arcs'] = np.where(kpi_df2["aircraft_number"] > 0, 1, 0)
+        results['arcs_number'] = kpi_df2['active_arcs'].sum()
+
+        # Number of aircraft
+        kpi_df2['aircraft_number'] = kpi_df2['aircraft_number'].fillna(0)
+        
+        # Average cruise mach
+        kpi_df2['mach_tot_aircraft'] = kpi_df2['aircraft_number']*kpi_df2['mach']
+
+        # Total fuel
+        kpi_df2['total_fuel'] = kpi_df2['aircraft_number']*kpi_df2['fuel']
+
+        # Total distance
+        kpi_df2['total_distance'] = kpi_df2['active_arcs']*kpi_df2['distances']
+
+        # Total pax
+        kpi_df2['total_pax'] = kpi_df2['aircraft_number']*kpi_df2['pax_num']
+
+        # Total cost
+        kpi_df2['total_cost'] = 2*kpi_df2['aircraft_number']*kpi_df2['doc']
+
+        results['network_density'] = results['arcs_number']/(results['nodes_number']*results['nodes_number']-results['nodes_number'])
+
+        kpi_df2['total_time'] = kpi_df2['aircraft_number']*kpi_df2['time']
+
         
 
 
-        write_newtork_results(profit,kpi_df1,kpi_df2)
-        write_optimal_results(profit, DOC_ik, vehicle)
+        write_optimal_results(profit, DOC_ik, vehicle, kpi_df2)
         write_kml_results(arrivals, departures, profit, vehicle)
+        write_newtork_results(profit,kpi_df1,kpi_df2)
 
     else:
         profit = 0
@@ -224,6 +250,8 @@ from framework.Database.Aircrafts.baseline_aircraft_parameters import *
 # x = [9.100e+01,8.900e+01,3.400e+01,3.000e+01,-3.000e+00,3.900e+01, 6.400e+01,1.200e+01,2.800e+01,1.358e+03,2.000e+01,9.600e+01, 5.000e+00,1.675e+03,41000, 78, 1, 1, 1, 1]  # No profit flag fuel | errors in noise the problem is related to the engine model - Exit gas speed is calculated wrong for certain inputs
 # x = [8.500e+01,9.100e+01,3.900e+01,3.400e+01,-3.000e+00,3.300e+01, 5.800e+01,1.200e+01,2.800e+01,1.418e+03,1.600e+01,1.020e+02, 6.000e+00,2.275e+03,41000, 78, 1, 1, 1, 1]  # No profit flag fuel
 # x = [1.030e+02,7.900e+01,4.600e+01,2.200e+01,-4.000e+00,3.500e+01, 5.400e+01,1.600e+01,2.900e+01,1.388e+03,1.500e+01,5.400e+01, 6.000e+00,1.075e+03,41000, 78, 1, 1, 1, 1] # Prifit ok
+
+x = [103, 81, 40, 16, -4, 34, 59, 14, 29, 1370, 18, 114, 6, 1118]
 
 x = [int(x) for x in x]
 print(x)
