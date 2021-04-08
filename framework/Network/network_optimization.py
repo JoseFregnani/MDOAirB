@@ -49,7 +49,7 @@ def network_optimization(arrivals, departures, distances, demand, doc0, pax_capa
     final_airport = departures
 
     operations = vehicle['operations']
-
+    results = vehicle['results']
     # doc0 = np.load('Database/DOC/DOC.npy',allow_pickle=True)
     # doc0 = doc0.tolist() 
 
@@ -143,7 +143,7 @@ def network_optimization(arrivals, departures, distances, demand, doc0, pax_capa
     # Solve linear programming problem (Network optimization)
     # =============================================================================
     log.info('==== Start PuLP optimization ====')
-    prob.solve(GLPK(timeLimit=60*3, msg = 0))
+    prob.solve(GLPK(timeLimit=60*5, msg = 0))
     log.info('Network optimization status: {}'.format(LpStatus[prob.status]))
     try:
         condition = LpStatus[prob.status]
@@ -186,7 +186,7 @@ def network_optimization(arrivals, departures, distances, demand, doc0, pax_capa
     list_of_pax_db = pd.DataFrame(list_of_pax)
     list_of_pax_db.to_csv('Database/Network/pax.csv')
 
-    results = vehicle['results']
+    
     profit = value(prob.objective)
     
     results['profit'] = profit
@@ -238,7 +238,9 @@ def network_optimization(arrivals, departures, distances, demand, doc0, pax_capa
     kpi_df2['revenue'] = revenue_df ['revenue'].values
 
     n = len(arrivals)
-    X = kpi_df2["aircraft_number"].to_numpy()
+
+    kpi_df2['active_arcs'] = np.where(kpi_df2["aircraft_number"] > 0, 1, 0)
+    X = kpi_df2['active_arcs'].to_numpy()
     X = np.reshape(X, (n,n))
 
     Distances = kpi_df2['distances'].to_numpy()

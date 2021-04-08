@@ -255,7 +255,12 @@ opt_df2['distances'] = distance_df['distances'].values
 opt_df2['doc'] = doc_df['doc'].values
 opt_df2['demand'] = demand_df['demand'].values
 opt_df2['revenue'] = revenue_df ['revenue'].values
+opt_df2['active_arcs'] = np.where(opt_df2["aircraft_number"] > 0, 1, 0)
 
+
+average_distance = opt_df2['active_arcs']*opt_df2['distances']
+average_distance = average_distance[average_distance > 0].mean()
+print(average_distance)
 # opt_df2.to_csv("Test/optimization_solution02.csv")
 
 n = len(arrivals)
@@ -301,3 +306,4 @@ for i in range(n):
 AVG_C = np.mean(C)
 
 print(AVG_C)
+

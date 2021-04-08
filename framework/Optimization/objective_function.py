@@ -103,6 +103,7 @@ def objective_function(x, vehicle):
             # The DOC is estimated for each city pair and stored in the DOC dictionary
             city_matrix_size = len(departures)*len(arrivals)
             DOC_ik = {}
+            DOC_nd = {}
             fuel_mass = {}
             total_mission_flight_time = {}
             mach = {}
@@ -110,6 +111,7 @@ def objective_function(x, vehicle):
 
             for i in range(len(departures)):
                 DOC_ik[departures[i]] = {}
+                DOC_nd[departures[i]] = {}
                 fuel_mass[departures[i]] = {}
                 total_mission_flight_time[departures[i]] = {}
                 mach[departures[i]] = {}
@@ -127,10 +129,11 @@ def objective_function(x, vehicle):
                                                                                         == arrivals[k], 'TORA'].iloc[0]
                         mission_range = distances[departures[i]][arrivals[k]]
                         fuel_mass[departures[i]][arrivals[k]], total_mission_flight_time[departures[i]][arrivals[k]], DOC,mach[departures[i]][arrivals[k]],passenger_capacity[departures[i]][arrivals[k]]  = mission(mission_range,vehicle)
-
+                        DOC_nd[departures[i]][arrivals[k]] = DOC
                         DOC_ik[departures[i]][arrivals[k]] = int(DOC*distances[departures[i]][arrivals[k]])                       
                         # print(DOC_ik[(i, k)])
                     else:
+                        DOC_nd[departures[i]][arrivals[k]] = 0
                         DOC_ik[departures[i]][arrivals[k]] = 0
                         fuel_mass[departures[i]][arrivals[k]]  = 0
                         total_mission_flight_time[departures[i]][arrivals[k]]  = 0
@@ -172,11 +175,14 @@ def objective_function(x, vehicle):
             fuel_used_df =  pd.DataFrame.from_dict(fuel_used_flatt,orient="index",columns=['fuel'])
             mission_time_flatt = flatten_dict(total_mission_flight_time)
             mission_time_df =  pd.DataFrame.from_dict(mission_time_flatt,orient="index",columns=['time'])
+            DOC_nd_flatt = flatten_dict(DOC_nd)
+            DOC_nd_df =  pd.DataFrame.from_dict(DOC_nd_flatt,orient="index",columns=['DOC_nd'])
 
             kpi_df2['mach'] = mach_df['mach'].values
             kpi_df2['pax_num'] = passenger_capacity_df['pax_num'].values
             kpi_df2['fuel'] = fuel_used_df['fuel'].values
             kpi_df2['time'] = mission_time_df['time'].values
+            kpi_df2['DOC_nd'] = DOC_nd_df['DOC_nd'].values
 
             # Number of active nodes
             kpi_df2['active_arcs'] = np.where(kpi_df2["aircraft_number"] > 0, 1, 0)
@@ -192,7 +198,7 @@ def objective_function(x, vehicle):
             kpi_df2['total_fuel'] = kpi_df2['aircraft_number']*kpi_df2['fuel']
 
             # Total distance
-            kpi_df2['total_distance'] = kpi_df2['active_arcs']*kpi_df2['distances']
+            kpi_df2['total_distance'] = kpi_df2['aircraft_number']*kpi_df2['distances']
 
             # Total pax
             kpi_df2['total_pax'] = kpi_df2['aircraft_number']*kpi_df2['pax_num']

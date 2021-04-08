@@ -65,14 +65,17 @@ def write_optimal_results(profit, DOC_ik, vehicle, kpi_df2):
     total_fuel = kpi_df2['total_fuel'].sum()
     total_CO2 = total_fuel*3.15
     total_distance = kpi_df2['total_distance'].sum()
-    total_pax = kpi_df2['total_pax'].sum()
+    total_pax = results['covered_demand']
     CO2_efficiency = 3.15*total_fuel/(total_pax*total_distance*1.852)
     total_cost = kpi_df2['total_cost'].sum()
     total_revenue = kpi_df2['revenue'].sum()
-    total_profit = total_revenue-total_cost
+    total_profit = results['profit']
     margin_percent = 100*(total_profit/total_cost)
-    average_DOC = total_cost/number_aircraft
-    average_distance = kpi_df2['total_distance'].sum()/number_aircraft
+    average_DOC = kpi_df2['DOC_nd']
+    average_DOC = average_DOC[average_DOC > 0].mean()
+    average_distance = kpi_df2['active_arcs']*kpi_df2['distances']
+    average_distance = average_distance[average_distance > 0].mean()
+    
     number_aircraft2 = np.round(((kpi_df2['total_time'].sum())+4)/(13*60))
     
     REV = 1.1*total_pax*120
@@ -365,7 +368,7 @@ def write_optimal_results(profit, DOC_ik, vehicle, kpi_df2):
         output.write(
             'Total CO2 [kg]: ' + str("{:.2f}".format(total_CO2)) + ' \n')
         output.write(
-            'CO2 efficiency [kg/PAX]: ' + str("{:.2f}".format(CO2_efficiency)) + ' \n')
+            'CO2 efficiency [kg/PAX]: ' + str("{:.8f}".format(CO2_efficiency)) + ' \n')
         output.write(
             'Total distance [nm]: ' + str("{:.2f}".format(total_distance)) + ' \n')
         output.write(
@@ -381,11 +384,11 @@ def write_optimal_results(profit, DOC_ik, vehicle, kpi_df2):
         output.write(
             'Average DOC [$]: ' + str("{:.2f}".format(average_DOC)) + ' \n')
         output.write(
-            'NRASK [$/pax.nm]x1E-4: ' + str("{:.2f}".format(RASK)) + ' \n')
+            'NRASK [$/pax.nm]x1E-4: ' + str("{:.2f}".format(RASK*1E4)) + ' \n')
         output.write(
-            'NCASK [$/pax.nm]x1E-4: ' + str("{:.2f}".format(CASK)) + ' \n')
+            'NCASK [$/pax.nm]x1E-4: ' + str("{:.2f}".format(CASK*1E4)) + ' \n')
         output.write(
-            'NP [$/pax.nm]x1E-4: ' + str("{:.2f}".format(NP)) + ' \n')
+            'NP [$/pax.nm]x1E-4: ' + str("{:.2f}".format(NP*1E4)) + ' \n')
         
         output.write(
             'Number of frequencies: ' + str("{:.2f}".format(results['number_of_frequencies'])) + ' \n')

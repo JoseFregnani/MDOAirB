@@ -105,10 +105,10 @@ Wetted area: [639.38958549] [m2]
  ----- Network parameters ----- 
 Number of nodes: 10.00 
 Number of arcs: 46.00 
-Average degree of nodes: 0.80 
-Average path length: 161.51 
+Average degree of nodes: 4.60 
+Average path length: 505.59 
 Network density: 0.51 
-Average clustering: 0.11
+Average clustering: 0.59
 
 Referemce values: 
 Airports array: ['FRA', 'LHR', 'CDG', 'AMS', 'MAD', 'BCN', 'FCO', 'DUB', 'VIE', 'ZRH']
@@ -167,20 +167,20 @@ Frequencies:
 
 Network Results: 
 Average Cruise Mach: 0.71 
-Total fuel [kg]: 333218.50 
-Total CO2 [kg]: 1049638.27 
-CO2 efficiency [kg/PAX]: 0.00 
-Total distance [nm]: 23257.00 
-Total pax: 9792.00 
-Total cost [$]: 2323610.00 
+Total fuel [kg]: 308639.43 
+Total CO2 [kg]: 972214.20 
+CO2 efficiency [kg/PAX]: 0.00033481 
+Total distance [nm]: 64254.00 
+Total pax: 24402.00 
+Total cost [$]: 2178808.00 
 Total revenue [$]: 2928240.00 
-Total profit [$]: 604630.00 
-Margin percent [%]: 26.02 
-Average DOC [$]: 16136.18 
-NRASK [$/pax.nm]x1E-4: 0.01 
-NCASK [$/pax.nm]x1E-4: 0.01 
-NP [$/pax.nm]x1E-4: -0.01 
+Total profit [$]: 749432.00 
+Margin percent [%]: 34.40 
+Average DOC [$]: 17.20 
+NRASK [$/pax.nm]x1E-4: 0.00 
+NCASK [$/pax.nm]x1E-4: 0.00 
+NP [$/pax.nm]x1E-4: 0.00 
 Number of frequencies: 144.00 
-Number of used aircraft: 144.00 
-Number of used aircraft 2: 14.00 
-Sectors per aircraft: 10.29 
+Number of used aircraft: 141.00 
+Number of used aircraft 2: 13.00 
+Sectors per aircraft: 11.08 
