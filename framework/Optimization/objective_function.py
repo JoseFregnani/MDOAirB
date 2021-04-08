@@ -60,6 +60,7 @@ def objective_function(x, vehicle):
         # Airplane sizing and checks
         status, vehicle = airplane_sizing(x, vehicle)
 
+        results = vehicle['results']
         performance = vehicle['performance']
         airport_departure = vehicle['airport_departure']
         airport_destination = vehicle['airport_destination']
@@ -87,13 +88,13 @@ def objective_function(x, vehicle):
             # ["FRA", "LHR", "CDG", "AMS",
             #          "MAD", "BCN", "FCO","DUB","VIE","ZRH"]
             departures = ['CD1', 'CD2', 'CD3', 'CD4',
-                            'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+                    'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
             arrivals = ['CD1', 'CD2', 'CD3', 'CD4',
-                        'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
+                    'CD5', 'CD6', 'CD7', 'CD8', 'CD9', 'CD10']
 
             airport_departure['array'] = arrivals
-
             results['nodes_number'] = len(departures)
+            
 
             # departures = ['CD1', 'CD2', 'CD3', 'CD4']
             # arrivals = ['CD1', 'CD2', 'CD3', 'CD4']
@@ -259,3 +260,28 @@ def objective_function(x, vehicle):
 # x =[0, 77, 35, 19, -3, 33, 63, 17, 29, 1396, 25, 120, 6, 2280, 41000, 78]
 
 # result = objective_function(x, vehicle)
+
+# x = [103, 81, 40, 16, -4, 34, 59, 14, 29, 1370, 18, 114, 6, 1118]
+
+
+# x = [9.700e+01,9.900e+01,4.400e+01,1.800e+01,-2.000e+00,3.200e+01, 4.800e+01,1.400e+01,3.000e+01,1.462e+03,1.700e+01,6.000e+01, 6.000e+00,1.525e+03]
+# # x = [7.300e+01,8.600e+01,2.900e+01,1.600e+01,-5.000e+00,3.400e+01, 4.600e+01,2.000e+01,2.700e+01,1.372e+03,1.800e+01,1.160e+02, 4.000e+00,2.425e+03]
+# # x = [1.210e+02,9.600e+01,4.100e+01,2.600e+01,-3.000e+00,3.600e+01, 6.200e+01,1.800e+01,2.900e+01,1.478e+03,1.800e+01,6.800e+01, 5.000e+00,1.975e+03]
+# # x = [7.900e+01,9.400e+01,3.100e+01,2.000e+01,-4.000e+00,3.700e+01, 5.600e+01,1.000e+01,2.900e+01,1.448e+03,1.600e+01,8.200e+01, 5.000e+00,1.825e+03]
+# # x = [1.270e+02,7.600e+01,3.600e+01,2.800e+01,-4.000e+00,3.800e+01, 6.000e+01,1.800e+01,3.000e+01,1.432e+03,1.700e+01,8.800e+01, 5.000e+00,1.225e+03]
+# # x = [1.150e+02,8.400e+01,4.900e+01,3.200e+01,-2.000e+00,3.600e+01, 5.000e+01,1.400e+01,2.800e+01,1.492e+03,1.900e+01,1.100e+02, 4.000e+00,1.375e+03]
+# # x = [1.090e+02,8.100e+01,2.600e+01,2.400e+01,-5.000e+00,4.000e+01, 5.200e+01,1.600e+01,2.700e+01,1.402e+03,1.400e+01,7.400e+01, 4.000e+00,2.125e+03]
+# # x = [9.100e+01,8.900e+01,3.400e+01,3.000e+01,-3.000e+00,3.900e+01, 6.400e+01,1.200e+01,2.800e+01,1.358e+03,2.000e+01,9.600e+01, 5.000e+00,1.675e+03]
+# # x = [8.500e+01,9.100e+01,3.900e+01,3.400e+01,-3.000e+00,3.300e+01, 5.800e+01,1.200e+01,2.800e+01,1.418e+03,1.600e+01,1.020e+02, 6.000e+00,2.275e+03]
+# # x = [1.030e+02,7.900e+01,4.600e+01,2.200e+01,-4.000e+00,3.500e+01, 5.400e+01,1.600e+01,2.900e+01,1.388e+03,1.500e+01,5.400e+01, 6.000e+00,1.075e+03]
+
+
+# x = [int(x) for x in x]
+# print(x)
+# start_time = datetime.now()
+
+# result = objective_function(x, vehicle)
+
+# end_time = datetime.now()
+# print(result)
+# print('objective function time: {}'.format(end_time - start_time))

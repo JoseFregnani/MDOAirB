@@ -383,6 +383,7 @@ aircraft['average_thrust'] = 0.75*aircraft['maximum_engine_thrust'] * \
 results = {}
 results['profit'] = 0
 results['nodes_number'] = 10
+results['nodes_number']
 results['arcs_number'] = 0
 results['avg_degree_nodes'] = 0
 results['network_density'] = 0
