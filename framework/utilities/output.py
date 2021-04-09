@@ -326,7 +326,7 @@ def write_optimal_results(profit, DOC_ik, vehicle, kpi_df2):
 
         output.write('Airports array: ' + str(airport_departure['array']) + "\n")
 
-        market_share = 0.1
+        market_share = operations['market_share']
 
         demand_db = pd.read_csv('Database/Demand/demand.csv')
         demand_db = round(market_share*(demand_db.T))

@@ -337,7 +337,7 @@ def network_optimization(arrivals, departures, distances, demand, doc0, pax_capa
 # distances_db = (distances_db.T)
 # distances = distances_db.to_dict()  # Convert to dictionaty
 
-# market_share = 0.1
+# market_share = operations['market_share']
 # # Load dai
 # demand_db= pd.read_csv('Database/Demand/demand.csv')
 # demand_db= round(market_share*(demand_db.T))

@@ -36,7 +36,7 @@ def fuselage_cross_section(vehicle):
 
     fuselage = vehicle['fuselage']
     # Seat dimensions economy class
-    armrest_top = 22  # [inch]
+    armrest_top = fuselage['armrest_top']   # [inch]
     armrest_bottom = 7    # [inch]
     armrest_width = 2*in_to_m  # armrest width
     armrest_top_height = armrest_top*in_to_m

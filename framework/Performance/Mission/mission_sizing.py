@@ -78,6 +78,7 @@ def mission_sizing(vehicle):
     wing = vehicle['wing']
     horizontal_tail = vehicle['horizontal_tail']
     vertical_tail = vehicle['vertical_tail']
+    performance = vehicle['performance']
 
     airport_departure = vehicle['airport_departure']
     airport_destination = vehicle['airport_destination']
@@ -92,20 +93,20 @@ def mission_sizing(vehicle):
     heading = 0
 
     # Operations and certification parameters:
-    buffet_margin = 1.3  # [g]
-    residual_rate_of_climb = 300  # [ft/min]
-    ceiling = 41000  # [ft] 
+    buffet_margin = operations['buffet_margin']  # [g]
+    residual_rate_of_climb = performance['residual_rate_of_climb']  # [ft/min]
+    ceiling = operations['max_ceiling']  # [ft] 
     descent_altitude = 1500
     # Network and mission parameters
-    holding_time = 30  # [min]
-    fuel_density = 0.81  # [kg/l]
-    fuel_price_per_kg = 1.0  # [per kg]
+    holding_time = operations['holding_time']  # [min]
+    fuel_density = operations['fuel_density']  # [kg/l]
+    fuel_price_per_kg = operations['fuel_price_per_kg']  # [per kg]
     fuel_price = (fuel_price_per_kg/fuel_density)*gallon_to_liter
     time_between_overhaul = 2500  # [hr]
     taxi_fuel_flow_reference = 5  # [kg/min]
-    contingency_fuel_percent = 0.1
-    min_cruise_time = 3  # [min]
-    go_around_allowance = 300
+    contingency_fuel_percent = operations['contingency_fuel_percent']
+    min_cruise_time = operations['min_cruise_time']  # [min]
+    go_around_allowance = operations['go_around_allowance']
 
     # Initial flight speed schedule
     climb_V_cas = 280
@@ -115,7 +116,7 @@ def mission_sizing(vehicle):
     descent_V_cas = 270
     mach_descent = 0.78
 
-    delta_ISA = 0
+    delta_ISA = airport_departure['delta_ISA']
 
     takeoff_fuel = aircraft['maximum_takeoff_weight']*0.005
 
@@ -124,8 +125,8 @@ def mission_sizing(vehicle):
 
     takeoff_allowance_mass = 200*max_takeoff_mass/22000
     approach_allowance_mass = 100*max_takeoff_mass/22000
-    average_taxi_in_time = 5
-    average_taxi_out_time = 10
+    average_taxi_in_time = operations['average_taxi_in_time']
+    average_taxi_out_time = operations['average_taxi_out_time']
 
     payload = round(
         aircraft['passenger_capacity']

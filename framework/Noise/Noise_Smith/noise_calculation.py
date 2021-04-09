@@ -97,6 +97,7 @@ def noise_calculation(vehicle):
     aircraft = vehicle['aircraft']
     airport_departure = vehicle['airport_departure']
     engine = vehicle['engine']
+    wing = vehicle['wing']
 
 
     maximum_takeoff_weight = aircraft['maximum_takeoff_weight']*GRAVITY
@@ -133,8 +134,8 @@ def noise_calculation(vehicle):
     aircraft_geometry = {}
     aircraft_geometry['fuselage_surface'] = 21.1
     aircraft_geometry['fuselage_length'] = 22.28
-    aircraft_geometry['flap_deflection_TO'] = 10
-    aircraft_geometry['flap_deflection_LD'] = 35 
+    aircraft_geometry['flap_deflection_TO'] = wing['flap_deflection_takeoff']
+    aircraft_geometry['flap_deflection_LD'] = wing['flap_deflection_landing']
     aircraft_geometry['main_landing_gear_number'] = 2
     aircraft_geometry['nose_landig_gear_number'] = 1
 

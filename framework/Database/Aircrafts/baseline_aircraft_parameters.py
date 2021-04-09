@@ -128,6 +128,7 @@ wing['wetted_area'] = 168.6500  # [m2]
 
 wing['flap_deflection_takeoff'] = 35  # [deg]
 wing['flap_deflection_landing'] = 45  # [deg]
+wing['flap_deflection_approach'] =  15  # [deg]
 wing['flap_span'] = 0.75
 wing['flap_area'] = 0
 wing['flap_chord'] = 0
@@ -246,6 +247,7 @@ fuselage['wetted_area'] = 0
 fuselage['diameter'] = 0
 fuselage['weight'] = 0
 fuselage['center_of_gravity_xposition'] = 0
+fuselage['armrest_top'] = 22
 
 
 engine = {}
@@ -344,6 +346,7 @@ systems['safety'] = 0
 
 performance = {}
 performance['range'] = 1600  # Aircraft range [nm]
+performance['residual_rate_of_climb'] = 300
 
 operations = {}
 operations['takeoff_field_length'] = 2000
@@ -355,7 +358,19 @@ operations['holding_time'] = 30  # [min]
 operations['alternative_airport_distance'] = 100  # [nm]
 operations['max_ceiling'] = 41000
 operations['passenger_mass'] = 100  # [kg]
-operations['load_factor'] = 0.85
+operations['reference_load_factor'] = 0.85
+operations['buffet_margin'] = 1.3
+operations['fuel_density'] = 0.81
+operations['contingency_fuel_percent'] = 0.1
+operations['min_cruise_time'] = 3
+operations['fuel_price_per_kg'] = 1.0
+operations['average_ticket_price'] = 120
+operations['market_share'] = 0.1
+operations['go_around_allowance'] = 300
+operations['average_taxi_in_time'] = 5
+operations['average_taxi_out_time'] = 10
+
+
 
 
 

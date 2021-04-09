@@ -112,10 +112,10 @@ def airplane_sizing(x, vehicle):
     engine['fan_pressure_ratio'] = x[10]/10
     engine['design_point_pressure'] = 41000
     engine['design_point_mach'] = 0.78
-    engine['position'] = 1
+    engine['position'] = engine['position']
 
 
-    ceiling =  41000
+    ceiling =  operations['max_ceiling']
     # Aerodynamics parameters
     Cl_max = 1.9
     wing['tip_incidence'] = wing['root_incidence'] + wing['twist']

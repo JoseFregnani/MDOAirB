@@ -70,7 +70,7 @@ def objective_function(x, vehicle):
     if status == 0:
         log.info('Aircraft passed sizing and checks status: {}'.format(status))
 
-        market_share = 0.1
+        market_share = operations['market_share']
 
         # Load origin-destination distance matrix [nm]
         distances_db = pd.read_csv('Database/Distance/distance.csv')
