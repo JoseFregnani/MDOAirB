@@ -110,6 +110,7 @@ def objective_function(x, vehicle):
             total_mission_flight_time = {}
             mach = {}
             passenger_capacity = {}
+            SAR = {}
 
             for i in range(len(departures)):
                 DOC_ik[departures[i]] = {}
@@ -118,6 +119,7 @@ def objective_function(x, vehicle):
                 total_mission_flight_time[departures[i]] = {}
                 mach[departures[i]] = {}
                 passenger_capacity[departures[i]] = {}
+                SAR[departures[i]] = {}
 
                 for k in range(len(arrivals)):
                     if (i != k) and (distances[departures[i]][arrivals[k]] <= x[13]):
@@ -130,7 +132,7 @@ def objective_function(x, vehicle):
                         airport_destination['takeoff_field_length'] = data_airports.loc[data_airports['APT2']
                                                                                         == arrivals[k], 'TORA'].iloc[0]
                         mission_range = distances[departures[i]][arrivals[k]]
-                        fuel_mass[departures[i]][arrivals[k]], total_mission_flight_time[departures[i]][arrivals[k]], DOC,mach[departures[i]][arrivals[k]],passenger_capacity[departures[i]][arrivals[k]]  = mission(mission_range,vehicle)
+                        fuel_mass[departures[i]][arrivals[k]], total_mission_flight_time[departures[i]][arrivals[k]], DOC,mach[departures[i]][arrivals[k]],passenger_capacity[departures[i]][arrivals[k]], SAR[departures[i]][arrivals[k]] = mission(mission_range,vehicle)
                         DOC_nd[departures[i]][arrivals[k]] = DOC
                         DOC_ik[departures[i]][arrivals[k]] = int(DOC*distances[departures[i]][arrivals[k]])                       
                         # print(DOC_ik[(i, k)])
@@ -141,6 +143,7 @@ def objective_function(x, vehicle):
                         total_mission_flight_time[departures[i]][arrivals[k]]  = 0
                         mach[departures[i]][arrivals[k]]  = 0
                         passenger_capacity[departures[i]][arrivals[k]]  = 0
+                        SAR[departures[i]][arrivals[k]] = 0
 
                     city_matrix_size = city_matrix_size - 1
                     print('INFO >>>> city pairs remaining to finish DOC matrix fill: ',city_matrix_size)
@@ -180,11 +183,18 @@ def objective_function(x, vehicle):
             DOC_nd_flatt = flatten_dict(DOC_nd)
             DOC_nd_df =  pd.DataFrame.from_dict(DOC_nd_flatt,orient="index",columns=['DOC_nd'])
 
+            SAR_flatt = flatten_dict(SAR)
+            SAR_df =  pd.DataFrame.from_dict(SAR_flatt,orient="index",columns=['SAR'])
+
             kpi_df2['mach'] = mach_df['mach'].values
             kpi_df2['pax_num'] = passenger_capacity_df['pax_num'].values
             kpi_df2['fuel'] = fuel_used_df['fuel'].values
             kpi_df2['time'] = mission_time_df['time'].values
             kpi_df2['DOC_nd'] = DOC_nd_df['DOC_nd'].values
+            kpi_df2['SAR'] = SAR_df['SAR'].values
+            
+
+
 
             # Number of active nodes
             kpi_df2['active_arcs'] = np.where(kpi_df2["aircraft_number"] > 0, 1, 0)
@@ -198,6 +208,9 @@ def objective_function(x, vehicle):
 
             # Total fuel
             kpi_df2['total_fuel'] = kpi_df2['aircraft_number']*kpi_df2['fuel']
+            
+            # total CEMV
+            kpi_df2['total_CEMV'] =kpi_df2['aircraft_number']*((1/kpi_df2['SAR'])*(1/(aircraft['wetted_area']**0.24)))
 
             # Total distance
             kpi_df2['total_distance'] = kpi_df2['aircraft_number']*kpi_df2['distances']
@@ -211,6 +224,8 @@ def objective_function(x, vehicle):
             results['network_density'] = results['arcs_number']/(results['nodes_number']*results['nodes_number']-results['nodes_number'])
 
             kpi_df2['total_time'] = kpi_df2['aircraft_number']*kpi_df2['time']
+
+
 
 
             write_optimal_results(profit, DOC_ik, vehicle, kpi_df2)

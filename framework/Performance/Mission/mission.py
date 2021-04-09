@@ -415,13 +415,16 @@ def mission(mission_range,vehicle):
         engines_number,
         0.35*operational_empty_weight,
         max_takeoff_mass)
+    
+    # Cruise average specific air range
+    SAR = fuel_weight/mission_range
 
 
     log.info('---- End DOC mission function ----')
     end_time = datetime.now()
     log.info('DOC mission execution time: {}'.format(end_time - start_time))
 
-    return float(fuel_mass), float(total_mission_flight_time),float(DOC),float(mach),float(passenger_capacity)
+    return float(fuel_mass), float(total_mission_flight_time),float(DOC),float(mach),float(passenger_capacity), float(SAR)
 
 
 # =============================================================================
