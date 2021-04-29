@@ -186,7 +186,7 @@ def network_optimization(arrivals, departures, distances, demand,active_airports
     list_of_pax = [i for i in list_of_pax if i != 0]
 
     # Post processing
-
+    min_capacity = 0.5*planes['P1']['w']
 
     def flatten_dict(dd, separator ='_', prefix =''):
         return { prefix + separator + k if prefix else k : v
@@ -210,11 +210,11 @@ def network_optimization(arrivals, departures, distances, demand,active_airports
     fraction_1 = np.floor(fraction)
     fraction_2 = fraction-fraction_1
 
-    revenue_1 = fraction_1*average_ticket_price*planes['P1']['w']
+    revenue_1 = (fraction_1*planes['P1']['w'])*average_ticket_price
     revenue_2 = np.zeros((len(arrivals),len(arrivals)))
     for i in range(len(arrivals)):
         for j in range(len(departures)):
-            if fraction_2[i][j] > 0.8:
+            if fraction_2[i][j] > min_capacity:
                 revenue_2[i][j] = fraction_2[i][j]*average_ticket_price*planes['P1']['w']
             else:
                 revenue_2[i][j] = 0
@@ -226,7 +226,7 @@ def network_optimization(arrivals, departures, distances, demand,active_airports
     list_of_airplanes_processed = np.zeros((len(arrivals),len(arrivals)))
     for i in range(len(arrivals)):
         for j in range(len(departures)):
-            if fraction_2[i][j] > 0.8:
+            if fraction_2[i][j] > min_capacity:
                 fracction_aux = 1
             else:
                 fracction_aux = 0
@@ -250,7 +250,7 @@ def network_optimization(arrivals, departures, distances, demand,active_airports
     list_pax_processed = np.zeros((len(arrivals),len(arrivals)))
     for i in range(len(arrivals)):
         for j in range(len(departures)):
-            if fraction_2[i][j] > 0.8:
+            if fraction_2[i][j] > min_capacity:
                 fracction_aux = fraction_2[i][j] 
             else:
                 fracction_aux = 0
@@ -260,7 +260,7 @@ def network_optimization(arrivals, departures, distances, demand,active_airports
 
     results['aircrafts_used']= np.sum(list_of_airplanes_processed)
     results['covered_demand'] = np.sum(list_pax_processed)
-
+    results['total_revenue'] = revenue_tot
     airplanes_ik = {}
     n = 0
     for i in range(len(departures)):
