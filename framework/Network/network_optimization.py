@@ -287,7 +287,7 @@ def network_optimization(arrivals, departures, distances, demand,active_airports
     DOC_tot = np.sum(DOC_proccessed)
 
     
-    profit = np.int(1.1*revenue_tot - 1.2*DOC_tot)
+    profit = np.int(1.0*revenue_tot - 1.2*DOC_tot)
 
     results['profit'] = np.round(profit)
     results['total_cost'] = np.round(DOC_tot)
